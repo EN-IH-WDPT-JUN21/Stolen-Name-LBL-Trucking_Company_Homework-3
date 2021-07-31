@@ -3,11 +3,23 @@ package com.ironhack.stolen_name_trucking_company_homework_3.dao;//For creating 
 import com.ironhack.stolen_name_trucking_company_homework_3.exceptions.*;
 import org.apache.commons.validator.routines.EmailValidator;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Table;
+
+@Entity
+@Table(name = "leads")
 public class Lead extends ClientInformation {
 
+    @Column(name="contact_name")
     protected String name;
+
+    @Column(name= "phone_number")
     protected String phoneNumber;
+
     protected String email;
+
+    @Column(name="company_name")
     protected String companyName;
 
     private static final String colorMain = "\u001B[33m";
