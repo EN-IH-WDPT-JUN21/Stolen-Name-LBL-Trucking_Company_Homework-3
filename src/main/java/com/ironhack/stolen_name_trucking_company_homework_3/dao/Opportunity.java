@@ -12,11 +12,11 @@ import javax.persistence.*;
 public class Opportunity extends ClientInformation {
 
     // This sets the status to Enum Open whenever an opportunity object is created
-    @Enumerated
+    @Enumerated(EnumType.STRING)
     private Status status = Status.OPEN;
 
     // com.ironhack.stolen_name_trucking_company_homework_3.Opportunity Specific variable - EnumTruck com.ironhack.stolen_name_trucking_company_homework_3.enums.Truck, int quantity, ObjectContact DecisionMaker
-    @Enumerated
+    @Enumerated(EnumType.STRING)
     private Truck product;
     private int quantity;
 

@@ -1,12 +1,14 @@
 package com.ironhack.stolen_name_trucking_company_homework_3.dao;
 
 import com.ironhack.stolen_name_trucking_company_homework_3.exceptions.*;
+import lombok.Setter;
 
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 
 @Entity
+@Setter
 public class Contact extends Lead {
 
     //public static Map<String, Contact> theContacts = new HashMap<>();
@@ -23,6 +25,9 @@ public class Contact extends Lead {
 
     public Contact(String name, String phoneNumber, String email, String companyName) throws NameContainsNumbersException, EmptyStringException, EmailNotValidException, PhoneNumberContainsLettersException, ExceedsMaxLength {
         super(name, phoneNumber, email, companyName);
+    }
+    public Contact(String name, String phoneNumber, String email, String companyName, SalesRep salesRep) throws NameContainsNumbersException, EmptyStringException, EmailNotValidException, PhoneNumberContainsLettersException, ExceedsMaxLength {
+        super(name, phoneNumber, email, companyName, salesRep);
     }
 
     public Contact() {
