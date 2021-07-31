@@ -1,11 +1,16 @@
 package com.ironhack.stolen_name_trucking_company_homework_3.dao;//For creating basic Leads. Extends Client information in order to retain a unique ID counter.
 
 import com.ironhack.stolen_name_trucking_company_homework_3.exceptions.*;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.Setter;
 import org.apache.commons.validator.routines.EmailValidator;
 
 import javax.persistence.*;
 
 @Entity
+@Setter
+@Getter
 @Table(name = "leads")
 @Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
 public class Lead extends ClientInformation {
@@ -40,6 +45,15 @@ public class Lead extends ClientInformation {
         setPhoneNumber(phoneNumber);
         setEmail(email);
         setCompanyName(companyName);
+    }
+
+    //New Reporting constructor for testing purposes, to replace existing constructor above later
+    public Lead(String name, String phoneNumber, String email, String companyName, SalesRep salesRep) throws NameContainsNumbersException, EmptyStringException, PhoneNumberContainsLettersException, EmailNotValidException, ExceedsMaxLength {
+        setName(name);
+        setPhoneNumber(phoneNumber);
+        setEmail(email);
+        setCompanyName(companyName);
+        setSalesRep(salesRep);
     }
 
     public String getName() {

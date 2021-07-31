@@ -3,10 +3,12 @@ package com.ironhack.stolen_name_trucking_company_homework_3.dao;//Extends com.i
 import com.ironhack.stolen_name_trucking_company_homework_3.enums.Status;
 import com.ironhack.stolen_name_trucking_company_homework_3.enums.Truck;
 import com.ironhack.stolen_name_trucking_company_homework_3.exceptions.ExceedsMaxLength;
+import lombok.Setter;
 
 import javax.persistence.*;
 
 @Entity
+@Setter
 public class Opportunity extends ClientInformation {
 
     // This sets the status to Enum Open whenever an opportunity object is created
@@ -46,6 +48,13 @@ public class Opportunity extends ClientInformation {
         setTruck(product);
         setQuantity(quantity);
         setDecisionMaker(decisionMaker);
+    }
+
+    public Opportunity(Truck product, int quantity, Contact decisionMaker, SalesRep salesRep) throws ExceedsMaxLength {
+        setTruck(product);
+        setQuantity(quantity);
+        setDecisionMaker(decisionMaker);
+        setSalesRep(salesRep);
     }
 
 

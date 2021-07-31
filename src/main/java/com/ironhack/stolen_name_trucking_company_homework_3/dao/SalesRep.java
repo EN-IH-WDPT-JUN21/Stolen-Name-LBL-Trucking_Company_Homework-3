@@ -23,7 +23,7 @@ public class SalesRep {
     private Long id;
 
     @Column(name="sales_rep_name")
-    private String name;
+    private String repName;
 
     @OneToMany(mappedBy = "salesRep")
     private List<Lead> leadList = new ArrayList<>();
@@ -32,7 +32,7 @@ public class SalesRep {
     private List<Opportunity> opportunityList = new ArrayList<>();
 
     public SalesRep(String name){
-        setName(name);
+        setRepName(name);
     }
 
 }
