@@ -22,4 +22,8 @@ public class SalesRep {
     @Column(name="sales_rep_name")
     private String name;
 
+    public SalesRep(String name){
+        setName(name);
+    }
+
 }

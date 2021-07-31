@@ -4,14 +4,23 @@ import com.ironhack.stolen_name_trucking_company_homework_3.enums.Status;
 import com.ironhack.stolen_name_trucking_company_homework_3.enums.Truck;
 import com.ironhack.stolen_name_trucking_company_homework_3.exceptions.ExceedsMaxLength;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Enumerated;
+
+@Entity
 public class Opportunity extends ClientInformation {
 
     // This sets the status to Enum Open whenever an opportunity object is created
+    @Enumerated
     private Status status = Status.OPEN;
 
     // com.ironhack.stolen_name_trucking_company_homework_3.Opportunity Specific variable - EnumTruck com.ironhack.stolen_name_trucking_company_homework_3.enums.Truck, int quantity, ObjectContact DecisionMaker
+    @Enumerated
     private Truck product;
     private int quantity;
+
+    @Column(name="decision_maker")
     private Contact decisionMaker;
 
     private static final String colorMain = "\u001B[33m";

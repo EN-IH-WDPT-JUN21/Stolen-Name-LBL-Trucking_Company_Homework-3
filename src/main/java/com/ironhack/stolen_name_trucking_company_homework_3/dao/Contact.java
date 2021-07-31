@@ -2,7 +2,9 @@ package com.ironhack.stolen_name_trucking_company_homework_3.dao;
 
 import com.ironhack.stolen_name_trucking_company_homework_3.exceptions.*;
 
+import javax.persistence.Entity;
 
+@Entity
 public class Contact extends Lead {
 
     //public static Map<String, Contact> theContacts = new HashMap<>();

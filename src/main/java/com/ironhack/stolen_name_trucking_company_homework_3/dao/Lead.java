@@ -3,12 +3,11 @@ package com.ironhack.stolen_name_trucking_company_homework_3.dao;//For creating 
 import com.ironhack.stolen_name_trucking_company_homework_3.exceptions.*;
 import org.apache.commons.validator.routines.EmailValidator;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Table;
+import javax.persistence.*;
 
 @Entity
 @Table(name = "leads")
+@Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
 public class Lead extends ClientInformation {
 
     @Column(name="contact_name")
