@@ -3,11 +3,17 @@ package com.ironhack.stolen_name_trucking_company_homework_3.dao;
 import com.ironhack.stolen_name_trucking_company_homework_3.exceptions.*;
 
 import javax.persistence.Entity;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 
 @Entity
 public class Contact extends Lead {
 
     //public static Map<String, Contact> theContacts = new HashMap<>();
+
+    @ManyToOne
+    @JoinColumn(name = "account_id", referencedColumnName = "id")
+    private Account account;
 
     private static final String colorMain = "\u001B[33m";
     private static final String colorMainBold = "\033[1;37m";

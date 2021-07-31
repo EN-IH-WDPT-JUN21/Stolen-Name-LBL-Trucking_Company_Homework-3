@@ -23,6 +23,10 @@ public class Opportunity extends ClientInformation {
     @JoinColumn(name = "contact_id", referencedColumnName = "id")
     private Contact decisionMaker;
 
+    @ManyToOne
+    @JoinColumn(name = "account_id", referencedColumnName = "id")
+    private Account account;
+
     private static final String colorMain = "\u001B[33m";
     private static final String colorMainBold = "\033[1;37m";
     private static final String colorTable = "\u001B[32m";

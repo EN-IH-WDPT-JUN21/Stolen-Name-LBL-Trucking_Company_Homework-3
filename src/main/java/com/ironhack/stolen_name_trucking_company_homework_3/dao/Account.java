@@ -6,18 +6,29 @@ import com.ironhack.stolen_name_trucking_company_homework_3.exceptions.ExceedsMa
 import com.ironhack.stolen_name_trucking_company_homework_3.exceptions.InvalidCountryException;
 import com.ironhack.stolen_name_trucking_company_homework_3.exceptions.NameContainsNumbersException;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Enumerated;
+import javax.persistence.OneToMany;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-
+@Entity
 public class Account extends ClientInformation{
 
+    @Enumerated
     private Industry industry;
+    @Column(name="employee_count")
     private int employeeCount;
+
     private String city;
     private String country;
+
+    @OneToMany(mappedBy = "account")
     private List<Contact> contactList = new ArrayList<>();
+
+    @OneToMany(mappedBy = "account")
     private List<Opportunity> opportunityList = new ArrayList<>();
 
     private static final String colorMain = "\u001B[33m";
