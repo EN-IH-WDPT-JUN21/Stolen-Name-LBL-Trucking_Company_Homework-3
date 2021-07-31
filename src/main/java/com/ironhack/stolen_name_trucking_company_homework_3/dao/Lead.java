@@ -21,6 +21,11 @@ public class Lead extends ClientInformation {
     @Column(name="company_name")
     protected String companyName;
 
+    @ManyToOne
+    @JoinColumn(name = "sales_rep_id", referencedColumnName = "id")
+    private SalesRep salesRep;
+
+
     private static final String colorMain = "\u001B[33m";
     private static final String colorMainBold = "\033[1;37m";
     private static final String colorTable = "\u001B[32m";
