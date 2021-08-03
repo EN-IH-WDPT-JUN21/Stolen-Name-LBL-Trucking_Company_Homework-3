@@ -19,7 +19,6 @@ public class SalesRep {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    //@Column(name="sales_rep_id")
     private Long id;
 
     @Column(name="sales_rep_name")

@@ -57,7 +57,9 @@ public interface OpportunityRepository extends JpaRepository<Opportunity, String
     @Query("SELECT AVG(quantity) FROM Opportunity")
     Optional<Double> findMeanProductQuantity();
 
-    // *** Median Report is needed ***
+    // *** Median Report is needed JPQL can give list of all quantities in an ordered int array, needs a second step to find the median from this ***
+    @Query("SELECT quantity FROM Opportunity order by quantity")
+    int[]findMedianQuantityStep1();
 
     //Report Maximum  employee count for all Accounts
     @Query("SELECT MAX(quantity) FROM Opportunity")
@@ -66,6 +68,22 @@ public interface OpportunityRepository extends JpaRepository<Opportunity, String
     //Report Minimum  employee count for all Accounts
     @Query("SELECT MIN(quantity) FROM Opportunity")
     Optional<Integer> findMinProductQuantity();
+
+    //Report Mean number of Opportunities associated with an account
+    @Query(value = "select avg(a.count_opportunity) from (select count(distinct id) as count_opportunity from opportunity group by account_id order by count_opportunity) a", nativeQuery = true)
+    Optional<Double>findMeanOpportunitiesPerAccount();
+
+    // *** Median Report is needed JPQL can give list of all opportunitycounts in an ordered int array, needs a second step to find the median from this ***
+    @Query(value = "select count(distinct id) as count_opportunity from opportunity group by account_id order by count_opportunity", nativeQuery = true)
+    int[]findMedianOppsPerAccountStep1();
+
+    //Report Max number of Opportunities associated with an account
+    @Query(value = "select max(a.count_opportunity) from (select count(distinct id) as count_opportunity from opportunity group by account_id order by count_opportunity) a", nativeQuery = true)
+    Optional<Double>findMaxOpportunitiesPerAccount();
+
+    //Report Min number of Opportunities associated with an account
+    @Query(value = "select min(a.count_opportunity) from (select count(distinct id) as count_opportunity from opportunity group by account_id order by count_opportunity) a", nativeQuery = true)
+    Optional<Double>findMinOpportunitiesPerAccount();
 
 
 }

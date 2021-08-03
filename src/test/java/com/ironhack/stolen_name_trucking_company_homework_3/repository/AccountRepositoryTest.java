@@ -99,6 +99,12 @@ class AccountRepositoryTest {
     }
 
     @Test
+    void findMedianEmployeeCountStep1_test(){
+        var medianEmployeeCount = accountRepository.findMedianEmployeeCountStep1();
+        assertEquals(3, medianEmployeeCount.length);
+    }
+
+    @Test
     void findMaxEmployeeCount() {
         var maxEmployeeCount = accountRepository.findMaxEmployeeCount();
         assertEquals(500, maxEmployeeCount.get().intValue());
