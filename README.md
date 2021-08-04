@@ -1,4 +1,4 @@
-<img alt="cool logo" src="https://github.com/EN-IH-WDPT-JUN21/Stolen-Name-LBL-Trucking_Company_Homework-3/blob/main/images/LBL-Logo-01.png">
+<img alt="cool logo" src="https://github.com/EN-IH-WDPT-JUN21/Stolen-Name-LBL-Trucking_Company_Homework-3/blob/main/images/LBL-Logo-01.svg">
 
 LBL Trucking Company sells fleets of Trucks to large companies all over the world. They need a new CRM system to manage prospective and live customers.
 
