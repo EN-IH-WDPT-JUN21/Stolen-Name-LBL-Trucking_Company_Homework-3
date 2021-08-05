@@ -4,6 +4,8 @@ import com.ironhack.stolen_name_trucking_company_homework_3.enums.Industry;
 import com.ironhack.stolen_name_trucking_company_homework_3.enums.Status;
 import com.ironhack.stolen_name_trucking_company_homework_3.enums.Truck;
 import com.ironhack.stolen_name_trucking_company_homework_3.exceptions.*;
+import com.ironhack.stolen_name_trucking_company_homework_3.repository.LeadRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 
 
 
@@ -15,7 +17,11 @@ import java.util.Map;
 import java.util.Scanner;
 
 
+
 public class MainMenu {
+
+    @Autowired
+    LeadRepository leadRepository;
 
     public static Map<String, Lead> theLeads = new HashMap<>();
     public static Map<String, Account> theAccounts = new HashMap<>();
@@ -85,7 +91,7 @@ public class MainMenu {
          colorHeadline + colorMain + "╔═══════════════════════════════════════════════════════════════════════════════════════════════════╗\n"
                                    + "║                                " + colorTable + "WELCOME TO LBL CRM SYSTEM" + colorMain + "                                          ║\n"
                                    + "╠═══════════════════════════════════════════════════════════════════════════════════════════════════╣\n"
-                                   + "║     " + colorTable + "WHAT WOULD YOU LIKE TO DO " + Login.getUsername().toUpperCase() +  "?" + colorMain + insertLine() + "║\n"
+                                   + "║     " + colorTable + "WHAT WOULD YOU LIKE TO DO " /*+ Login.getUsername().toUpperCase() +*/ + "?" + colorMain /*+ insertLine()*/ + "║\n"
                                    + "╠═══════════════════════════════════════════════════════════════════════════════════════════════════╣\n"
                                    + "║ 1.  To create new Lead " + colorHeadline + "- type: 'new lead'" + colorMain + "                                                         ║\n"
                                    + "║ 2.  To check Leads list " + colorHeadline + "- type: 'show leads'" + colorMain + "                                                      ║\n"
@@ -100,7 +106,7 @@ public class MainMenu {
                                    + "║ 11. To quit " + colorHeadline + "- type: 'quit'" + colorMain + "                                                                        ║\n"
                                    + "╚═══════════════════════════════════════════════════════════════════════════════════════════════════╝\n" + reset);
 
-        consoleFocusRunOnce();
+        //consoleFocusRunOnce();
 
         try {
 
@@ -247,6 +253,7 @@ public class MainMenu {
                     theLeads.put(newLead.getId(), newLead);
                     System.out.println(colorMain + "\n╔════════════╦═════ " + colorMainBold + "New Lead created" + colorMain + " ══════════════════════╦══════════════════════╦══════════════════════════════════════════╦═════════════════════════════════════════════╗" + reset);
                     System.out.println(theLeads.get(newLead.getId()));
+                    leadRepository.save(newLead);
                     return newLead;
                 }
                 case "n" -> // Would normally go back in the menu at this point
@@ -718,13 +725,13 @@ public class MainMenu {
         return name.matches("^[A-Za-z\\s]{1,}[\\.]{0,1}[A-Za-z\\s]{0,}$");
     }*/
 
-    public static StringBuilder insertLine() {
+   /* public static StringBuilder insertLine() {
         StringBuilder line = new StringBuilder();
         for (int i = 1; i < (68 - Login.getUsername().length()); i++) {
             line.append(" ");
         }
         return line;
-    }
+    }*/
 
     public void OSGuest() throws RuntimeException, AWTException {
 
@@ -741,7 +748,7 @@ public class MainMenu {
                                    colorHeadline + colorMain + "╔═══════════════════════════════════════════════════════════════════════════════════════════════════╗\n"
                                    + "║                                " + colorTable + "WELCOME TO LBL CRM SYSTEM" + colorMain + "                                          ║\n"
                                    + "╠═══════════════════════════════════════════════════════════════════════════════════════════════════╣\n"
-                                   + "║     " + colorTable + "WHAT WOULD YOU LIKE TO DO " + Login.getUsername().toUpperCase() +  "?" + colorMain + insertLine() + "║\n"
+                                   + "║     " + colorTable + "WHAT WOULD YOU LIKE TO DO " + /*Login.getUsername().toUpperCase() + */ "?" + colorMain /*+ insertLine()*/ + "║\n"
                                    + "╠═══════════════════════════════════════════════════════════════════════════════════════════════════╣\n"
                                    + "║ 1.  To check Leads list " + colorHeadline + "- type: 'show leads'" + colorMain + "                                                      ║\n"
                                    + "║ 2.  To check individual Lead's details " + colorHeadline + "- type: 'lookup lead ' + Lead Id" + colorMain + "                           ║\n"
@@ -752,7 +759,7 @@ public class MainMenu {
                                    + "║ 7.  To quit " + colorHeadline + "- type: 'quit'" + colorMain + "                                                                        ║\n"
                                    + "╚═══════════════════════════════════════════════════════════════════════════════════════════════════╝\n" + reset);
 
-        consoleFocusRunOnce();
+        //consoleFocusRunOnce();
 
         try {
 

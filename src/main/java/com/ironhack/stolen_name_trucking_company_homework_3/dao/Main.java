@@ -2,6 +2,7 @@ package com.ironhack.stolen_name_trucking_company_homework_3.dao;
 
 import com.ironhack.stolen_name_trucking_company_homework_3.enums.Truck;
 import com.ironhack.stolen_name_trucking_company_homework_3.exceptions.*;
+import com.ironhack.stolen_name_trucking_company_homework_3.repository.SalesRepRepository;
 
 
 
@@ -10,14 +11,21 @@ import java.util.Properties;
 
 public class Main {
 
+
     public static MainMenu menu = new MainMenu();
 
+
     public static void main(String[] args) throws NameContainsNumbersException, EmptyStringException, EmailNotValidException, PhoneNumberContainsLettersException, ExceedsMaxLength, NoSuchValueException {
+
+
 
         SalesRep salesRep1 = new SalesRep("James");
         SalesRep salesRep2 = new SalesRep("Sara");
         SalesRep salesRep3 = new SalesRep("Michael");
         SalesRep salesRep4 = new SalesRep("Julia");
+
+
+
 
 
 
