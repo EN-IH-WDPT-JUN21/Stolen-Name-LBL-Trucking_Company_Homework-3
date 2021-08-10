@@ -1,4 +1,4 @@
-package com.ironhack.stolen_name_trucking_company_homework_3.dao;
+/*package com.ironhack.stolen_name_trucking_company_homework_3.dao;
 
 import com.ironhack.stolen_name_trucking_company_homework_3.enums.Industry;
 import com.ironhack.stolen_name_trucking_company_homework_3.enums.Status;
@@ -9,11 +9,8 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import java.awt.*;
 import java.io.ByteArrayInputStream;
-import java.io.ByteArrayOutputStream;
 import java.io.InputStream;
-import java.io.PrintStream;
 
 class MainMenuTest {
 
@@ -51,7 +48,7 @@ class MainMenuTest {
         try {
             System.setIn(new ByteArrayInputStream(data.getBytes())); // Sets System.In to test1
             int hashMapSize = MainMenu.theLeads.size();
-            MainMenu test = new MainMenu(); // Creates a sales associate to test method
+            MainMenu test = new MainMenu(leadRepository, accountRepository, contactRepository, opportunityRepository, salesRepRepository); // Creates a sales associate to test method
 
             Lead theNewLead = test.newLead(); // creates new lead
             //Assertions check Object created correctly and added to hashmap
@@ -67,7 +64,7 @@ class MainMenuTest {
 
     @Test
     void testConvertLeadThrowsNullPointerException(){
-        MainMenu test = new MainMenu(); // Creates a sales associate to test method
+        MainMenu test = new MainMenu(leadRepository, accountRepository, contactRepository, opportunityRepository, salesRepRepository); // Creates a sales associate to test method
 
         Assertions.assertThrows(NullPointerException.class, () -> test.convertLead("239832487248"));
         Assertions.assertThrows(NullPointerException.class, () -> test.convertLead("Sausage"));
@@ -98,7 +95,7 @@ class MainMenuTest {
             //int oppHashMapSize = MainMenu.theOpportunities.size();
             //int conHashMapSize = MainMenu.theContacts.size();
 
-            MainMenu test = new MainMenu(); // Creates a sales associate to test method
+            MainMenu test = new MainMenu(leadRepository, accountRepository, contactRepository, opportunityRepository, salesRepRepository); // Creates a sales associate to test method
             Opportunity newOpp = test.convertLead(lead1.getId());
             //Assertions check Object created correctly and added to hashmap
             //Assertions.assertEquals(oppHashMapSize + 1, MainMenu.theOpportunities.size()); // Checks it's added to HashMap
@@ -123,7 +120,7 @@ class MainMenuTest {
         try {
             System.setIn(new ByteArrayInputStream(data.getBytes())); // Sets System.In to test1
             int accHashMapSize = MainMenu.theAccounts.size();
-            MainMenu test = new MainMenu(); // Creates a sales associate to test method
+            MainMenu test = new MainMenu(leadRepository, accountRepository, contactRepository, opportunityRepository, salesRepRepository); // Creates a sales associate to test method
 
             Account testAccount = test.createAccount(testOpp);
             //Assertions check Object created correctly and added to hashmap
@@ -145,7 +142,7 @@ class MainMenuTest {
         try {
             System.setIn(new ByteArrayInputStream(data.getBytes())); // Sets System.In to test1
 
-            MainMenu test = new MainMenu(); // Creates a sales associate to test method
+            MainMenu test = new MainMenu(leadRepository, accountRepository, contactRepository, opportunityRepository, salesRepRepository); // Creates a sales associate to test method
 
             Assertions.assertThrows(RuntimeException.class, test::OS);
         }finally {
@@ -169,7 +166,7 @@ class MainMenuTest {
 
         try {
             System.setIn(new ByteArrayInputStream(data.getBytes()));
-            MainMenu test = new MainMenu();
+            MainMenu test = new MainMenu(leadRepository, accountRepository, contactRepository, opportunityRepository, salesRepRepository);
             Contact testContact = new Contact("TestContact", "1234567", "email@email.com",
                     "TestContactCompany");
             Opportunity testOpp = new Opportunity(Truck.HYBRID, 30, testContact);
@@ -187,7 +184,7 @@ class MainMenuTest {
     void closeWon() throws ExceedsMaxLength, NameContainsNumbersException, EmptyStringException, EmailNotValidException, PhoneNumberContainsLettersException {
         String data = "y";
         InputStream stdin = System.in;
-        MainMenu test = new MainMenu();
+        MainMenu test = new MainMenu(leadRepository, accountRepository, contactRepository, opportunityRepository, salesRepRepository);
         Contact testContact = new Contact("TestContact", "1234567", "email@email.com",
                 "TestContactCompany");
         Opportunity testOpp = new Opportunity(Truck.HYBRID, 30, testContact);
@@ -203,3 +200,5 @@ class MainMenuTest {
         }
     }
 }
+
+ */

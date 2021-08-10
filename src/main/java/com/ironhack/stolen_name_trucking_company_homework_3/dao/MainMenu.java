@@ -4,9 +4,9 @@ import com.ironhack.stolen_name_trucking_company_homework_3.enums.Industry;
 import com.ironhack.stolen_name_trucking_company_homework_3.enums.Status;
 import com.ironhack.stolen_name_trucking_company_homework_3.enums.Truck;
 import com.ironhack.stolen_name_trucking_company_homework_3.exceptions.*;
-import com.ironhack.stolen_name_trucking_company_homework_3.repository.LeadRepository;
+import com.ironhack.stolen_name_trucking_company_homework_3.repository.*;
 import org.springframework.beans.factory.annotation.Autowired;
-
+import org.springframework.stereotype.Component;
 
 
 import java.awt.*;
@@ -17,11 +17,15 @@ import java.util.Map;
 import java.util.Scanner;
 
 
-
+@Component
 public class MainMenu {
 
-    @Autowired
-    LeadRepository leadRepository;
+
+    final LeadRepository leadRepository;
+    final AccountRepository accountRepository;
+    final ContactRepository contactRepository;
+    final OpportunityRepository opportunityRepository;
+    final SalesRepRepository salesRepRepository;
 
     public static Map<String, Lead> theLeads = new HashMap<>();
     public static Map<String, Account> theAccounts = new HashMap<>();
@@ -69,8 +73,13 @@ public class MainMenu {
     private static boolean wasRun = false;
     private static boolean valid;
 
-    public MainMenu() {
-
+    @Autowired
+    public MainMenu(LeadRepository leadRepository, AccountRepository accountRepository, ContactRepository contactRepository, OpportunityRepository opportunityRepository, SalesRepRepository salesRepRepository) {
+        this.leadRepository = leadRepository;
+        this.accountRepository = accountRepository;
+        this.contactRepository = contactRepository;
+        this.opportunityRepository = opportunityRepository;
+        this.salesRepRepository = salesRepRepository;
     }
 
     public void OS() throws RuntimeException, AWTException, NoSuchValueException {

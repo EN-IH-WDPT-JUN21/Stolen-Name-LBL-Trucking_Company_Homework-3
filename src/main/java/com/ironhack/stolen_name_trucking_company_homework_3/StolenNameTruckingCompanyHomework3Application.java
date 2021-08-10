@@ -3,6 +3,7 @@ package com.ironhack.stolen_name_trucking_company_homework_3;
 import com.ironhack.stolen_name_trucking_company_homework_3.dao.*;
 import com.ironhack.stolen_name_trucking_company_homework_3.enums.Truck;
 import com.ironhack.stolen_name_trucking_company_homework_3.repository.*;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 
@@ -11,16 +12,19 @@ import org.springframework.context.annotation.Bean;
 
 @SpringBootApplication
 
-public class StolenNameTruckingCompanyHomework3Application {
+public class StolenNameTruckingCompanyHomework3Application implements CommandLineRunner{
 
-	public static MainMenu menu = new MainMenu();
+	@Autowired
+	MainMenu menu;
+
+	//public static MainMenu menu = new MainMenu(leadRepository, accountRepository, contactRepository, opportunityRepository, salesRepRepository);
 
 	public static void main(String[] args) {
 		SpringApplication.run(StolenNameTruckingCompanyHomework3Application.class, args);
 
 	}
 	@Bean
-	CommandLineRunner commandLineRunner(SalesRepRepository salesRepRepository, AccountRepository accountRepository, LeadRepository leadRepository, OpportunityRepository opportunityRepository, ContactRepository contactRepository){
+	CommandLineRunner commandLineRunner(SalesRepRepository salesRepRepository, AccountRepository accountRepository, LeadRepository leadRepository, OpportunityRepository opportunityRepository, ContactRepository contactRepository) {
 		return args -> {
 
 			SalesRep salesRep1 = new SalesRep("James");
@@ -81,7 +85,11 @@ public class StolenNameTruckingCompanyHomework3Application {
 			menu.OS();
 
 		};
-	}
 
+
+	}
+	@Override
+	public void run(String...args){
+	}
 
 }
