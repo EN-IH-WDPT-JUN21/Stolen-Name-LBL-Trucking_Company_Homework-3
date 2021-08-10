@@ -328,6 +328,7 @@ public class MainMenu {
                     valid = false;
 
                     Contact newContact = new Contact(lead.getName().toUpperCase(), lead.getPhoneNumber().toUpperCase(), lead.getEmail().toUpperCase(), lead.getCompanyName().toUpperCase()); // Converts lead into contact
+                    contactRepository.save(newContact);
                     newOpp.setDecisionMaker(newContact); // Assigns contact as the decisionMaker
                     theContacts.put(newContact.getId(), newContact);  // Adds contact to contact Map
                     theOpportunities.put(newOpp.getId(), newOpp); // Adds Opportunity to opportunities map
@@ -364,6 +365,8 @@ public class MainMenu {
                     System.out.println(theContacts.get(newContact.getId()));
                     System.out.println(colorInput + "Press Enter to continue..." + reset);
                     scanner.nextLine();
+                    opportunityRepository.save(newOpp);
+
                     return newOpp;
                     //createAccount(newContact, newOpp); // Not sure whether to put this here or in Menu
                 }
@@ -457,6 +460,11 @@ public class MainMenu {
             theAccounts.put(newAccount.getId(), newAccount); // Adds new account to Accounts Map (database)
             //System.out.println(colorMain + "\n ═════════════ New Account Created ═════════════\n");
             System.out.println(theAccounts.get(newAccount.getId()));
+            accountRepository.save(newAccount);
+            opportunity.setAccount(newAccount);
+            opportunityRepository.save(opportunity);
+            opportunity.getDecisionMaker().setAccount(newAccount);
+            contactRepository.save(opportunity.getDecisionMaker());
             return newAccount;
         } catch (Exception e) {
 
@@ -648,6 +656,7 @@ public class MainMenu {
             switch (scanner.nextLine().trim().toLowerCase(Locale.ROOT)) {
                 case "y": {
                     opp.setStatus(Status.CLOSED_LOST);
+                    opportunityRepository.save(opp);
                     System.out.println(colorMain + "\n═════════════ " + colorMainBold + "Status Changed!" + colorMain + " ═════════════" + reset);
                 }
                 break;
@@ -688,6 +697,7 @@ public class MainMenu {
             switch (scanner.nextLine().trim().toLowerCase(Locale.ROOT)) {
                 case "y": {
                     opp.setStatus(Status.CLOSED_WON);
+                    opportunityRepository.save(opp);
                     System.out.println(colorMain + "\n═════════════ " + colorMainBold + "Status Changed!" + colorMain + " ═════════════" + reset);
                 }
                 break;
