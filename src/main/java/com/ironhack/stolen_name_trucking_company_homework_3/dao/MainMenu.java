@@ -170,6 +170,8 @@ public class MainMenu {
                     case "show" + "contacts" -> showContacts();
                     case "show" + "accounts" -> showAccounts();
                     case "show" + "salesreps" -> showSalesReps();
+                    case "view" + "reports" -> reportMenu();
+                    case "main" + "menu" -> OS();
                     default -> throw new IllegalArgumentException();
                 }
             }
@@ -812,6 +814,62 @@ public class MainMenu {
         }
     }
 
+
+    public static void reportMenu(){
+
+        System.out.println("\n" + colorHeadline + colorLogo
+                + "                                                                                                \n" +
+                "                                         *#### #####        ###################*   *####*         \n" +
+                "                         #################### #####        ######################  #####          \n" +
+                "                    ,######              ### #####        #####            ###### #####           \n" +
+                "                  ####                  ### #####        #####    ############## #####            \n" +
+                "                ####                   ### #####        #####      ###########  #####             \n" +
+                "              ########################### #####        #####            ###### #####              \n" +
+                "             ####################.###### ############ ###################### ############         \n" +
+                "             ################ ####### # ############ #####################  ############          \n" + reset +
+                colorHeadline + colorMain + "╔═══════════════════════════════════════════════════════════════════════════════════════════════════╗\n"
+                + "║                                " + colorTable + "WELCOME TO LBL CRM SYSTEM" + colorMain + "                                          ║\n"
+                + "╠═══════════════════════════════════════════════════════════════════════════════════════════════════╣\n"
+                + "║     " + colorTable + "REPORTING MENU " /*+ Login.getUsername().toUpperCase()*/  + colorMain /*+ insertLine()*/ + "║\n"
+                + "╠═══════════════════════════════════════════════════════════════════════════════════════════════════╣\n"
+                + "║ 1.  Display count of Leads by Sales Representative " + colorHeadline + "- type: 'report lead by salesrep'" + colorMain + "                                                         ║\n"
+                + "║ 2.  Display count of all Opportunities by Sales Representative " + colorHeadline + "- type: 'report opportunity by salesrep'" + colorMain + "                                     ║\n"
+                + "║ 3.  Display count of CLOSED-WON Opportunities by Sales Representative " + colorHeadline + "- type: 'report closed-won by salesrep'" + colorMain + "                                                      ║\n"
+                + "║ 4.  Display count of CLOSED-LOST Opportunities by Sales Representative " + colorHeadline + "- type: 'report closed-lost by salesrep'" + colorMain + "                           ║\n"
+                + "║ 5.  Display count of OPEN Opportunities by Sales Representative " + colorHeadline + "- type: - 'report open by salesrep'" + colorMain + "                               ║\n"
+                + "║ 6.  Display count of all Opportunities by the Product " + colorHeadline + "- type: 'report opportunity by the product'" + colorMain + "                                        ║\n"
+                + "║ 7.  Display count of CLOSED-WON Opportunities by the Product " + colorHeadline + "- type: 'report closed-won by the product'" + colorMain + "      ║\n"
+                + "║ 8.  Display count of CLOSED-LOST Opportunities by the Product" + colorHeadline + "- type: 'report closed-lost by the product'" + colorMain + "                       ║\n"
+                + "║ 9.  Display count of OPEN Opportunities by the Product" + colorHeadline + "- type: 'report open by the product'" + colorMain + "                     ║\n"
+                + "║ 10. Display count of all Opportunities by Country " + colorHeadline + "- type: - 'report opportunity by country'" + colorMain + "                                                 ║\n"
+                + "║ 11. Display count of CLOSED-WON Opportunities by Country " + colorHeadline + "- type: 'report closed-won by country'" + colorMain + "                                                 ║\n"
+                + "║ 12. Display count of CLOSED-LOST Opportunities by Country" + colorHeadline + "- type: 'report closed-lost by country'" + colorMain + "                                  ║\n"
+                + "║ 13. Display count of OPEN Opportunities by Country" + colorHeadline + "- type: 'report open by country'" + colorMain + "                     ║\n"
+                + "║ 14. Display count of all Opportunities by City " + colorHeadline + "- type: - 'report opportunity by city'" + colorMain + "                                                 ║\n"
+                + "║ 15. Display count of CLOSED-WON Opportunities by City " + colorHeadline + "- type: 'report closed-won by city'" + colorMain + "                                                 ║\n"
+                + "║ 16. Display count of CLOSED-LOST Opportunities by City" + colorHeadline + "- type: 'report closed-lost by city'" + colorMain + "                                  ║\n"
+                + "║ 17. Display count of OPEN Opportunities by City" + colorHeadline + "- type: 'report open by city'" + colorMain + "                     ║\n"
+                + "║ 18. Display count of all Opportunities by Industry " + colorHeadline + "- type: - 'report opportunity by industry'" + colorMain + "                                                 ║\n"
+                + "║ 19. Display count of CLOSED-WON Opportunities by Industry " + colorHeadline + "- type: 'report closed-won by industry'" + colorMain + "                                                 ║\n"
+                + "║ 20. Display count of CLOSED-LOST Opportunities by Industry" + colorHeadline + "- type: 'report closed-lost by industry'" + colorMain + "                                  ║\n"
+                + "║ 21. Display count of OPEN Opportunities by Industry" + colorHeadline + "- type: 'report open by industry'" + colorMain + "                     ║\n"
+                + "║ 22. Display MEAN EmployeeCount for Accounts" + colorHeadline + "- type: 'mean employeecount'" + colorMain + "                     ║\n"
+                + "║ 23. Display MEDIAN EmployeeCount for Accounts" + colorHeadline + "- type: 'median employeecount'" + colorMain + "                     ║\n"
+                + "║ 24. Display MAXIMUM EmployeeCount for Accounts" + colorHeadline + "- type: 'max employeecount'" + colorMain + "                     ║\n"
+                + "║ 25. Display MINIMUM EmployeeCount for Accounts" + colorHeadline + "- type: 'min employeecount'" + colorMain + "                     ║\n"
+                + "║ 26. Display MEAN quantity of products for Opportunities" + colorHeadline + "- type: 'mean quantity'" + colorMain + "                     ║\n"
+                + "║ 27. Display MEDIAN quantity of products for Opportunities" + colorHeadline + "- type: 'median quantity'" + colorMain + "                     ║\n"
+                + "║ 28. Display MAXIMUM quantity of products for Opportunities" + colorHeadline + "- type: 'max quantity'" + colorMain + "                     ║\n"
+                + "║ 29. Display MINIMUM quantity of products for Opportunities" + colorHeadline + "- type: 'min quantity'" + colorMain + "                     ║\n"
+                + "║ 30. Display MEAN number of Opportunities per Account" + colorHeadline + "- type: 'mean opps per account'" + colorMain + "                     ║\n"
+                + "║ 31. Display MEDIAN number of Opportunities per Account" + colorHeadline + "- type: 'median opps per account'" + colorMain + "                     ║\n"
+                + "║ 32. Display MAXIMUM number of Opportunities per Account" + colorHeadline + "- type: 'max opps per account'" + colorMain + "                     ║\n"
+                + "║ 33. Display MINIMUM number of Opportunities per Account" + colorHeadline + "- type: 'min opps per account'" + colorMain + "                     ║\n"
+                + "║ 34. To return to the main menu " + colorHeadline + "- type: 'main menu'" + colorMain + "                                             ║\n" //shall we create another 'menu' explaining reporting options?
+                + "║ 35. To quit " + colorHeadline + "- type: 'quit'" + colorMain + "                                                                        ║\n"
+                + "╚═══════════════════════════════════════════════════════════════════════════════════════════════════╝\n" + reset);
+
+    }
 
 
     /*//Email format validation

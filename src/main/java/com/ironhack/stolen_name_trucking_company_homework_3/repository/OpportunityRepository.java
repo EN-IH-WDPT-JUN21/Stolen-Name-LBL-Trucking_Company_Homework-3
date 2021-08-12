@@ -61,11 +61,11 @@ public interface OpportunityRepository extends JpaRepository<Opportunity, String
     @Query("SELECT quantity FROM Opportunity order by quantity")
     int[]findMedianQuantityStep1();
 
-    //Report Maximum  employee count for all Accounts
+    //Report Maximum  products quantity for all Opportunities
     @Query("SELECT MAX(quantity) FROM Opportunity")
     Optional<Integer> findMaxProductQuantity();
 
-    //Report Minimum  employee count for all Accounts
+    //Report Minimum  products quantity for all Opportunities
     @Query("SELECT MIN(quantity) FROM Opportunity")
     Optional<Integer> findMinProductQuantity();
 
