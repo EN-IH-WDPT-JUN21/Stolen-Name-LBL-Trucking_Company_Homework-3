@@ -81,15 +81,16 @@ class OpportunityRepositoryTest {
 
 
 
+
+
     }
 
     @AfterEach
     void tearDown() {
-
-       opportunityRepository.deleteAll();
-       accountRepository.deleteAll();
-       contactRepository.deleteAll();
-       salesRepRepository.deleteAll();
+        opportunityRepository.deleteAll();
+        accountRepository.deleteAll();
+        contactRepository.deleteAll();
+        salesRepRepository.deleteAll();
 
     }
 
@@ -308,11 +309,84 @@ class OpportunityRepositoryTest {
         assertEquals(1150, maxProductQuantity.get().intValue());
     }
 
+    @Test
+    void findMedianQuantityStep1_test(){
+        var medianQuantity = opportunityRepository.findMedianQuantityStep1();
+        assertEquals(3, medianQuantity.length);
+    }
+
 
     @Test
     void findMinProductQuantity() {
         var minProductQuantity = opportunityRepository.findMinProductQuantity();
         assertEquals(1, minProductQuantity.get().intValue());
+    }
+
+    @Test
+    void findMeanOpportunitiesPerAccount() throws NameContainsNumbersException, EmptyStringException, InvalidCountryException, ExceedsMaxLength {
+        var testOpp1 = new Opportunity(Truck.FLATBED, 10, contacts.get(0), salesReps.get(0));
+        var testOpp2 = new Opportunity(Truck.BOX, 1150, contacts.get(1), salesReps.get(0));
+        var testOpp3 = new Opportunity(Truck.HYBRID, 1, contacts.get(2), salesReps.get(1));
+        var testAccount1 = new Account(Industry.PRODUCE, 50, "London", "UNITED KINGDOM",contacts.get(0), opportunities.get(0));
+        testAccount1.addOpportunity(testOpp1);
+        testAccount1.addOpportunity(testOpp2);
+        testAccount1.addOpportunity(testOpp3);
+        accountRepository.save(testAccount1);
+        testOpp1.setAccount(testAccount1);
+        testOpp2.setAccount(testAccount1);
+        testOpp3.setAccount(testAccount1);
+        opportunityRepository.save(testOpp1);
+        opportunityRepository.save(testOpp2);
+        opportunityRepository.save(testOpp3);
+        var meanOppsPerAccount = opportunityRepository.findMeanOpportunitiesPerAccount();
+        assertEquals(1.5, meanOppsPerAccount.get().doubleValue());
+    }
+
+    @Test
+    void findMedianOppsPerAccountStep1_Test(){
+        var medianAccountsFirstStep = opportunityRepository.findMedianOppsPerAccountStep1();
+        assertEquals(3, medianAccountsFirstStep.length);
+    }
+
+    @Test
+    void findMaxOpportunitiesPerAccount() throws NameContainsNumbersException, EmptyStringException, InvalidCountryException, ExceedsMaxLength {
+        var testOpp1 = new Opportunity(Truck.FLATBED, 10, contacts.get(0), salesReps.get(0));
+        var testOpp2 = new Opportunity(Truck.BOX, 1150, contacts.get(1), salesReps.get(0));
+        var testOpp3 = new Opportunity(Truck.HYBRID, 1, contacts.get(2), salesReps.get(1));
+        var testAccount1 = new Account(Industry.PRODUCE, 50, "London", "UNITED KINGDOM",contacts.get(0), opportunities.get(0));
+        testAccount1.addOpportunity(testOpp1);
+        testAccount1.addOpportunity(testOpp2);
+        testAccount1.addOpportunity(testOpp3);
+        accountRepository.save(testAccount1);
+        testOpp1.setAccount(testAccount1);
+        testOpp2.setAccount(testAccount1);
+        testOpp3.setAccount(testAccount1);
+        opportunityRepository.save(testOpp1);
+        opportunityRepository.save(testOpp2);
+        opportunityRepository.save(testOpp3);
+
+        var maxOppsPerAccount = opportunityRepository.findMaxOpportunitiesPerAccount();
+        assertEquals(3, maxOppsPerAccount.get().doubleValue());
+    }
+
+    @Test
+    void findMinOpportunitiesPerAccount() throws ExceedsMaxLength, NameContainsNumbersException, EmptyStringException, InvalidCountryException {
+        var testOpp1 = new Opportunity(Truck.FLATBED, 10, contacts.get(0), salesReps.get(0));
+        var testOpp2 = new Opportunity(Truck.BOX, 1150, contacts.get(1), salesReps.get(0));
+        var testOpp3 = new Opportunity(Truck.HYBRID, 1, contacts.get(2), salesReps.get(1));
+        var testAccount1 = new Account(Industry.PRODUCE, 50, "London", "UNITED KINGDOM",contacts.get(0), opportunities.get(0));
+        testAccount1.addOpportunity(testOpp1);
+        testAccount1.addOpportunity(testOpp2);
+        testAccount1.addOpportunity(testOpp3);
+        accountRepository.save(testAccount1);
+        testOpp1.setAccount(testAccount1);
+        testOpp2.setAccount(testAccount1);
+        testOpp3.setAccount(testAccount1);
+        opportunityRepository.save(testOpp1);
+        opportunityRepository.save(testOpp2);
+        opportunityRepository.save(testOpp3);
+        var minOppsPerAccount = opportunityRepository.findMinOpportunitiesPerAccount();
+        assertEquals(1, minOppsPerAccount.get().doubleValue());
     }
 
 

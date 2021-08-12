@@ -1,14 +1,27 @@
-package com.ironhack.stolen_name_trucking_company_homework_3.dao;
+/*package com.ironhack.stolen_name_trucking_company_homework_3.dao;
 
 import com.ironhack.stolen_name_trucking_company_homework_3.enums.Truck;
 import com.ironhack.stolen_name_trucking_company_homework_3.exceptions.*;
 
+
 public class Main {
 
-    public static MainMenu menu = new MainMenu();
+
+    public static MainMenu menu = new MainMenu(LeadRepository, accountRepository, contactRepository, opportunityRepository, salesRepRepository);
 
 
     public static void main(String[] args) throws NameContainsNumbersException, EmptyStringException, EmailNotValidException, PhoneNumberContainsLettersException, ExceedsMaxLength, NoSuchValueException {
+
+
+
+        SalesRep salesRep1 = new SalesRep("James");
+        SalesRep salesRep2 = new SalesRep("Sara");
+        SalesRep salesRep3 = new SalesRep("Michael");
+        SalesRep salesRep4 = new SalesRep("Julia");
+
+
+
+
 
 
         Lead lead1 = new Lead("Sebastian Marek Labedz", "123456789", "labedzsebastian@gmail.co", "Wings of Freedom");
@@ -27,6 +40,7 @@ public class Main {
         Account account1 = new Account(contact1, opportunity1);
         Account account2 = new Account(contact2, opportunity2);
         Account account3 = new Account(contact3, opportunity3);
+
 
 
         MainMenu.theLeads.put(lead1.getId(), lead1);
@@ -48,4 +62,6 @@ public class Main {
         Login.login2();
 
     }
+
 }
+*/

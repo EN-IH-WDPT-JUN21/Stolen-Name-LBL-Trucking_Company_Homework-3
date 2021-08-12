@@ -1,4 +1,4 @@
-package com.ironhack.stolen_name_trucking_company_homework_3.dao;
+/*package com.ironhack.stolen_name_trucking_company_homework_3.dao;
 
 import com.ironhack.stolen_name_trucking_company_homework_3.exceptions.NoSuchValueException;
 
@@ -24,7 +24,7 @@ public class Login implements ActionListener {
     private static String username;
 
 
-    public static MainMenu menu = new MainMenu();
+    //public static MainMenu menu = new MainMenu(leadRepository, accountRepository, contactRepository, opportunityRepository, salesRepRepository);
 
     public static void login2() {
 
@@ -124,3 +124,4 @@ public class Login implements ActionListener {
 
     }
 }
+*/

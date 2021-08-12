@@ -1,5 +1,8 @@
 package com.ironhack.stolen_name_trucking_company_homework_3.dao;
 
+import com.ironhack.stolen_name_trucking_company_homework_3.exceptions.EmptyStringException;
+import com.ironhack.stolen_name_trucking_company_homework_3.exceptions.ExceedsMaxLength;
+import com.ironhack.stolen_name_trucking_company_homework_3.exceptions.NameContainsNumbersException;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -19,7 +22,6 @@ public class SalesRep {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    //@Column(name="sales_rep_id")
     private Long id;
 
     @Column(name="sales_rep_name")
@@ -33,6 +35,19 @@ public class SalesRep {
 
     public SalesRep(String name){
         setRepName(name);
+    }
+
+    public void setName(String repName) throws NameContainsNumbersException, EmptyStringException, ExceedsMaxLength {
+        if (repName.isEmpty()) {
+            throw new EmptyStringException("No name input. Please try again.");
+        }
+        else if(!repName.matches("[a-zA-Z\\u00C0-\\u00FF\\s]+")){
+            throw new NameContainsNumbersException( "Name can not contain numbers. Please try again.");
+        } else if(repName.length()>43){
+            throw new ExceedsMaxLength("Exceeds maximum value of 43 characters. Please try again.");
+        }
+
+        this.repName = repName;
     }
 
 }
