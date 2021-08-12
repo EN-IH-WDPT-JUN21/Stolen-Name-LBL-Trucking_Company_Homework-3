@@ -82,6 +82,11 @@ public class StolenNameTruckingCompanyHomework3Application implements CommandLin
 			MainMenu.theAccounts.put(account2.getId(), account2);
 			MainMenu.theAccounts.put(account3.getId(), account3);
 
+			MainMenu.theSalesReps.put(salesRep1.getId().toString(),salesRep1);
+			MainMenu.theSalesReps.put(salesRep2.getId().toString(),salesRep2);
+			MainMenu.theSalesReps.put(salesRep3.getId().toString(),salesRep3);
+			MainMenu.theSalesReps.put(salesRep4.getId().toString(),salesRep4);
+
 			menu.OS();
 
 		};

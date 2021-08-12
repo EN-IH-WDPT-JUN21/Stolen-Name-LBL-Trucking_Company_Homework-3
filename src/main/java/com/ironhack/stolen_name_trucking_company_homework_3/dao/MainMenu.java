@@ -31,6 +31,7 @@ public class MainMenu {
     public static Map<String, Account> theAccounts = new HashMap<>();
     public static Map<String, Contact> theContacts = new HashMap<>();
     public static Map<String, Opportunity> theOpportunities = new HashMap<>();
+    public static Map<String, SalesRep> theSalesReps = new HashMap<>();
 
     Scanner scanner = new Scanner(System.in);
     Scanner scanner2 = new Scanner(System.in);
@@ -88,32 +89,35 @@ public class MainMenu {
         Scanner scanner2 = new Scanner(System.in);
 
         System.out.println("\n" + colorHeadline + colorLogo
-                                   + "                                                                                                \n" +
-                                   "                                         *#### #####        ###################*   *####*         \n" +
-                                   "                         #################### #####        ######################  #####          \n" +
-                                   "                    ,######              ### #####        #####            ###### #####           \n" +
-                                   "                  ####                  ### #####        #####    ############## #####            \n" +
-                                   "                ####                   ### #####        #####      ###########  #####             \n" +
-                                   "              ########################### #####        #####            ###### #####              \n" +
-                                   "             ####################.###### ############ ###################### ############         \n" +
-                                   "             ################ ####### # ############ #####################  ############          \n" + reset +
-         colorHeadline + colorMain + "╔═══════════════════════════════════════════════════════════════════════════════════════════════════╗\n"
-                                   + "║                                " + colorTable + "WELCOME TO LBL CRM SYSTEM" + colorMain + "                                          ║\n"
-                                   + "╠═══════════════════════════════════════════════════════════════════════════════════════════════════╣\n"
-                                   + "║     " + colorTable + "WHAT WOULD YOU LIKE TO DO " /*+ Login.getUsername().toUpperCase() +*/ + "?" + colorMain /*+ insertLine()*/ + "║\n"
-                                   + "╠═══════════════════════════════════════════════════════════════════════════════════════════════════╣\n"
-                                   + "║ 1.  To create new Lead " + colorHeadline + "- type: 'new lead'" + colorMain + "                                                         ║\n"
-                                   + "║ 2.  To check Leads list " + colorHeadline + "- type: 'show leads'" + colorMain + "                                                      ║\n"
-                                   + "║ 3.  To check individual Lead's details " + colorHeadline + "- type: 'lookup lead ' + Lead Id" + colorMain + "                           ║\n"
-                                   + "║ 4.  To convert Lead into Opportunity " + colorHeadline + "- type: - 'convert ' + Lead Id" + colorMain + "                               ║\n"
-                                   + "║ 5.  To check Opportunity list " + colorHeadline + "- type: 'show opportunities'" + colorMain + "                                        ║\n"
-                                   + "║ 6.  To check individual Opportunity's details " + colorHeadline + "- type: 'lookup opportunity ' + Opportunity Id" + colorMain + "      ║\n"
-                                   + "║ 7.  To change Opportunity status to WON" + colorHeadline + "- type: 'close-won' + Opportunity Id" + colorMain + "                       ║\n"
-                                   + "║ 8.  To change Opportunity status to LOST" + colorHeadline + "- type: 'close-lost' + Opportunity Id" + colorMain + "                     ║\n"
-                                   + "║ 9.  To check Contact list " + colorHeadline + "- type: 'show contacts'" + colorMain + "                                                 ║\n"
-                                   + "║ 10. To check Account list " + colorHeadline + "- type: 'show accounts'" + colorMain + "                                                 ║\n"
-                                   + "║ 11. To quit " + colorHeadline + "- type: 'quit'" + colorMain + "                                                                        ║\n"
-                                   + "╚═══════════════════════════════════════════════════════════════════════════════════════════════════╝\n" + reset);
+                + "                                                                                                \n" +
+                "                                         *#### #####        ###################*   *####*         \n" +
+                "                         #################### #####        ######################  #####          \n" +
+                "                    ,######              ### #####        #####            ###### #####           \n" +
+                "                  ####                  ### #####        #####    ############## #####            \n" +
+                "                ####                   ### #####        #####      ###########  #####             \n" +
+                "              ########################### #####        #####            ###### #####              \n" +
+                "             ####################.###### ############ ###################### ############         \n" +
+                "             ################ ####### # ############ #####################  ############          \n" + reset +
+                colorHeadline + colorMain + "╔═══════════════════════════════════════════════════════════════════════════════════════════════════╗\n"
+                + "║                                " + colorTable + "WELCOME TO LBL CRM SYSTEM" + colorMain + "                                          ║\n"
+                + "╠═══════════════════════════════════════════════════════════════════════════════════════════════════╣\n"
+                + "║     " + colorTable + "WHAT WOULD YOU LIKE TO DO " /*+ Login.getUsername().toUpperCase()*/ +  "?" + colorMain /*+ insertLine()*/ + "║\n"
+                + "╠═══════════════════════════════════════════════════════════════════════════════════════════════════╣\n"
+                + "║ 1.  To create new Lead " + colorHeadline + "- type: 'new lead'" + colorMain + "                                                         ║\n"
+                + "║ 2.  To create new Sales Representative " + colorHeadline + "- type: 'new salesrep'" + colorMain + "                                     ║\n"
+                + "║ 3.  To check Leads list " + colorHeadline + "- type: 'show leads'" + colorMain + "                                                      ║\n"
+                + "║ 4.  To check individual Lead's details " + colorHeadline + "- type: 'lookup lead ' + Lead Id" + colorMain + "                           ║\n"
+                + "║ 5.  To convert Lead into Opportunity " + colorHeadline + "- type: - 'convert ' + Lead Id" + colorMain + "                               ║\n"
+                + "║ 6.  To check Opportunity list " + colorHeadline + "- type: 'show opportunities'" + colorMain + "                                        ║\n"
+                + "║ 7.  To check individual Opportunity's details " + colorHeadline + "- type: 'lookup opportunity ' + Opportunity Id" + colorMain + "      ║\n"
+                + "║ 8.  To change Opportunity status to WON" + colorHeadline + "- type: 'close-won' + Opportunity Id" + colorMain + "                       ║\n"
+                + "║ 9.  To change Opportunity status to LOST" + colorHeadline + "- type: 'close-lost' + Opportunity Id" + colorMain + "                     ║\n"
+                + "║ 10. To check Contact list " + colorHeadline + "- type: 'show contacts'" + colorMain + "                                                 ║\n"
+                + "║ 11. To check Account list " + colorHeadline + "- type: 'show accounts'" + colorMain + "                                                 ║\n"
+                + "║ 12. To check Sales Representatives list " + colorHeadline + "- type: 'show salesreps'" + colorMain + "                                  ║\n"
+                + "║ 13. To check available Reports " + colorHeadline + "- type: 'view reports'" + colorMain + "                                             ║\n" //shall we create another 'menu' explaining reporting options?
+                + "║ 14. To quit " + colorHeadline + "- type: 'quit'" + colorMain + "                                                                        ║\n"
+                + "╚═══════════════════════════════════════════════════════════════════════════════════════════════════╝\n" + reset);
 
         //consoleFocusRunOnce();
 
@@ -160,10 +164,12 @@ public class MainMenu {
                 switch (input[0] + input[1]) {
                     //String x = input.substring(input.indexOf("Lead") + 3, input.length());
                     case "new" + "lead" -> newLead();
+                    case "new" + "salesrep" -> newSalesRep();
                     case "show" + "leads" -> showLeads();
                     case "show" + "opportunities" -> showOpportunities();
                     case "show" + "contacts" -> showContacts();
                     case "show" + "accounts" -> showAccounts();
+                    case "show" + "salesreps" -> showSalesReps();
                     default -> throw new IllegalArgumentException();
                 }
             }
@@ -731,6 +737,82 @@ public class MainMenu {
             consoleFocus();
         }
     }
+
+    public SalesRep newSalesRep() {
+
+        valid = false;
+
+        System.out.println(colorInput + "\nWould you like to create a new sales representative?" + colorTable +"   y / n " + reset);
+        try {
+            switch (scanner.nextLine().trim().toLowerCase(Locale.ROOT)) {
+                case "y" -> {
+                    SalesRep newSalesRep = new SalesRep();
+
+                    //asks and validates customer's name
+                    while (!valid) {
+                        System.out.println(colorInput + "\nPlease input the sales representative's name: " + reset);
+                        try {
+                            newSalesRep.setName(scanner.nextLine().trim().toUpperCase());
+                            valid = true;
+                        } catch (EmptyStringException e) {
+                            System.out.println(colorError + e.getMessage());
+                        } catch (NameContainsNumbersException e) {
+                            System.out.println(colorError + e.getMessage());
+                        } catch (ExceedsMaxLength e) {
+                            System.out.println(colorError + e.getMessage());
+                        }
+                    }
+
+                    valid = false;
+                    salesRepRepository.save(newSalesRep);
+                    theSalesReps.put(newSalesRep.getId().toString(), newSalesRep);
+                    System.out.println(colorMain + "\n╔════════════╦═══ " + colorMainBold + "New Sales Representative created" + colorMain + " ════════╗" + reset);
+                    System.out.printf("%-1s %-17s %-1s %-50s %-1s\n",
+                            colorMain + "║",
+                            colorTable + newSalesRep.getId(),
+                            colorMain + "║",
+                            colorTable + newSalesRep.getRepName().toUpperCase(),
+                            colorMain + "║" + reset);
+                    return newSalesRep;
+                }
+                case "n" -> // Would normally go back in the menu at this point
+                        OS();
+
+                default -> throw new IllegalArgumentException();
+            }
+        } catch (IllegalArgumentException | AWTException | NoSuchValueException e) {
+
+            System.out.println(colorError + "\nInvalid input - please start again\n" + reset);
+            newSalesRep();
+        }
+        return null;
+    }
+
+    public static void showSalesReps() {
+        System.out.println(colorMain + "\n╔════════════╦═══ " + colorMainBold + "Total Number Of Sales Representatives: " + theSalesReps.size() + colorMain + " ╗" + reset);
+        System.out.printf("%-1s %-17s %-1s %-50s %-1s\n",
+                colorMain + "║",
+                colorHeadlineBold + "ID",
+                colorMain + "║",
+                colorHeadlineBold + "Name",
+                colorMain + "║");
+        System.out.printf("%-1s%-12s%-1s%-45s%-1s\n",
+                colorMain + "╠",
+                "════════════",
+                "╬",
+                "═════════════════════════════════════════════",
+                "╣" + reset);
+        for (String key : theSalesReps.keySet()) {
+            System.out.printf("%-1s %-17s %-1s %-50s %-1s\n",
+                    colorMain + "║",
+                    colorTable + key,
+                    colorMain + "║",
+                    colorTable + theSalesReps.get(key).getRepName().toUpperCase(),
+                    colorMain + "║" + reset);
+        }
+    }
+
+
 
     /*//Email format validation
     public static boolean isValidEmail(String email){
