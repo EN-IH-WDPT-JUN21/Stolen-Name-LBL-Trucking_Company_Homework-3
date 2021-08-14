@@ -13,7 +13,7 @@ public interface LeadRepository extends JpaRepository<Lead, String> {
 
     //Report Lead by SalesRep
     @Query("SELECT r.repName, COUNT(l) FROM Lead l JOIN l.salesRep r GROUP BY r.repName ORDER BY r.repName")
-    List<Object[]> findCountSalesRepIdGroup();
+    List<Object[]> findCountLeadByRepName();
 
 
 

@@ -62,7 +62,7 @@ class LeadRepositoryTest {
 
     @Test
     void getCountOfLeadsGroupBySalesRep_Test() {
-        var leadByRep = leadRepository.findCountSalesRepIdGroup();
+        var leadByRep = leadRepository.findCountLeadByRepName();
 
         assertEquals("David Lynch", leadByRep.get(0)[0]);
         assertEquals("Martha Stewart", leadByRep.get(1)[0]);

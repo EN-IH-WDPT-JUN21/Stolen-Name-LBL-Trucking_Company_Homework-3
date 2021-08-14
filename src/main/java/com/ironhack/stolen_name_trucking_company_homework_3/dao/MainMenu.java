@@ -1,31 +1,36 @@
 package com.ironhack.stolen_name_trucking_company_homework_3.dao;
 
 import com.ironhack.stolen_name_trucking_company_homework_3.enums.Industry;
+import com.ironhack.stolen_name_trucking_company_homework_3.enums.ReportCommands;
 import com.ironhack.stolen_name_trucking_company_homework_3.enums.Status;
 import com.ironhack.stolen_name_trucking_company_homework_3.enums.Truck;
 import com.ironhack.stolen_name_trucking_company_homework_3.exceptions.*;
 import com.ironhack.stolen_name_trucking_company_homework_3.repository.*;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Component;
 
 
 import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Scanner;
+
+import static com.ironhack.stolen_name_trucking_company_homework_3.enums.ReportCommands.*;
 
 
 @Component
 public class MainMenu {
 
 
-    final LeadRepository leadRepository;
-    final AccountRepository accountRepository;
-    final ContactRepository contactRepository;
-    final OpportunityRepository opportunityRepository;
-    final SalesRepRepository salesRepRepository;
+    LeadRepository leadRepository;
+    AccountRepository accountRepository;
+    ContactRepository contactRepository;
+    OpportunityRepository opportunityRepository;
+    SalesRepRepository salesRepRepository;
 
     public static Map<String, Lead> theLeads = new HashMap<>();
     public static Map<String, Account> theAccounts = new HashMap<>();
@@ -35,6 +40,10 @@ public class MainMenu {
 
     Scanner scanner = new Scanner(System.in);
     Scanner scanner2 = new Scanner(System.in);
+
+    public MainMenu() {
+
+    }
 
     enum consoleTextColor {
         ANSI_BLACK("\033[0;30m"),
@@ -477,13 +486,13 @@ public class MainMenu {
         } catch (Exception e) {
 
             System.out.println(colorError + "\nInvalid input - please start again\n" + reset);
-            createAccount(opportunity); // Catches errors and returns to start of method - Is there a better way??
+            //createAccount(opportunity); // Catches errors and returns to start of method - Is there a better way??
         }
         return null;
     }
 
     public void showLeads() {
-        System.out.println(colorMain + "\n╔════════════╦═══ " + colorMainBold + "TOTAL NUMBER OF LEADS: " + theLeads.size() + colorMain + " ════════════════╗" + reset);
+        System.out.println(colorMain + "\n╔════════════╦═══ " + colorMainBold + "Total Number Of Leads: " + theLeads.size() + colorMain + " ════════════════╗" + reset);
         System.out.printf("%-1s %-17s %-1s %-50s %-1s\n",
                           colorMain + "║",
                           colorHeadlineBold + "ID",
@@ -664,7 +673,7 @@ public class MainMenu {
             switch (scanner.nextLine().trim().toLowerCase(Locale.ROOT)) {
                 case "y": {
                     opp.setStatus(Status.CLOSED_LOST);
-                    opportunityRepository.save(opp);
+                    //opportunityRepository.save(opp); //we don't need to save again, we need to update instead?
                     System.out.println(colorMain + "\n═════════════ " + colorMainBold + "Status Changed!" + colorMain + " ═════════════" + reset);
                 }
                 break;
@@ -705,7 +714,7 @@ public class MainMenu {
             switch (scanner.nextLine().trim().toLowerCase(Locale.ROOT)) {
                 case "y": {
                     opp.setStatus(Status.CLOSED_WON);
-                    opportunityRepository.save(opp);
+                    //opportunityRepository.save(opp); //we don't need to save again, we need to update instead?
                     System.out.println(colorMain + "\n═════════════ " + colorMainBold + "Status Changed!" + colorMain + " ═════════════" + reset);
                 }
                 break;
@@ -815,7 +824,7 @@ public class MainMenu {
     }
 
 
-    public static void reportMenu(){
+    public void reportMenu() throws NoSuchValueException, AWTException {
 
         System.out.println("\n" + colorHeadline + colorLogo
                 + "                                                                                                \n" +
@@ -827,48 +836,114 @@ public class MainMenu {
                 "              ########################### #####        #####            ###### #####              \n" +
                 "             ####################.###### ############ ###################### ############         \n" +
                 "             ################ ####### # ############ #####################  ############          \n" + reset +
-                colorHeadline + colorMain + "╔═══════════════════════════════════════════════════════════════════════════════════════════════════╗\n"
-                + "║                                " + colorTable + "WELCOME TO LBL CRM SYSTEM" + colorMain + "                                          ║\n"
-                + "╠═══════════════════════════════════════════════════════════════════════════════════════════════════╣\n"
-                + "║     " + colorTable + "REPORTING MENU " /*+ Login.getUsername().toUpperCase()*/  + colorMain /*+ insertLine()*/ + "║\n"
-                + "╠═══════════════════════════════════════════════════════════════════════════════════════════════════╣\n"
-                + "║ 1.  Display count of Leads by Sales Representative " + colorHeadline + "- type: 'report lead by salesrep'" + colorMain + "                                                         ║\n"
-                + "║ 2.  Display count of all Opportunities by Sales Representative " + colorHeadline + "- type: 'report opportunity by salesrep'" + colorMain + "                                     ║\n"
-                + "║ 3.  Display count of CLOSED-WON Opportunities by Sales Representative " + colorHeadline + "- type: 'report closed-won by salesrep'" + colorMain + "                                                      ║\n"
-                + "║ 4.  Display count of CLOSED-LOST Opportunities by Sales Representative " + colorHeadline + "- type: 'report closed-lost by salesrep'" + colorMain + "                           ║\n"
-                + "║ 5.  Display count of OPEN Opportunities by Sales Representative " + colorHeadline + "- type: - 'report open by salesrep'" + colorMain + "                               ║\n"
-                + "║ 6.  Display count of all Opportunities by the Product " + colorHeadline + "- type: 'report opportunity by the product'" + colorMain + "                                        ║\n"
-                + "║ 7.  Display count of CLOSED-WON Opportunities by the Product " + colorHeadline + "- type: 'report closed-won by the product'" + colorMain + "      ║\n"
-                + "║ 8.  Display count of CLOSED-LOST Opportunities by the Product" + colorHeadline + "- type: 'report closed-lost by the product'" + colorMain + "                       ║\n"
-                + "║ 9.  Display count of OPEN Opportunities by the Product" + colorHeadline + "- type: 'report open by the product'" + colorMain + "                     ║\n"
-                + "║ 10. Display count of all Opportunities by Country " + colorHeadline + "- type: - 'report opportunity by country'" + colorMain + "                                                 ║\n"
-                + "║ 11. Display count of CLOSED-WON Opportunities by Country " + colorHeadline + "- type: 'report closed-won by country'" + colorMain + "                                                 ║\n"
-                + "║ 12. Display count of CLOSED-LOST Opportunities by Country" + colorHeadline + "- type: 'report closed-lost by country'" + colorMain + "                                  ║\n"
-                + "║ 13. Display count of OPEN Opportunities by Country" + colorHeadline + "- type: 'report open by country'" + colorMain + "                     ║\n"
-                + "║ 14. Display count of all Opportunities by City " + colorHeadline + "- type: - 'report opportunity by city'" + colorMain + "                                                 ║\n"
-                + "║ 15. Display count of CLOSED-WON Opportunities by City " + colorHeadline + "- type: 'report closed-won by city'" + colorMain + "                                                 ║\n"
-                + "║ 16. Display count of CLOSED-LOST Opportunities by City" + colorHeadline + "- type: 'report closed-lost by city'" + colorMain + "                                  ║\n"
-                + "║ 17. Display count of OPEN Opportunities by City" + colorHeadline + "- type: 'report open by city'" + colorMain + "                     ║\n"
-                + "║ 18. Display count of all Opportunities by Industry " + colorHeadline + "- type: - 'report opportunity by industry'" + colorMain + "                                                 ║\n"
-                + "║ 19. Display count of CLOSED-WON Opportunities by Industry " + colorHeadline + "- type: 'report closed-won by industry'" + colorMain + "                                                 ║\n"
-                + "║ 20. Display count of CLOSED-LOST Opportunities by Industry" + colorHeadline + "- type: 'report closed-lost by industry'" + colorMain + "                                  ║\n"
-                + "║ 21. Display count of OPEN Opportunities by Industry" + colorHeadline + "- type: 'report open by industry'" + colorMain + "                     ║\n"
-                + "║ 22. Display MEAN EmployeeCount for Accounts" + colorHeadline + "- type: 'mean employeecount'" + colorMain + "                     ║\n"
-                + "║ 23. Display MEDIAN EmployeeCount for Accounts" + colorHeadline + "- type: 'median employeecount'" + colorMain + "                     ║\n"
-                + "║ 24. Display MAXIMUM EmployeeCount for Accounts" + colorHeadline + "- type: 'max employeecount'" + colorMain + "                     ║\n"
-                + "║ 25. Display MINIMUM EmployeeCount for Accounts" + colorHeadline + "- type: 'min employeecount'" + colorMain + "                     ║\n"
-                + "║ 26. Display MEAN quantity of products for Opportunities" + colorHeadline + "- type: 'mean quantity'" + colorMain + "                     ║\n"
-                + "║ 27. Display MEDIAN quantity of products for Opportunities" + colorHeadline + "- type: 'median quantity'" + colorMain + "                     ║\n"
-                + "║ 28. Display MAXIMUM quantity of products for Opportunities" + colorHeadline + "- type: 'max quantity'" + colorMain + "                     ║\n"
-                + "║ 29. Display MINIMUM quantity of products for Opportunities" + colorHeadline + "- type: 'min quantity'" + colorMain + "                     ║\n"
-                + "║ 30. Display MEAN number of Opportunities per Account" + colorHeadline + "- type: 'mean opps per account'" + colorMain + "                     ║\n"
-                + "║ 31. Display MEDIAN number of Opportunities per Account" + colorHeadline + "- type: 'median opps per account'" + colorMain + "                     ║\n"
-                + "║ 32. Display MAXIMUM number of Opportunities per Account" + colorHeadline + "- type: 'max opps per account'" + colorMain + "                     ║\n"
-                + "║ 33. Display MINIMUM number of Opportunities per Account" + colorHeadline + "- type: 'min opps per account'" + colorMain + "                     ║\n"
-                + "║ 34. To return to the main menu " + colorHeadline + "- type: 'main menu'" + colorMain + "                                             ║\n" //shall we create another 'menu' explaining reporting options?
-                + "║ 35. To quit " + colorHeadline + "- type: 'quit'" + colorMain + "                                                                        ║\n"
-                + "╚═══════════════════════════════════════════════════════════════════════════════════════════════════╝\n" + reset);
+                colorHeadline + colorMain + "╔══════════════════════════════════════════════════════════════════════════════════════════════════════════════════╗\n"
+                + "║                                " + colorTable + "WELCOME TO LBL CRM SYSTEM REPORTING MENU" + colorMain + "                                          ║\n"
+                + "╠══════════════════════════════════════════════════════════════════════════════════════════════════════════════════╣\n"
+                + "║ 1.  Display count of Leads by Sales Representative " + colorHeadline + "- type: 'report lead by salesrep'" + colorMain + "                             ║\n"
+                + "║ 2.  Display count of all Opportunities by Sales Representative " + colorHeadline + "- type: 'report opportunity by salesrep'" + colorMain + "          ║\n"
+                + "║ 3.  Display count of CLOSED-WON Opportunities by Sales Representative " + colorHeadline + "- type: 'report closed-won by salesrep'" + colorMain + "    ║\n"
+                + "║ 4.  Display count of CLOSED-LOST Opportunities by Sales Representative " + colorHeadline + "- type: 'report closed-lost by salesrep'" + colorMain + "  ║\n"
+                + "║ 5.  Display count of OPEN Opportunities by Sales Representative " + colorHeadline + "- type: - 'report open by salesrep'" + colorMain + "              ║\n"
+                + "║ 6.  Display count of all Opportunities by the Product " + colorHeadline + "- type: 'report opportunity by the product'" + colorMain + "                ║\n"
+                + "║ 7.  Display count of CLOSED-WON Opportunities by the Product " + colorHeadline + "- type: 'report closed-won by product'" + colorMain + "              ║\n"
+                + "║ 8.  Display count of CLOSED-LOST Opportunities by the Product" + colorHeadline + "- type: 'report closed-lost by product'" + colorMain + "             ║\n"
+                + "║ 9.  Display count of OPEN Opportunities by the Product" + colorHeadline + "- type: 'report open by product'" + colorMain + "                           ║\n"
+                + "║ 10. Display count of all Opportunities by Country " + colorHeadline + "- type: - 'report opportunity by country'" + colorMain + "                      ║\n"
+                + "║ 11. Display count of CLOSED-WON Opportunities by Country " + colorHeadline + "- type: 'report closed-won by country'" + colorMain + "                  ║\n"
+                + "║ 12. Display count of CLOSED-LOST Opportunities by Country" + colorHeadline + "- type: 'report closed-lost by country'" + colorMain + "                 ║\n"
+                + "║ 13. Display count of OPEN Opportunities by Country" + colorHeadline + "- type: 'report open by country'" + colorMain + "                               ║\n"
+                + "║ 14. Display count of all Opportunities by City " + colorHeadline + "- type: - 'report opportunity by city'" + colorMain + "                            ║\n"
+                + "║ 15. Display count of CLOSED-WON Opportunities by City " + colorHeadline + "- type: 'report closed-won by city'" + colorMain + "                        ║\n"
+                + "║ 16. Display count of CLOSED-LOST Opportunities by City" + colorHeadline + "- type: 'report closed-lost by city'" + colorMain + "                       ║\n"
+                + "║ 17. Display count of OPEN Opportunities by City" + colorHeadline + "- type: 'report open by city'" + colorMain + "                                     ║\n"
+                + "║ 18. Display count of all Opportunities by Industry " + colorHeadline + "- type: - 'report opportunity by industry'" + colorMain + "                    ║\n"
+                + "║ 19. Display count of CLOSED-WON Opportunities by Industry " + colorHeadline + "- type: 'report closed-won by industry'" + colorMain + "                ║\n"
+                + "║ 20. Display count of CLOSED-LOST Opportunities by Industry" + colorHeadline + "- type: 'report closed-lost by industry'" + colorMain + "               ║\n"
+                + "║ 21. Display count of OPEN Opportunities by Industry" + colorHeadline + "- type: 'report open by industry'" + colorMain + "                             ║\n"
+                + "║ 22. Display MEAN EmployeeCount for Accounts" + colorHeadline + "- type: 'mean employeecount'" + colorMain + "                                          ║\n"
+                + "║ 23. Display MEDIAN EmployeeCount for Accounts" + colorHeadline + "- type: 'median employeecount'" + colorMain + "                                      ║\n"
+                + "║ 24. Display MAXIMUM EmployeeCount for Accounts" + colorHeadline + "- type: 'max employeecount'" + colorMain + "                                        ║\n"
+                + "║ 25. Display MINIMUM EmployeeCount for Accounts" + colorHeadline + "- type: 'min employeecount'" + colorMain + "                                        ║\n"
+                + "║ 26. Display MEAN quantity of products for Opportunities" + colorHeadline + "- type: 'mean quantity'" + colorMain + "                                   ║\n"
+                + "║ 27. Display MEDIAN quantity of products for Opportunities" + colorHeadline + "- type: 'median quantity'" + colorMain + "                               ║\n"
+                + "║ 28. Display MAXIMUM quantity of products for Opportunities" + colorHeadline + "- type: 'max quantity'" + colorMain + "                                 ║\n"
+                + "║ 29. Display MINIMUM quantity of products for Opportunities" + colorHeadline + "- type: 'min quantity'" + colorMain + "                                 ║\n"
+                + "║ 30. Display MEAN number of Opportunities per Account" + colorHeadline + "- type: 'mean opps per account'" + colorMain + "                              ║\n"
+                + "║ 31. Display MEDIAN number of Opportunities per Account" + colorHeadline + "- type: 'median opps per account'" + colorMain + "                          ║\n"
+                + "║ 32. Display MAXIMUM number of Opportunities per Account" + colorHeadline + "- type: 'max opps per account'" + colorMain + "                            ║\n"
+                + "║ 33. Display MINIMUM number of Opportunities per Account" + colorHeadline + "- type: 'min opps per account'" + colorMain + "                            ║\n"
+                + "║ 34. To return to the main menu " + colorHeadline + "- type: 'main menu'" + colorMain + "                                                               ║\n"
+                + "║ 35. To quit " + colorHeadline + "- type: 'quit'" + colorMain + "                                                                                       ║\n"
+                + "╚══════════════════════════════════════════════════════════════════════════════════════════════════════════════════╝\n" + reset);
 
+        try {
+
+            // Creates String from scanner input
+            String input = scanner.nextLine().trim().toUpperCase();
+
+            if (input.length() < 1) {
+                throw new IllegalArgumentException();
+            } else {
+                switch (ReportCommands.getCommandType(input)){
+                    case REPORT_LEAD_BY_SALESREP:
+                        var leadByRep = leadRepository.findCountLeadByRepName();
+                        for(int i = 0; i <leadByRep.size(); i++) {
+                            System.out.println(leadByRep.get(i)[0] + ":" + leadByRep.get(i)[1]);
+                        }
+                        break;
+                    case REPORT_OPP_BY_SALESREP:
+                        var oppByRep = opportunityRepository.findCountOpportunityByRepName();
+                        for(int i = 0; i <oppByRep.size(); i++) {
+                            System.out.println(oppByRep.get(i)[0] + ":" + oppByRep.get(i)[1]);
+                        }
+                        break;
+                    /*case REPORT_CLOSE_W_BY_SALESREP -> opportunityRepository.findCountOpportunityByRepNameForStatus(Status.CLOSED_WON);
+                    case REPORT_CLOSE_L_BY_SALESREP -> opportunityRepository.findCountOpportunityByRepNameForStatus(Status.CLOSED_LOST);
+                    case REPORT_OPEN_BY_SALESREP -> opportunityRepository.findCountOpportunityByRepNameForStatus(Status.OPEN);
+                    case REPORT_OPP_BY_PRODUCT -> opportunityRepository.findCountOppForProduct();
+                    case REPORT_CLOSE_W_BY_PRODUCT -> opportunityRepository.findCountOpportunityByProductForStatus(Status.CLOSED_WON);
+                    case REPORT_CLOSE_L_BY_PRODUCT -> opportunityRepository.findCountOpportunityByProductForStatus(Status.CLOSED_LOST);
+                    case REPORT_OPEN_BY_PRODUCT -> opportunityRepository.findCountOpportunityByProductForStatus(Status.OPEN);
+                    case REPORT_OPP_BY_COUNTRY -> opportunityRepository.findCountOppForCountry();
+                    case REPORT_CLOSE_W_BY_COUNTRY -> opportunityRepository.findCountOpportunityByCountryForStatus(Status.CLOSED_WON);
+                    case REPORT_CLOSE_L_BY_COUNTRY -> opportunityRepository.findCountOpportunityByCountryForStatus(Status.CLOSED_LOST);
+                    case REPORT_OPEN_BY_COUNTRY -> opportunityRepository.findCountOpportunityByCountryForStatus(Status.OPEN);
+                    case REPORT_OPP_BY_CITY -> opportunityRepository.findCountOppForCity();
+                    case REPORT_CLOSE_W_BY_CITY -> opportunityRepository.findCountOpportunityByCityForStatus(Status.CLOSED_WON);
+                    case REPORT_CLOSE_L_BY_CITY -> opportunityRepository.findCountOpportunityByCityForStatus(Status.CLOSED_LOST);
+                    case REPORT_OPEN_BY_CITY -> opportunityRepository.findCountOpportunityByCityForStatus(Status.OPEN);
+                    case REPORT_OPP_BY_INDUSTRY -> opportunityRepository.findCountOppForIndustry();
+                    case REPORT_CLOSE_W_BY_INDUSTRY -> opportunityRepository.findCountOpportunityByIndustryForStatus(Status.CLOSED_WON);
+                    case REPORT_CLOSE_L_BY_INDUSTRY -> opportunityRepository.findCountOpportunityByIndustryForStatus(Status.CLOSED_LOST);
+                    case REPORT_OPEN_BY_INDUSTRY -> opportunityRepository.findCountOpportunityByIndustryForStatus(Status.OPEN);
+                    case MEAN_EMPCOUNT -> accountRepository.findMeanEmployeeCount();
+                    case MEDIAN_EMPCOUNT -> accountRepository.findMedianEmployeeCountStep1();
+                    case MAX_EMPCOUNT -> accountRepository.findMaxEmployeeCount();
+                    case MIN_EMPCOUNT -> accountRepository.findMaxEmployeeCount();
+                    case MEAN_QUANT -> opportunityRepository.findMeanProductQuantity();
+                    case MED_QUANT -> opportunityRepository.findMedianQuantityStep1();
+                    case MAX_QUANT -> opportunityRepository.findMaxProductQuantity();
+                    case MIN_QUANT -> opportunityRepository.findMinProductQuantity();
+                    case MEAN_OPPS_PERR_ACC -> opportunityRepository.findMeanOpportunitiesPerAccount();
+                    case MED_OPPS_PERR_ACC -> opportunityRepository.findMedianOppsPerAccountStep1();
+                    case MAX_OPPS_PERR_ACC -> opportunityRepository.findMaxOpportunitiesPerAccount();
+                    case MIN_OPPS_PERR_ACC -> opportunityRepository.findMinOpportunitiesPerAccount();
+                    case MAIN_MENU -> OS();
+                    case QUIT -> {
+                        System.out.println(colorMainBold + "\nThank you for using our LBL CRM SYSTEM!" + reset);
+                    System.out.println(colorError + "Exiting the program" + reset);
+                    System.exit(0);
+                    }*/
+                    default: throw new IllegalArgumentException();
+                }
+            }
+        } catch (IllegalArgumentException | NullPointerException  e) {
+            System.out.println(colorError + "\nInvalid input" + reset);
+        }
+
+        System.out.println(colorInput + "\nPress Enter to continue..." + reset);
+        scanner.nextLine();
+        OS();
     }
 
 
