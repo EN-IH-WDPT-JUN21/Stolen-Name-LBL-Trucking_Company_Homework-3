@@ -16,8 +16,8 @@ import java.util.List;
 
 @Getter
 @Setter
-@Entity
 @AllArgsConstructor
+@Entity
 @Table(name = "account")
 @Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
 public class Account extends ClientInformation{
@@ -33,7 +33,7 @@ public class Account extends ClientInformation{
     @OneToMany(mappedBy = "account")
     private List<Contact> contactList = new ArrayList<>();
 
-    @OneToMany(mappedBy = "account", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "account")
     private List<Opportunity> opportunityList = new ArrayList<>();
 
     private static final String colorMain = "\u001B[33m";

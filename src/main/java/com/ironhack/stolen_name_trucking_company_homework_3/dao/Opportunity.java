@@ -9,10 +9,10 @@ import lombok.Setter;
 
 import javax.persistence.*;
 
-@Entity
 @Setter
 @Getter
 @AllArgsConstructor
+@Entity
 @Table(name = "opportunity")
 @Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
 public class Opportunity extends ClientInformation {
@@ -62,7 +62,6 @@ public class Opportunity extends ClientInformation {
         setDecisionMaker(decisionMaker);
         setSalesRep(salesRep);
     }
-
 
     public String getId() {
         return id;
