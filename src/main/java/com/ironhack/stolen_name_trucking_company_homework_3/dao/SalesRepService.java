@@ -13,11 +13,11 @@ public class SalesRepService {
     @Autowired
     LeadRepository leadRepository;
 
-    public void addLeadToDb(Lead lead){
-        leadRepository.save(lead);
-    }
+    //public void addLeadToDb(Lead lead){
+        //leadRepository.save(lead);
+    //}
 
-    public void addSalesRep(SalesRep salesRep){
-        salesRepRepository.save(salesRep);
-    }
+   // public void addSalesRep(SalesRep salesRep){
+        //salesRepRepository.save(salesRep);
+    //}
 }

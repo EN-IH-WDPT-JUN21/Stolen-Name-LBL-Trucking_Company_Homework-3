@@ -1,14 +1,16 @@
 package com.ironhack.stolen_name_trucking_company_homework_3.dao;
 
 import com.ironhack.stolen_name_trucking_company_homework_3.exceptions.*;
+import lombok.Getter;
 import lombok.Setter;
 
-import javax.persistence.Entity;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
+import javax.persistence.*;
 
 @Entity
 @Setter
+@Getter
+@Table(name = "contact")
+@Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
 public class Contact extends Lead {
 
     //public static Map<String, Contact> theContacts = new HashMap<>();

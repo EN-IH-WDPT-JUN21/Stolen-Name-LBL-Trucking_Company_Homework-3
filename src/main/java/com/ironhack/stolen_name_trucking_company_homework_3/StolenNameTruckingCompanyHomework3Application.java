@@ -52,9 +52,9 @@ public class StolenNameTruckingCompanyHomework3Application implements CommandLin
 			contactRepository.save(contact3);
 
 
-			Opportunity opportunity1 = new Opportunity(Truck.FLATBED, 10, contact1);
-			Opportunity opportunity2 = new Opportunity(Truck.BOX, 1150, contact2);
-			Opportunity opportunity3 = new Opportunity(Truck.HYBRID, 1, contact3);
+			Opportunity opportunity1 = new Opportunity(Truck.FLATBED, 10, contact1, salesRep1);
+			Opportunity opportunity2 = new Opportunity(Truck.BOX, 1150, contact2, salesRep2);
+			Opportunity opportunity3 = new Opportunity(Truck.HYBRID, 1, contact3, salesRep3);
 			opportunityRepository.save(opportunity1);
 			opportunityRepository.save(opportunity2);
 			opportunityRepository.save(opportunity3);

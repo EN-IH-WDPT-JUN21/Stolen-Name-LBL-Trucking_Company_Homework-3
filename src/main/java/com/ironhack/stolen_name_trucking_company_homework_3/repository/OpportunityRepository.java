@@ -16,12 +16,12 @@ import java.util.Optional;
 public interface OpportunityRepository extends JpaRepository<Opportunity, String> {
 
     //Report Opportunities by SalesRep
-    @Query("SELECT r.repName, COUNT(o) FROM Opportunity o JOIN o.salesRep r GROUP BY r.repName ORDER BY r.repName")
+    @Query("SELECT r.repName, COUNT(o) FROM Opportunity o RIGHT JOIN o.salesRep r GROUP BY r.repName ORDER BY r.repName")
     List<Object[]> findCountOpportunityByRepName();
 
     //Report CLOSED-WON, CLOSED-LOST, and OPEN opportunities by SalesRep (takes a parameter argument)
-    @Query("SELECT r.repName, COUNT(o) FROM Opportunity o Join o.salesRep r WHERE status = :status GROUP BY r.repName ORDER BY r.repName")
-    List<Object[]> findCountOpportunityByRepNameForStatus(@Param("status") Status status);
+    @Query("SELECT r.repName, COUNT(o) FROM Opportunity o RIGHT JOIN o.salesRep r WHERE status = :status GROUP BY r.repName ORDER BY r.repName")
+    List<Object[]> findCountOpportunityByRepNameForStatus(@Param("status") String status);
 
     //Report Opportunities by Product
     @Query("SELECT o.product, count(o) FROM Opportunity o GROUP BY o.product ORDER BY o.product")
@@ -29,31 +29,31 @@ public interface OpportunityRepository extends JpaRepository<Opportunity, String
 
     //Report CLOSED-WON, CLOSED-LOST, and OPEN opportunities by Product (takes a parameter argument)
     @Query("SELECT o.product, COUNT(o) FROM Opportunity o WHERE status = :status  GROUP BY o.product ORDER BY o.product")
-    List<Object[]> findCountOpportunityByProductForStatus(@Param("status") Status status);
+    List<Object[]> findCountOpportunityByProductForStatus(@Param("status") String status);
 
     //Report Opportunities by Country
-    @Query("SELECT r.country, COUNT(o) FROM Opportunity o JOIN o.account r GROUP BY r.country ORDER BY r.country")
+    @Query("SELECT ac.country, COUNT(o) FROM Opportunity o JOIN o.account ac GROUP BY ac.country ORDER BY ac.country")
     List<Object[]> findCountOppForCountry();
 
     //Report CLOSED-WON, CLOSED-LOST, and OPEN opportunities by Country (takes a parameter argument)
-    @Query("SELECT r.country, COUNT(o) FROM Opportunity o JOIN o.account r  WHERE status = :status  GROUP BY r.country ORDER BY r.country")
-    List<Object[]> findCountOpportunityByCountryForStatus(@Param("status") Status status);
+    @Query("SELECT ac.country, COUNT(o) FROM Opportunity o JOIN o.account ac  WHERE status = :status  GROUP BY ac.country ORDER BY ac.country")
+    List<Object[]> findCountOpportunityByCountryForStatus(@Param("status") String status);
 
     //Report Opportunities by City
-    @Query("SELECT r.city, COUNT(o) FROM Opportunity o JOIN o.account r GROUP BY r.city ORDER BY r.city")
+    @Query("SELECT ac.city, COUNT(o) FROM Opportunity o JOIN o.account ac GROUP BY ac.city ORDER BY ac.city")
     List<Object[]> findCountOppForCity();
 
     //Report CLOSED-WON, CLOSED-LOST, and OPEN opportunities by City (takes a parameter argument)
-    @Query("SELECT r.city, COUNT(o) FROM Opportunity o JOIN o.account r  WHERE status = :status  GROUP BY r.city ORDER BY r.city")
-    List<Object[]> findCountOpportunityByCityForStatus(@Param("status") Status status);
+    @Query("SELECT ac.city, COUNT(o) FROM Opportunity o JOIN o.account ac  WHERE status = :status  GROUP BY ac.city ORDER BY ac.city")
+    List<Object[]> findCountOpportunityByCityForStatus(@Param("status") String status);
 
     //Report Opportunities by Industry
-    @Query("SELECT r.industry, COUNT(o) FROM Opportunity o JOIN o.account r GROUP BY r.industry ORDER BY r.industry")
+    @Query("SELECT ac.industry, COUNT(o) FROM Opportunity o JOIN o.account ac GROUP BY ac.industry ORDER BY ac.industry")
     List<Object[]> findCountOppForIndustry();
 
     //Report CLOSED-WON, CLOSED-LOST, and OPEN opportunities by Industry (takes a parameter argument)
-    @Query("SELECT r.industry, COUNT(o) FROM Opportunity o JOIN o.account r  WHERE status = :status  GROUP BY r.industry ORDER BY r.industry")
-    List<Object[]> findCountOpportunityByIndustryForStatus(@Param("status") Status status);
+    @Query("SELECT ac.industry, COUNT(o) FROM Opportunity o JOIN o.account ac  WHERE status = :status  GROUP BY ac.industry ORDER BY ac.industry")
+    List<Object[]> findCountOpportunityByIndustryForStatus(@Param("status") String status);
 
     //Report mean number products quantity for all Opportunities
     @Query("SELECT AVG(quantity) FROM Opportunity")

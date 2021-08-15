@@ -844,7 +844,7 @@ public class MainMenu {
                 + "║ 3.  Display count of CLOSED-WON Opportunities by Sales Representative " + colorHeadline + "- type: 'report closed-won by salesrep'" + colorMain + "    ║\n"
                 + "║ 4.  Display count of CLOSED-LOST Opportunities by Sales Representative " + colorHeadline + "- type: 'report closed-lost by salesrep'" + colorMain + "  ║\n"
                 + "║ 5.  Display count of OPEN Opportunities by Sales Representative " + colorHeadline + "- type: - 'report open by salesrep'" + colorMain + "              ║\n"
-                + "║ 6.  Display count of all Opportunities by the Product " + colorHeadline + "- type: 'report opportunity by the product'" + colorMain + "                ║\n"
+                + "║ 6.  Display count of all Opportunities by the Product " + colorHeadline + "- type: 'report opportunity by product'" + colorMain + "                    ║\n"
                 + "║ 7.  Display count of CLOSED-WON Opportunities by the Product " + colorHeadline + "- type: 'report closed-won by product'" + colorMain + "              ║\n"
                 + "║ 8.  Display count of CLOSED-LOST Opportunities by the Product" + colorHeadline + "- type: 'report closed-lost by product'" + colorMain + "             ║\n"
                 + "║ 9.  Display count of OPEN Opportunities by the Product" + colorHeadline + "- type: 'report open by product'" + colorMain + "                           ║\n"
@@ -887,53 +887,251 @@ public class MainMenu {
                 switch (ReportCommands.getCommandType(input)){
                     case REPORT_LEAD_BY_SALESREP:
                         var leadByRep = leadRepository.findCountLeadByRepName();
-                        for(int i = 0; i <leadByRep.size(); i++) {
-                            System.out.println(leadByRep.get(i)[0] + ":" + leadByRep.get(i)[1]);
+                        if(leadByRep.isEmpty()){
+                            System.out.println("There are no entries matching reporting criteria");
+                        } else {
+                            for (int i = 0; i < leadByRep.size(); i++) {
+                                System.out.println(leadByRep.get(i)[0] + ": " + leadByRep.get(i)[1]);
+                            }
                         }
                         break;
                     case REPORT_OPP_BY_SALESREP:
                         var oppByRep = opportunityRepository.findCountOpportunityByRepName();
-                        for(int i = 0; i <oppByRep.size(); i++) {
-                            System.out.println(oppByRep.get(i)[0] + ":" + oppByRep.get(i)[1]);
+                        if(oppByRep.isEmpty()){
+                            System.out.println("There are no entries matching reporting criteria");
+                        } else {
+                            for (int i = 0; i < oppByRep.size(); i++) {
+                                System.out.println(oppByRep.get(i)[0] + ": " + oppByRep.get(i)[1]);
+                            }
                         }
                         break;
-                    /*case REPORT_CLOSE_W_BY_SALESREP -> opportunityRepository.findCountOpportunityByRepNameForStatus(Status.CLOSED_WON);
-                    case REPORT_CLOSE_L_BY_SALESREP -> opportunityRepository.findCountOpportunityByRepNameForStatus(Status.CLOSED_LOST);
-                    case REPORT_OPEN_BY_SALESREP -> opportunityRepository.findCountOpportunityByRepNameForStatus(Status.OPEN);
-                    case REPORT_OPP_BY_PRODUCT -> opportunityRepository.findCountOppForProduct();
-                    case REPORT_CLOSE_W_BY_PRODUCT -> opportunityRepository.findCountOpportunityByProductForStatus(Status.CLOSED_WON);
-                    case REPORT_CLOSE_L_BY_PRODUCT -> opportunityRepository.findCountOpportunityByProductForStatus(Status.CLOSED_LOST);
-                    case REPORT_OPEN_BY_PRODUCT -> opportunityRepository.findCountOpportunityByProductForStatus(Status.OPEN);
-                    case REPORT_OPP_BY_COUNTRY -> opportunityRepository.findCountOppForCountry();
-                    case REPORT_CLOSE_W_BY_COUNTRY -> opportunityRepository.findCountOpportunityByCountryForStatus(Status.CLOSED_WON);
-                    case REPORT_CLOSE_L_BY_COUNTRY -> opportunityRepository.findCountOpportunityByCountryForStatus(Status.CLOSED_LOST);
-                    case REPORT_OPEN_BY_COUNTRY -> opportunityRepository.findCountOpportunityByCountryForStatus(Status.OPEN);
-                    case REPORT_OPP_BY_CITY -> opportunityRepository.findCountOppForCity();
-                    case REPORT_CLOSE_W_BY_CITY -> opportunityRepository.findCountOpportunityByCityForStatus(Status.CLOSED_WON);
-                    case REPORT_CLOSE_L_BY_CITY -> opportunityRepository.findCountOpportunityByCityForStatus(Status.CLOSED_LOST);
-                    case REPORT_OPEN_BY_CITY -> opportunityRepository.findCountOpportunityByCityForStatus(Status.OPEN);
-                    case REPORT_OPP_BY_INDUSTRY -> opportunityRepository.findCountOppForIndustry();
-                    case REPORT_CLOSE_W_BY_INDUSTRY -> opportunityRepository.findCountOpportunityByIndustryForStatus(Status.CLOSED_WON);
-                    case REPORT_CLOSE_L_BY_INDUSTRY -> opportunityRepository.findCountOpportunityByIndustryForStatus(Status.CLOSED_LOST);
-                    case REPORT_OPEN_BY_INDUSTRY -> opportunityRepository.findCountOpportunityByIndustryForStatus(Status.OPEN);
-                    case MEAN_EMPCOUNT -> accountRepository.findMeanEmployeeCount();
-                    case MEDIAN_EMPCOUNT -> accountRepository.findMedianEmployeeCountStep1();
-                    case MAX_EMPCOUNT -> accountRepository.findMaxEmployeeCount();
-                    case MIN_EMPCOUNT -> accountRepository.findMaxEmployeeCount();
-                    case MEAN_QUANT -> opportunityRepository.findMeanProductQuantity();
-                    case MED_QUANT -> opportunityRepository.findMedianQuantityStep1();
-                    case MAX_QUANT -> opportunityRepository.findMaxProductQuantity();
-                    case MIN_QUANT -> opportunityRepository.findMinProductQuantity();
-                    case MEAN_OPPS_PERR_ACC -> opportunityRepository.findMeanOpportunitiesPerAccount();
-                    case MED_OPPS_PERR_ACC -> opportunityRepository.findMedianOppsPerAccountStep1();
-                    case MAX_OPPS_PERR_ACC -> opportunityRepository.findMaxOpportunitiesPerAccount();
-                    case MIN_OPPS_PERR_ACC -> opportunityRepository.findMinOpportunitiesPerAccount();
-                    case MAIN_MENU -> OS();
-                    case QUIT -> {
+                    case REPORT_CLOSE_W_BY_SALESREP:
+                        var oppCloseW = opportunityRepository.findCountOpportunityByRepNameForStatus(Status.CLOSED_WON.toString());
+                        if(oppCloseW.isEmpty()){
+                            System.out.println("There are no entries matching reporting criteria");
+                        } else {
+                            for (int i = 0; i < oppCloseW.size(); i++) {
+                                System.out.println(oppCloseW.get(i)[0] + ": " + oppCloseW.get(i)[1]);
+                            }
+                        }
+                        break;
+                    case REPORT_CLOSE_L_BY_SALESREP:
+                        var oppCloseL = opportunityRepository.findCountOpportunityByRepNameForStatus(Status.CLOSED_LOST.toString());
+                        if(oppCloseL.isEmpty()){
+                            System.out.println("There are no entries matching reporting criteria");
+                        } else {
+                            for (int i = 0; i < oppCloseL.size(); i++) {
+                                System.out.println(oppCloseL.get(i)[0] + ": " + oppCloseL.get(i)[1]);
+                            }
+                        }
+                        break;
+                    case REPORT_OPEN_BY_SALESREP:
+                        var oppOpen = opportunityRepository.findCountOpportunityByRepNameForStatus(Status.OPEN.toString());
+                        if(oppOpen.isEmpty()){
+                            System.out.println("There are no entries matching reporting criteria");
+                        } else {
+                            for (int i = 0; i < oppOpen.size(); i++) {
+                                System.out.println(oppOpen.get(i)[0] + ": " + oppOpen.get(i)[1]);
+                            }
+                        }
+                        break;
+                    case REPORT_OPP_BY_PRODUCT:
+                        var countOppProd = opportunityRepository.findCountOppForProduct();
+                        if(countOppProd.isEmpty()){
+                            System.out.println("There are no entries matching reporting criteria");
+                        } else {
+                            for (int i = 0; i < countOppProd.size(); i++) {
+                                System.out.println(countOppProd.get(i)[0] + ": " + countOppProd.get(i)[1]);
+                            }
+                        }
+                        break;
+                    case REPORT_CLOSE_W_BY_PRODUCT:
+                        var countProdW = opportunityRepository.findCountOpportunityByProductForStatus(Status.CLOSED_WON.toString());
+                        if(countProdW.isEmpty()){
+                            System.out.println("There are no entries matching reporting criteria");
+                        } else {
+                            for (int i = 0; i < countProdW.size(); i++) {
+                                System.out.println(countProdW.get(i)[0] + ": " + countProdW.get(i)[1]);
+                            }
+                        }
+                        break;
+                    case REPORT_CLOSE_L_BY_PRODUCT:
+                        var countProdL = opportunityRepository.findCountOpportunityByProductForStatus(Status.CLOSED_LOST.toString());
+                        if(countProdL.isEmpty()){
+                            System.out.println("There are no entries matching reporting criteria");
+                        } else {
+                            for (int i = 0; i < countProdL.size(); i++) {
+                                System.out.println(countProdL.get(i)[0] + ": " + countProdL.get(i)[1]);
+                            }
+                        }
+                        break;
+                    case REPORT_OPEN_BY_PRODUCT:
+                        var countProdOp = opportunityRepository.findCountOpportunityByProductForStatus(Status.OPEN.toString());
+                        if(countProdOp.isEmpty()){
+                            System.out.println("There are no entries matching reporting criteria");
+                        } else {
+                            for (int i = 0; i < countProdOp.size(); i++) {
+                                System.out.println(countProdOp.get(i)[0] + ": " + countProdOp.get(i)[1]);
+                            }
+                        }
+                        break;
+                    case REPORT_OPP_BY_COUNTRY:
+                        var oppCountry = opportunityRepository.findCountOppForCountry();
+                        if(oppCountry.isEmpty()){
+                            System.out.println("There are no entries matching reporting criteria");
+                        } else {
+                            for (int i = 0; i < oppCountry.size(); i++) {
+                                System.out.println(oppCountry.get(i)[0] + ": " + oppCountry.get(i)[1]);
+                            }
+                        }
+                        break;
+                    case REPORT_CLOSE_W_BY_COUNTRY:
+                        var oppCountryW = opportunityRepository.findCountOpportunityByCountryForStatus(Status.CLOSED_WON.toString());
+                        if(oppCountryW.isEmpty()){
+                            System.out.println("There are no entries matching reporting criteria");
+                        } else {
+                            for (int i = 0; i < oppCountryW.size(); i++) {
+                                System.out.println(oppCountryW.get(i)[0] + ": " + oppCountryW.get(i)[1]);
+                            }
+                        }
+                        break;
+                    case REPORT_CLOSE_L_BY_COUNTRY:
+                        var oppCountryL = opportunityRepository.findCountOpportunityByCountryForStatus(Status.CLOSED_LOST.toString());
+                        if(oppCountryL.isEmpty()){
+                            System.out.println("There are no entries matching reporting criteria");
+                        } else {
+                            for (int i = 0; i < oppCountryL.size(); i++) {
+                                System.out.println(oppCountryL.get(i)[0] + ": " + oppCountryL.get(i)[1]);
+                            }
+                        }
+                        break;
+                    case REPORT_OPEN_BY_COUNTRY:
+                        var oppCountryOp = opportunityRepository.findCountOpportunityByCountryForStatus(Status.OPEN.toString());
+                        if(oppCountryOp.isEmpty()){
+                            System.out.println("There are no entries matching reporting criteria");
+                        } else {
+                            for (int i = 0; i < oppCountryOp.size(); i++) {
+                                System.out.println(oppCountryOp.get(i)[0] + ": " + oppCountryOp.get(i)[1]);
+                            }
+                        }
+                        break;
+                    case REPORT_OPP_BY_CITY:
+                        var oppCountCity = opportunityRepository.findCountOppForCity();
+                        if(oppCountCity.isEmpty()){
+                            System.out.println("There are no entries matching reporting criteria");
+                        } else {
+                            for (int i = 0; i < oppCountCity.size(); i++) {
+                                System.out.println(oppCountCity.get(i)[0] + ": " + oppCountCity.get(i)[1]);
+                            }
+                        }
+                        break;
+                    case REPORT_CLOSE_W_BY_CITY:
+                        var oppCityW = opportunityRepository.findCountOpportunityByCityForStatus(Status.CLOSED_WON.toString());
+                        if(oppCityW.isEmpty()){
+                            System.out.println("There are no entries matching reporting criteria");
+                        } else {
+                            for (int i = 0; i < oppCityW.size(); i++) {
+                                System.out.println(oppCityW.get(i)[0] + ": " + oppCityW.get(i)[1]);
+                            }
+                        }
+                        break;
+                    case REPORT_CLOSE_L_BY_CITY:
+                        var oppCityL = opportunityRepository.findCountOpportunityByCityForStatus(Status.CLOSED_LOST.toString());
+                        if(oppCityL.isEmpty()){
+                            System.out.println("There are no entries matching reporting criteria");
+                        } else {
+                            for (int i = 0; i < oppCityL.size(); i++) {
+                                System.out.println(oppCityL.get(i)[0] + ": " + oppCityL.get(i)[1]);
+                            }
+                        }
+                        break;
+                    case REPORT_OPEN_BY_CITY:
+                        var oppCityOp = opportunityRepository.findCountOpportunityByCityForStatus(Status.OPEN.toString());
+                        if(oppCityOp.isEmpty()){
+                            System.out.println("There are no entries matching reporting criteria");
+                        } else {
+                            for (int i = 0; i < oppCityOp.size(); i++) {
+                                System.out.println(oppCityOp.get(i)[0] + ": " + oppCityOp.get(i)[1]);
+                            }
+                        }
+                        break;
+                    case REPORT_OPP_BY_INDUSTRY:
+                        var oppCountInd = opportunityRepository.findCountOppForIndustry();
+                        if(oppCountInd.isEmpty()){
+                            System.out.println("There are no entries matching reporting criteria");
+                        } else {
+                            for (int i = 0; i < oppCountInd.size(); i++) {
+                                System.out.println(oppCountInd.get(i)[0] + ": " + oppCountInd.get(i)[1]);
+                            }
+                        }
+                        break;
+                    case REPORT_CLOSE_W_BY_INDUSTRY:
+                        var oppIndW = opportunityRepository.findCountOpportunityByIndustryForStatus(Status.CLOSED_WON.toString());
+                        if(oppIndW.isEmpty()){
+                            System.out.println("There are no entries matching reporting criteria");
+                        } else {
+                            for (int i = 0; i < oppIndW.size(); i++) {
+                                System.out.println(oppIndW.get(i)[0] + ": " + oppIndW.get(i)[1]);
+                            }
+                        }
+                        break;
+                    case REPORT_CLOSE_L_BY_INDUSTRY:
+                        var oppIndL = opportunityRepository.findCountOpportunityByIndustryForStatus(Status.CLOSED_LOST.toString());
+                        if(oppIndL.isEmpty()){
+                            System.out.println("There are no entries matching reporting criteria");
+                        } else {
+                            for (int i = 0; i < oppIndL.size(); i++) {
+                                System.out.println(oppIndL.get(i)[0] + ": " + oppIndL.get(i)[1]);
+                            }
+                        }
+                        break;
+                    case REPORT_OPEN_BY_INDUSTRY:
+                        var oppIndOp = opportunityRepository.findCountOpportunityByIndustryForStatus(Status.OPEN.toString());
+                        if(oppIndOp.isEmpty()){
+                            System.out.println("There are no entries matching reporting criteria");
+                        } else {
+                            for (int i = 0; i < oppIndOp.size(); i++) {
+                                System.out.println(oppIndOp.get(i)[0] + ": " + oppIndOp.get(i)[1]);
+                            }
+                        }
+                        break;
+                    case MEAN_EMPCOUNT:
+                        System.out.println("Average number of employees is: " + accountRepository.findMeanEmployeeCount().get().doubleValue());
+                        break;
+                    //case MEDIAN_EMPCOUNT -> accountRepository.findMedianEmployeeCountStep1();
+                    case MAX_EMPCOUNT:
+                        System.out.println("Maximum number of employees is: " + accountRepository.findMaxEmployeeCount().get());
+                        break;
+                    case MIN_EMPCOUNT:
+                        System.out.println("Minimum number of employees is: " + accountRepository.findMaxEmployeeCount().get());
+                        break;
+                    case MEAN_QUANT:
+                        System.out.println("Average quantity of trucks is: " + opportunityRepository.findMeanProductQuantity().get().doubleValue());
+                        break;
+                    //case MED_QUANT -> opportunityRepository.findMedianQuantityStep1();
+                    case MAX_QUANT:
+                        System.out.println("Maximum quantity of trucks is: " + opportunityRepository.findMaxProductQuantity().get());
+                        break;
+                    case MIN_QUANT:
+                        System.out.println("Minimum quantity of trucks is: " + opportunityRepository.findMinProductQuantity().get());
+                        break;
+                    case MEAN_OPPS_PERR_ACC:
+                        System.out.println("Average number of opportunities per account is: " + opportunityRepository.findMeanOpportunitiesPerAccount().get().doubleValue());
+                        break;
+                    //case MED_OPPS_PERR_ACC -> opportunityRepository.findMedianOppsPerAccountStep1();
+                    case MAX_OPPS_PERR_ACC:
+                        System.out.println("Maximum number of opportunities per account is: " + opportunityRepository.findMaxOpportunitiesPerAccount().get());
+                        break;
+                    case MIN_OPPS_PERR_ACC:
+                        System.out.println("Minimum number of opportunities per account is: " + opportunityRepository.findMinOpportunitiesPerAccount().get());
+                        break;
+                    case MAIN_MENU: OS();
+                    break;
+                    case QUIT:
                         System.out.println(colorMainBold + "\nThank you for using our LBL CRM SYSTEM!" + reset);
                     System.out.println(colorError + "Exiting the program" + reset);
                     System.exit(0);
-                    }*/
+                    break;
                     default: throw new IllegalArgumentException();
                 }
             }
