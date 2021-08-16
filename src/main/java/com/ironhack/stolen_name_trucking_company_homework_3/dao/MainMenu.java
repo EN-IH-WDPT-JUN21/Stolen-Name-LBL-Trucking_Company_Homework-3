@@ -34,24 +34,15 @@ public class MainMenu {
     public static Map<String, SalesRep> theSalesReps = new HashMap<>();
 
     Scanner scanner = new Scanner(System.in);
-    Scanner scanner2 = new Scanner(System.in);
 
     enum consoleTextColor {
-        ANSI_BLACK("\033[0;30m"),
         ANSI_RED("\033[0;31m"),
         ANSI_GREEN("\033[0;32m"),
         ANSI_YELLOW("\033[0;33m"),
         ANSI_BLUE("\033[0;34m"),
-        ANSI_PURPLE("\033[0;35m"),
-        ANSI_CYAN("\033[0;36m"),
-        ANSI_WHITE("\033[0;37m"),
         ANSI_RESET("\u001B[0m"),
-        BLACK_BOLD("\033[1;30m"),
-        RED_BOLD("\033[1;31m"),
         GREEN_BOLD("\033[1;32m"),
-        YELLOW_BOLD("\033[1;33m"),
         BLUE_BOLD("\033[1;34m"),
-        PURPLE_BOLD("\033[1;35m"),
         CYAN_BOLD("\033[1;36m"),
         WHITE_BOLD("\033[1;37m");
 
@@ -84,9 +75,6 @@ public class MainMenu {
     }
 
     public void OS() throws RuntimeException, AWTException, NoSuchValueException {
-
-        Scanner scanner = new Scanner(System.in);
-        Scanner scanner2 = new Scanner(System.in);
 
         System.out.println("\n" + colorHeadline + colorLogo
                 + "                                                                                                \n" +
@@ -162,7 +150,6 @@ public class MainMenu {
             } else {
 
                 switch (input[0] + input[1]) {
-                    //String x = input.substring(input.indexOf("Lead") + 3, input.length());
                     case "new" + "lead" -> newLead();
                     case "new" + "salesrep" -> newSalesRep();
                     case "show" + "leads" -> showLeads();
@@ -206,11 +193,7 @@ public class MainMenu {
                         try {
                             newLead.setName(scanner.nextLine().trim().toUpperCase());
                             valid = true;
-                        } catch (EmptyStringException e) {
-                            System.out.println(colorError + e.getMessage());
-                        } catch (NameContainsNumbersException e) {
-                            System.out.println(colorError + e.getMessage());
-                        } catch (ExceedsMaxLength e) {
+                        } catch (EmptyStringException | NameContainsNumbersException | ExceedsMaxLength e) {
                             System.out.println(colorError + e.getMessage());
                         }
                     }
@@ -223,11 +206,7 @@ public class MainMenu {
                         try{
                             newLead.setPhoneNumber(scanner.nextLine().trim().toUpperCase());
                             valid = true;
-                        }catch (EmptyStringException e) {
-                            System.out.println(colorError + e.getMessage());
-                        } catch (PhoneNumberContainsLettersException e) {
-                            System.out.println(colorError + e.getMessage());
-                        } catch (ExceedsMaxLength e) {
+                        }catch (EmptyStringException | PhoneNumberContainsLettersException | ExceedsMaxLength e) {
                             System.out.println(colorError + e.getMessage());
                         }
                     }
@@ -241,11 +220,7 @@ public class MainMenu {
                         try {
                             newLead.setEmail(scanner.nextLine().trim().toUpperCase());
                             valid = true;
-                        }catch (EmptyStringException e) {
-                            System.out.println(colorError + e.getMessage());
-                        } catch (EmailNotValidException e) {
-                            System.out.println(colorError + e.getMessage());
-                        } catch (ExceedsMaxLength e) {
+                        }catch (EmptyStringException | EmailNotValidException | ExceedsMaxLength e) {
                             System.out.println(colorError + e.getMessage());
                         }
                     }
@@ -259,9 +234,7 @@ public class MainMenu {
                         try {
                             newLead.setCompanyName(scanner.nextLine().trim().toUpperCase());
                             valid = true;
-                        }catch(EmptyStringException e){
-                            System.out.println(colorError + e.getMessage());
-                        } catch (ExceedsMaxLength e) {
+                        }catch(EmptyStringException | ExceedsMaxLength e){
                             System.out.println(colorError + e.getMessage());
                         }
 
@@ -296,8 +269,7 @@ public class MainMenu {
                            colorTable + lead.getCompanyName() +
                            colorInput + " into an opportunity?" +
                            colorTable + "    y / n " + reset);
-        /*Scanner scanner = new Scanner(System.in);
-        Scanner scanner2 = new Scanner(System.in);*/
+
         try {
             switch (scanner.nextLine().trim().toLowerCase(Locale.ROOT)) {
                 case "y" -> {
@@ -870,27 +842,6 @@ public class MainMenu {
                 + "╚═══════════════════════════════════════════════════════════════════════════════════════════════════╝\n" + reset);
 
     }
-
-
-    /*//Email format validation
-    public static boolean isValidEmail(String email){
-        return email.matches("^[\\w-_\\.+]*[\\w-_\\.]\\@([\\w]+\\.)+[\\w]+[\\w]$");
-    }
-
-
-
-    //Name input validation (contains only alphabetic characters)
-    public static boolean isValidName(String name){
-        return name.matches("^[A-Za-z\\s]{1,}[\\.]{0,1}[A-Za-z\\s]{0,}$");
-    }*/
-
-   /* public static StringBuilder insertLine() {
-        StringBuilder line = new StringBuilder();
-        for (int i = 1; i < (68 - Login.getUsername().length()); i++) {
-            line.append(" ");
-        }
-        return line;
-    }*/
 
     public void OSGuest() throws RuntimeException, AWTException {
 
