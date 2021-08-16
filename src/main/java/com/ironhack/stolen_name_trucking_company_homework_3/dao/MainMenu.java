@@ -669,7 +669,7 @@ public class MainMenu {
             switch (scanner.nextLine().trim().toLowerCase(Locale.ROOT)) {
                 case "y": {
                     opp.setStatus(Status.CLOSED_LOST);
-                    //opportunityRepository.save(opp); //we don't need to save again, we need to update instead?
+                    opportunityRepository.save(opp); //does it override or creates a new instance?
                     System.out.println(colorMain + "\n═════════════ " + colorMainBold + "Status Changed!" + colorMain + " ═════════════" + reset);
                 }
                 break;
@@ -710,7 +710,7 @@ public class MainMenu {
             switch (scanner.nextLine().trim().toLowerCase(Locale.ROOT)) {
                 case "y": {
                     opp.setStatus(Status.CLOSED_WON);
-                    //opportunityRepository.save(opp); //we don't need to save again, we need to update instead?
+                    opportunityRepository.save(opp);
                     System.out.println(colorMain + "\n═════════════ " + colorMainBold + "Status Changed!" + colorMain + " ═════════════" + reset);
                 }
                 break;

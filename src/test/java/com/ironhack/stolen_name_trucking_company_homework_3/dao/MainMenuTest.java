@@ -289,7 +289,7 @@ class MainMenuTest {
     }
 
 
-    @Test
+    /*@Test
     void closeLost() throws NameContainsNumbersException, EmptyStringException, EmailNotValidException, PhoneNumberContainsLettersException, ExceedsMaxLength {
 
         String data = "y";
@@ -329,6 +329,6 @@ class MainMenuTest {
         } finally {
             System.setIn(stdin);
         }
-    }
+    }*/
 }
 
