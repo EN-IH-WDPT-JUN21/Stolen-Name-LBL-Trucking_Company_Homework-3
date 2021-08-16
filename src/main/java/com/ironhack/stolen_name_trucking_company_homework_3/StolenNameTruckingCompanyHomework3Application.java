@@ -44,9 +44,9 @@ public class StolenNameTruckingCompanyHomework3Application implements CommandLin
 			leadRepository.save(lead2);
 			leadRepository.save(lead3);
 
-			Contact contact1 = new Contact("Ludwig van Beethoven", "123456789", "beet@gmail.co", "Classics Forever", salesRep1);
-			Contact contact2 = new Contact("Marie Antoinette", "980651164", "cakes@gmail.com", "Best Cakes", salesRep2);
-			Contact contact3 = new Contact("Pythagoras", "563782789", "numbers@yahoo.com", "Triangles", salesRep3);
+			Contact contact1 = new Contact(lead1.getName(), lead1.getPhoneNumber(), lead1.getEmail(), lead1.getCompanyName(), salesRep1);
+			Contact contact2 = new Contact(lead2.getName(), lead2.getPhoneNumber(), lead2.getEmail(), lead2.getCompanyName(), salesRep2);
+			Contact contact3 = new Contact(lead3.getName(), lead3.getPhoneNumber(), lead3.getEmail(), lead3.getCompanyName(), salesRep3);
 			contactRepository.save(contact1);
 			contactRepository.save(contact2);
 			contactRepository.save(contact3);
