@@ -1,16 +1,18 @@
-/*package com.ironhack.stolen_name_trucking_company_homework_3.dao;
+package com.ironhack.stolen_name_trucking_company_homework_3.dao;
 
-import com.ironhack.stolen_name_trucking_company_homework_3.enums.Industry;
 import com.ironhack.stolen_name_trucking_company_homework_3.enums.Status;
 import com.ironhack.stolen_name_trucking_company_homework_3.enums.Truck;
 import com.ironhack.stolen_name_trucking_company_homework_3.exceptions.*;
+import com.ironhack.stolen_name_trucking_company_homework_3.repository.*;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
 import java.io.InputStream;
+import java.io.PrintStream;
 
 class MainMenuTest {
 
@@ -18,6 +20,19 @@ class MainMenuTest {
     Lead lead1;
     Lead lead2;
     Lead lead3;
+    String colorMain = "\033[0;33m";
+    String colorMainBold = "\033[1;37m";
+    String colorHeadline = "\033[0;34m";
+    String colorHeadlineBold = "\033[1;34m";
+    String colorTable = "\033[1;32m";
+    String reset = "\u001B[0m";
+    String os = System.getProperty("os.name").toLowerCase();
+    String expectedOutput;
+    LeadRepository leadRepository;
+    AccountRepository accountRepository;
+    ContactRepository contactRepository;
+    OpportunityRepository opportunityRepository;
+    SalesRepRepository salesRepRepository;
 
 
     @BeforeEach
@@ -39,16 +54,18 @@ class MainMenuTest {
         MainMenu.theLeads.remove(lead2.getId(), lead2);
         MainMenu.theLeads.remove(lead3.getId(), lead3);
         ClientInformation.setUniqueID(counterStatus);
+        MainMenu.theContacts.clear();
+        MainMenu.theOpportunities.clear();
     }
 
-    @Test
+   /* @Test
     void testNewLeadPositive() {
         String data = "y \n Nathan \n 0028263 \n 122@gmail.com \n Santander \n"; // Used to simulate user input
         InputStream stdin = System.in; // Used to store default System.in
         try {
             System.setIn(new ByteArrayInputStream(data.getBytes())); // Sets System.In to test1
             int hashMapSize = MainMenu.theLeads.size();
-            MainMenu test = new MainMenu(leadRepository, accountRepository, contactRepository, opportunityRepository, salesRepRepository); // Creates a sales associate to test method
+            MainMenu test = new MainMenu(); // Creates a sales associate to test method
 
             Lead theNewLead = test.newLead(); // creates new lead
             //Assertions check Object created correctly and added to hashmap
@@ -60,7 +77,7 @@ class MainMenuTest {
         } finally {
             System.setIn(stdin); /// Resets System.in to default state
         }
-    }
+    }*/
 
     @Test
     void testConvertLeadThrowsNullPointerException(){
@@ -72,7 +89,7 @@ class MainMenuTest {
 
 
 
-    @Test
+   /* @Test
     void testConvertLeadPositive() throws NameContainsNumbersException, EmptyStringException, EmailNotValidException, ExceedsMaxLength, PhoneNumberContainsLettersException {
         //Assertions.assertEquals(0, MainMenu.theOpportunities.size());
         //Assertions.assertEquals(0, MainMenu.theContacts.size());
@@ -148,7 +165,7 @@ class MainMenuTest {
         }finally {
             System.setIn(stdin); /// Resets System.in to default state
         }
-    }
+    }*/
 
     @Test
     void showLeads() {
@@ -157,7 +174,7 @@ class MainMenuTest {
         ByteArrayOutputStream outContent = new ByteArrayOutputStream();
         System.setOut(new PrintStream(outContent));
 
-        MainMenu test = new MainMenu();
+        MainMenu test = new MainMenu(leadRepository, accountRepository, contactRepository, opportunityRepository, salesRepRepository);
         test.showLeads();
 
         //Now we have to validate the output. It has to exactly mimic the output we created.
@@ -190,7 +207,7 @@ class MainMenuTest {
         ByteArrayOutputStream outContent = new ByteArrayOutputStream();
         System.setOut(new PrintStream(outContent));
 
-        MainMenu test = new MainMenu();
+        MainMenu test = new MainMenu(leadRepository, accountRepository, contactRepository, opportunityRepository, salesRepRepository);
         test.showContacts();
 
         //Now we have to validate the output. It has to exactly mimic the output we created.
@@ -217,7 +234,7 @@ class MainMenuTest {
         // After this all System.out.println() statements will come to outContent stream.
         ByteArrayOutputStream outContent = new ByteArrayOutputStream();
         System.setOut(new PrintStream(outContent));
-        MainMenu test = new MainMenu();
+        MainMenu test = new MainMenu(leadRepository, accountRepository, contactRepository, opportunityRepository, salesRepRepository);
         test.showOpportunities();
 
         //Now we have to validate the output. It has to exactly mimic the output we created.
@@ -246,7 +263,7 @@ class MainMenuTest {
         // After this all System.out.println() statements will come to outContent stream.
         ByteArrayOutputStream outContent = new ByteArrayOutputStream();
         System.setOut(new PrintStream(outContent));
-        MainMenu test = new MainMenu();
+        MainMenu test = new MainMenu(leadRepository, accountRepository, contactRepository, opportunityRepository, salesRepRepository);
         test.showAccounts();
 
         //Now we have to validate the output. It has to exactly mimic the output we created.
@@ -272,21 +289,20 @@ class MainMenuTest {
     }
 
 
-    @Test
+    /*@Test
     void closeLost() throws NameContainsNumbersException, EmptyStringException, EmailNotValidException, PhoneNumberContainsLettersException, ExceedsMaxLength {
 
         String data = "y";
         InputStream stdin = System.in;
 
+        Contact testContact = new Contact("TestContact", "1234567", "email@email.com",
+                "TestContactCompany");
+        Opportunity testOpp = new Opportunity(Truck.HYBRID, 30, testContact);
+        MainMenu.theOpportunities.put(testOpp.getId(), testOpp);
 
         try {
             System.setIn(new ByteArrayInputStream(data.getBytes()));
-            MainMenu test = new MainMenu(leadRepository, accountRepository, contactRepository, opportunityRepository, salesRepRepository);
-            Contact testContact = new Contact("TestContact", "1234567", "email@email.com",
-                    "TestContactCompany");
-            Opportunity testOpp = new Opportunity(Truck.HYBRID, 30, testContact);
-            MainMenu.theOpportunities.put(testOpp.getId(), testOpp);
-
+            MainMenu test = new MainMenu();
             test.closeLost(testOpp.getId());
             Assertions.assertEquals(Status.CLOSED_LOST, MainMenu.theOpportunities.get(testOpp.getId()).getStatus());
 
@@ -313,7 +329,6 @@ class MainMenuTest {
         } finally {
             System.setIn(stdin);
         }
-    }
+    }*/
 }
 
- */

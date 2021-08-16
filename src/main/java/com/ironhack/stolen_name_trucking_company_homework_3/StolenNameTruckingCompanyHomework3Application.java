@@ -1,6 +1,7 @@
 package com.ironhack.stolen_name_trucking_company_homework_3;
 
 import com.ironhack.stolen_name_trucking_company_homework_3.dao.*;
+import com.ironhack.stolen_name_trucking_company_homework_3.enums.Industry;
 import com.ironhack.stolen_name_trucking_company_homework_3.enums.Truck;
 import com.ironhack.stolen_name_trucking_company_homework_3.repository.*;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -36,34 +37,39 @@ public class StolenNameTruckingCompanyHomework3Application implements CommandLin
 			salesRepRepository.save(salesRep3);
 			salesRepRepository.save(salesRep4);
 
-			Lead lead1 = new Lead("Sebastian Marek Labedz", "123456789", "labedzsebastian@gmail.co", "Wings of Freedom");
-			Lead lead2 = new Lead("Lee Dawson", "980651164", "ld@gmail.com", "LeeD");
-			Lead lead3 = new Lead("Natalia Shilyaeva", "563782789", "nattyshil@yahoo.com", "Nathy From Wonderland");
+			Lead lead1 = new Lead("Sebastian Marek Labedz", "123456789", "labedzsebastian@gmail.co", "Wings of Freedom", salesRep1);
+			Lead lead2 = new Lead("Lee Dawson", "980651164", "ld@gmail.com", "LeeD", salesRep2);
+			Lead lead3 = new Lead("Natalia Shilyaeva", "563782789", "nattyshil@yahoo.com", "Naty From Wonderland", salesRep3);
 			leadRepository.save(lead1);
 			leadRepository.save(lead2);
 			leadRepository.save(lead3);
 
-			Contact contact1 = new Contact("John Doe", "123475357", "alfa@beta.uk", "Kałasznikow");
-			Contact contact2 = new Contact("Martha Steward", "123475357", "ms@wp.pl", "My own company");
-			Contact contact3 = new Contact("George Truman", "123475357", "thisisverylongemail@gmail.com", "Truman Show");
+			Contact contact1 = new Contact(lead1.getName(), lead1.getPhoneNumber(), lead1.getEmail(), lead1.getCompanyName(), salesRep1);
+			Contact contact2 = new Contact(lead2.getName(), lead2.getPhoneNumber(), lead2.getEmail(), lead2.getCompanyName(), salesRep2);
+			Contact contact3 = new Contact(lead3.getName(), lead3.getPhoneNumber(), lead3.getEmail(), lead3.getCompanyName(), salesRep3);
 			contactRepository.save(contact1);
 			contactRepository.save(contact2);
 			contactRepository.save(contact3);
 
-
-			Opportunity opportunity1 = new Opportunity(Truck.FLATBED, 10, contact1);
-			Opportunity opportunity2 = new Opportunity(Truck.BOX, 1150, contact2);
-			Opportunity opportunity3 = new Opportunity(Truck.HYBRID, 1, contact3);
+			Opportunity opportunity1 = new Opportunity(Truck.FLATBED, 10, contact1, salesRep1);
+			Opportunity opportunity2 = new Opportunity(Truck.BOX, 1150, contact2, salesRep2);
+			Opportunity opportunity3 = new Opportunity(Truck.HYBRID, 1, contact3, salesRep3);
 			opportunityRepository.save(opportunity1);
 			opportunityRepository.save(opportunity2);
 			opportunityRepository.save(opportunity3);
 
-			Account account1 = new Account(contact1, opportunity1);
-			Account account2 = new Account(contact2, opportunity2);
-			Account account3 = new Account(contact3, opportunity3);
+			Account account1 = new Account(Industry.PRODUCE, 25, "VIENNA", "AUSTRIA", contact1, opportunity1);
+			Account account2 = new Account(Industry.MANUFACTURING, 190, "VERSAILLES", "FRANCE", contact2, opportunity2);
+			Account account3 = new Account(Industry.MEDICAL, 109, "ATHENS", "GREECE", contact3, opportunity3);
 			accountRepository.save(account1);
 			accountRepository.save(account2);
 			accountRepository.save(account3);
+			opportunity1.setAccount(account1);
+			opportunity2.setAccount(account2);
+			opportunity3.setAccount(account3);
+			opportunityRepository.save(opportunity1);
+			opportunityRepository.save(opportunity2);
+			opportunityRepository.save(opportunity3);
 
 
 			MainMenu.theLeads.put(lead1.getId(), lead1);

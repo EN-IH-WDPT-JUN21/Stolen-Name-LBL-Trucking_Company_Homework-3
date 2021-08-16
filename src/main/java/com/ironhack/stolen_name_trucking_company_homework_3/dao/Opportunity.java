@@ -3,12 +3,18 @@ package com.ironhack.stolen_name_trucking_company_homework_3.dao;//Extends com.i
 import com.ironhack.stolen_name_trucking_company_homework_3.enums.Status;
 import com.ironhack.stolen_name_trucking_company_homework_3.enums.Truck;
 import com.ironhack.stolen_name_trucking_company_homework_3.exceptions.ExceedsMaxLength;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
 import lombok.Setter;
 
 import javax.persistence.*;
 
-@Entity
 @Setter
+@Getter
+@AllArgsConstructor
+@Entity
+@Table(name = "opportunity")
+@Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
 public class Opportunity extends ClientInformation {
 
     // This sets the status to Enum Open whenever an opportunity object is created
@@ -18,7 +24,7 @@ public class Opportunity extends ClientInformation {
     // com.ironhack.stolen_name_trucking_company_homework_3.Opportunity Specific variable - EnumTruck com.ironhack.stolen_name_trucking_company_homework_3.enums.Truck, int quantity, ObjectContact DecisionMaker
     @Enumerated(EnumType.STRING)
     private Truck product;
-    private int quantity;
+    private Integer quantity;
 
 
     @OneToOne
@@ -56,7 +62,6 @@ public class Opportunity extends ClientInformation {
         setDecisionMaker(decisionMaker);
         setSalesRep(salesRep);
     }
-
 
     public String getId() {
         return id;

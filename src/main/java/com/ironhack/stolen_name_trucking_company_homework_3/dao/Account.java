@@ -5,19 +5,27 @@ import com.ironhack.stolen_name_trucking_company_homework_3.exceptions.EmptyStri
 import com.ironhack.stolen_name_trucking_company_homework_3.exceptions.ExceedsMaxLength;
 import com.ironhack.stolen_name_trucking_company_homework_3.exceptions.InvalidCountryException;
 import com.ironhack.stolen_name_trucking_company_homework_3.exceptions.NameContainsNumbersException;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.Setter;
 
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+@Getter
+@Setter
+@AllArgsConstructor
 @Entity
+@Table(name = "account")
+@Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
 public class Account extends ClientInformation{
 
     @Enumerated(EnumType.STRING)
     private Industry industry;
     @Column(name="employee_count")
-    private int employeeCount;
+    private Integer employeeCount;
 
     private String city;
     private String country;
@@ -25,7 +33,7 @@ public class Account extends ClientInformation{
     @OneToMany(mappedBy = "account")
     private List<Contact> contactList = new ArrayList<>();
 
-    @OneToMany(mappedBy = "account", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "account")
     private List<Opportunity> opportunityList = new ArrayList<>();
 
     private static final String colorMain = "\u001B[33m";
