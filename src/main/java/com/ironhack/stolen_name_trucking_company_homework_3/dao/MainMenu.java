@@ -1137,7 +1137,7 @@ public class MainMenu {
 
         System.out.println(colorInput + "\nPress Enter to continue..." + reset);
         scanner.nextLine();
-        OS();
+        reportMenu();
     }
 
 
