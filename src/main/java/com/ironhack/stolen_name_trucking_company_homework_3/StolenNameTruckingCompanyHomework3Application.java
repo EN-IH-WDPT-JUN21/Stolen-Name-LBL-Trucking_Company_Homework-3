@@ -9,7 +9,11 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.builder.SpringApplicationBuilder;
+import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.Bean;
+
+import static com.ironhack.stolen_name_trucking_company_homework_3.dao.Login.isLoggedIn;
 
 @SpringBootApplication
 
@@ -18,12 +22,20 @@ public class StolenNameTruckingCompanyHomework3Application implements CommandLin
 	@Autowired
 	MainMenu menu;
 
+
 	//public static MainMenu menu = new MainMenu(leadRepository, accountRepository, contactRepository, opportunityRepository, salesRepRepository);
 
 	public static void main(String[] args) {
-		SpringApplication.run(StolenNameTruckingCompanyHomework3Application.class, args);
+			/*SpringApplication.run(StolenNameTruckingCompanyHomework3Application.class, args);
+			System.setProperty("java.awt.headless", "false");
+			SpringApplication.run(Login.class);
+			Login.login();*/
+			ApplicationContext context = new SpringApplicationBuilder(StolenNameTruckingCompanyHomework3Application.class)
+				.headless(false).run(args);
+			Login login = context.getBean(Login.class);
 
-	}
+		}
+
 	@Bean
 	CommandLineRunner commandLineRunner(SalesRepRepository salesRepRepository, AccountRepository accountRepository, LeadRepository leadRepository, OpportunityRepository opportunityRepository, ContactRepository contactRepository) {
 		return args -> {
@@ -93,8 +105,20 @@ public class StolenNameTruckingCompanyHomework3Application implements CommandLin
 			MainMenu.theSalesReps.put(salesRep3.getId().toString(),salesRep3);
 			MainMenu.theSalesReps.put(salesRep4.getId().toString(),salesRep4);
 
-			menu.OS();
-
+			Login.login();
+			/*if (login.getUsername().equals("Lee") && login.getPassword().equals("lee")
+					|| login.getUsername().equals("Sebastian") && login.getPassword().equals("sebastian")
+					|| login.getUsername().equals("Mariana") && login.getPassword().equals("mariana")
+					|| login.getUsername().equals("NataliaS") && login.getPassword().equals("natalias")
+					|| login.getUsername().equals("Nathan") && login.getPassword().equals("nathan")
+					|| login.getUsername().equals("NataliaN") && login.getPassword().equals("natalian")
+					|| login.getUsername().equals("Katarzyna") && login.getPassword().equals("katarzyna")
+					|| login.getUsername().equals("Urszula") && login.getPassword().equals("urszula")
+					|| login.getUsername().equals("Anna") && login.getPassword().equals("anna")
+					|| login.getUsername().equals("Admin") && login.getPassword().equals("admin")) {*/
+			if (isLoggedIn) {
+				menu.OS();
+			}
 		};
 
 
