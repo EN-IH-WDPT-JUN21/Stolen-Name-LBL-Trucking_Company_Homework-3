@@ -14,8 +14,11 @@ import javax.persistence.*;
 @AllArgsConstructor
 @Entity
 @Table(name = "opportunity")
-@Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
-public class Opportunity extends ClientInformation {
+public class Opportunity {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
 
     // This sets the status to Enum Open whenever an opportunity object is created
     @Enumerated(EnumType.STRING)
@@ -28,7 +31,7 @@ public class Opportunity extends ClientInformation {
 
 
     @OneToOne
-    @JoinColumn(name = "contact_id", referencedColumnName = "id")
+    @JoinColumn(name = "contact_id")
     private Contact decisionMaker;
 
     @ManyToOne
@@ -63,9 +66,9 @@ public class Opportunity extends ClientInformation {
         setSalesRep(salesRep);
     }
 
-    public String getId() {
-        return id;
-    }
+    //public Long getId() {
+        //return id;
+    //}
 
     public Truck getProduct() {
         return product;

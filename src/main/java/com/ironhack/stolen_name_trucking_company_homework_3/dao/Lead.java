@@ -12,8 +12,12 @@ import javax.persistence.*;
 @Setter
 @Getter
 @Table(name = "leads")
-@Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
-public class Lead extends ClientInformation {
+@Inheritance(strategy = InheritanceType.JOINED)
+public class Lead {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    protected Long id;
 
     @Column(name="contact_name")
     protected String name;
@@ -124,7 +128,7 @@ public class Lead extends ClientInformation {
     }
 
 
-    public String getId() {
+    public Long getId() {
         return id;
     }
 

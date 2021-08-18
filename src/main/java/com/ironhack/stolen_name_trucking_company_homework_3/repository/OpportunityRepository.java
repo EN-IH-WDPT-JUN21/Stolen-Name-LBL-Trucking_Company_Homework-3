@@ -1,9 +1,6 @@
 package com.ironhack.stolen_name_trucking_company_homework_3.repository;
 
-import com.ironhack.stolen_name_trucking_company_homework_3.dao.MainMenu;
 import com.ironhack.stolen_name_trucking_company_homework_3.dao.Opportunity;
-import com.ironhack.stolen_name_trucking_company_homework_3.dao.SalesRep;
-import com.ironhack.stolen_name_trucking_company_homework_3.enums.Status;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -13,11 +10,18 @@ import java.util.List;
 import java.util.Optional;
 
 @Repository
-public interface OpportunityRepository extends JpaRepository<Opportunity, String> {
+public interface OpportunityRepository extends JpaRepository<Opportunity, Long> {
+
+    //Find opportunity by id
+    Optional<Opportunity> findById(Long id);
 
     //Report Opportunities by SalesRep
     @Query("SELECT r.repName, COUNT(o) FROM Opportunity o RIGHT JOIN o.salesRep r GROUP BY r.repName ORDER BY r.repName")
     List<Object[]> findCountOpportunityByRepName();
+
+    //Show all opportunities
+    @Query("SELECT o.id, o.status, o.product, o.quantity, c.name FROM Opportunity o JOIN o.decisionMaker c")
+    List<Object[]> findAllOpportunities();
 
     //Report CLOSED-WON, CLOSED-LOST, and OPEN opportunities by SalesRep (takes a parameter argument)
     @Query("SELECT r.repName, COUNT(o) FROM Opportunity o RIGHT JOIN o.salesRep r WHERE status = :status GROUP BY r.repName ORDER BY r.repName")
