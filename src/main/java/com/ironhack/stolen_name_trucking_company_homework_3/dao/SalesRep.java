@@ -27,11 +27,23 @@ public class SalesRep {
     @Column(name="sales_rep_name")
     private String repName;
 
-    @OneToMany(mappedBy = "salesRep")
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "salesRep", orphanRemoval = true)
     private List<Lead> leadList = new ArrayList<>();
 
     @OneToMany(mappedBy = "salesRep")
     private List<Opportunity> opportunityList = new ArrayList<>();
+
+    public SalesRep addLead(Lead lead) {
+        leadList.add(lead);
+        lead.setSalesRep(this);
+        return this;
+    }
+
+    public SalesRep removeLead(Lead lead) {
+        leadList.remove(lead);
+        lead.setSalesRep(null);
+        return this;
+    }
 
     public SalesRep(String name){
         setRepName(name);

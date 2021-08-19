@@ -8,6 +8,9 @@ import org.apache.commons.validator.routines.EmailValidator;
 
 import javax.persistence.*;
 
+import static javax.persistence.CascadeType.DETACH;
+import static javax.persistence.CascadeType.PERSIST;
+
 @Entity
 @Setter
 @Getter
