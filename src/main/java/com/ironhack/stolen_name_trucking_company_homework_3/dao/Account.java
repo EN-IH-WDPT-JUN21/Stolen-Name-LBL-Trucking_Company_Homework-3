@@ -63,9 +63,9 @@ public class Account {
         addOpportunity(opportunity);
     }
 
-    //public Long getId() {
-        //return id;
-    //}
+    public Long getId() {
+        return id;
+    }
 
     public Industry getIndustry() {
         return industry;

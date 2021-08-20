@@ -35,6 +35,7 @@ public class StolenNameTruckingCompanyHomework3Application implements CommandLin
 					new SalesRep("Martha Stewart")
 			));
 
+
 			List<Contact> contacts = contactRepository.saveAll(List.of(
 					new Contact("John Doe", "123475357", "alfa@beta.uk", "Kałasznikow", salesReps.get(0)),
 					new Contact("Martha Steward", "123475357", "ms@wp.pl", "My own company", salesReps.get(1)),

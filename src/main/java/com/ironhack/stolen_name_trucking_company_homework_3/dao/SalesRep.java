@@ -27,7 +27,7 @@ public class SalesRep {
     @Column(name="sales_rep_name")
     private String repName;
 
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "salesRep", orphanRemoval = true)
+    @OneToMany(mappedBy = "salesRep", fetch = FetchType.EAGER, cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Lead> leadList = new ArrayList<>();
 
     @OneToMany(mappedBy = "salesRep")

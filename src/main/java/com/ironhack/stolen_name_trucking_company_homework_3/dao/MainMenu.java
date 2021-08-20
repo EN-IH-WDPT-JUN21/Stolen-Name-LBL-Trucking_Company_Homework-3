@@ -337,12 +337,13 @@ public class MainMenu {
 
                     valid = false;
 
-                    Contact newContact = new Contact(lead.getName().toUpperCase(), lead.getPhoneNumber().toUpperCase(), lead.getEmail().toUpperCase(), lead.getCompanyName().toUpperCase()); // Converts lead into contact
+                    Contact newContact = new Contact(lead.getName().toUpperCase(), lead.getPhoneNumber().toUpperCase(), lead.getEmail().toUpperCase(), lead.getCompanyName().toUpperCase(), lead.getSalesRep()); // Converts lead into contact
                     contactRepository.save(newContact);
                     newOpp.setDecisionMaker(newContact); // Assigns contact as the decisionMaker
                     //theContacts.put(newContact.getId(), newContact);  // Adds contact to contact Map
                     //theOpportunities.put(newOpp.getId(), newOpp); // Adds Opportunity to opportunities map
                     //theLeads.remove(lead.getId()); // Removes converted lead from Leads map ("Database")
+                    newOpp.setSalesRep(lead.getSalesRep());
                     opportunityRepository.save(newOpp);
                     System.out.println(colorMain + "\n╔════════════╦═════ " + colorMainBold + "New Opportunity created" + colorMain + " ════════════╦═══════════════════╗" + reset);
                     System.out.printf("%-1s %-17s %-1s %-27s %-1s %-24s %-1s %-24s %-1s\n",
@@ -376,8 +377,9 @@ public class MainMenu {
                     System.out.println(newContact.toString());
                     System.out.println(colorInput + "Press Enter to continue..." + reset);
                     scanner.nextLine();
-                    lead.getSalesRep().removeLead(lead); //needed to disconnect foreign key
-                    leadRepository.delete(lead);// Removes lead from repo
+                    newOpp.getSalesRep().removeLead(lead);
+                    //leadRepository.delete(lead);// Removes lead from repo?
+                    opportunityRepository.save(newOpp);
 
                     return newOpp;
                     //createAccount(newContact, newOpp); // Not sure whether to put this here or in Menu
@@ -470,12 +472,11 @@ public class MainMenu {
             //theAccounts.put(newAccount.getId(), newAccount); // Adds new account to Accounts Map (database)
             //System.out.println(colorMain + "\n ═════════════ New Account Created ═════════════\n");
             System.out.println(newAccount.toString());
-            newAccount.addContact(opportunity.getDecisionMaker());
+            //newAccount.addContact(opportunity.getDecisionMaker());
             accountRepository.save(newAccount);
             opportunity.setAccount(newAccount);
             opportunityRepository.save(opportunity);
-            //opportunity.getDecisionMaker().setAccount(newAccount);
-            //contactRepository.save(opportunity.getDecisionMaker());
+
             return newAccount;
         } catch (Exception e) {
 
