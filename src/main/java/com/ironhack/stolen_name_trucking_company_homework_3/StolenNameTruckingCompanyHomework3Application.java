@@ -25,18 +25,12 @@ public class StolenNameTruckingCompanyHomework3Application implements CommandLin
 	MainMenu menu;
 
 	public static void main(String[] args) {
+		System.setProperty("java.awt.headless", "false");
 		SpringApplication.run(StolenNameTruckingCompanyHomework3Application.class, args);
 	}
 	@Bean
 	CommandLineRunner commandLineRunner(SalesRepRepository salesRepRepository, AccountRepository accountRepository, LeadRepository leadRepository, OpportunityRepository opportunityRepository, ContactRepository contactRepository, Login login) throws NoSuchValueException, AWTException {
 		return args -> {
-
-			List<Lead> leads = leadRepository.saveAll(List.of(
-					new Lead("Sebastian Marek Labedz", "123456789", "labedzsebastian@gmail.co", "Wings of Freedom"),
-					new Lead("Lee Dawson", "980651164", "ld@gmail.com", "LeeD"),
-					new Lead("Natalia Shilyaeva", "563782789", "nattyshil@yahoo.com", "Nathy From Wonderland")
-
-			));
 
 			List<SalesRep> salesReps = salesRepRepository.saveAll(List.of(
 					new SalesRep("David Lynch"),
@@ -85,6 +79,8 @@ public class StolenNameTruckingCompanyHomework3Application implements CommandLin
 			menu.OS();
 		} else if (getIsLoggedIn() == 2) {
 			menu.OSGuest();
+		} else {
+			menu.OS();
 		}
 	}
 }
