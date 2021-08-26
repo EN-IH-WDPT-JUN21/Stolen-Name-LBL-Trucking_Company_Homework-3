@@ -9,17 +9,22 @@ import javax.persistence.*;
 
 @Setter
 @Getter
-@AllArgsConstructor
 @Entity
+@PrimaryKeyJoinColumn(name = "id")
 @Table(name = "contact")
-@Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
 public class Contact extends Lead {
 
     //public static Map<String, Contact> theContacts = new HashMap<>();
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
 
     @ManyToOne
     @JoinColumn(name = "account_id", referencedColumnName = "id")
     private Account account;
+
+    @OneToOne(mappedBy = "decisionMaker")
+    private Opportunity opportunity;
 
     private static final String colorMain = "\u001B[33m";
     private static final String colorMainBold = "\033[1;37m";
@@ -37,7 +42,7 @@ public class Contact extends Lead {
     public Contact() {
     }
 
-    public String getId() {
+    public Long getId() {
         return id;
     }
 

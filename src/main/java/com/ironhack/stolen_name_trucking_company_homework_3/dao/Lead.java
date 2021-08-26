@@ -12,8 +12,12 @@ import javax.persistence.*;
 @Setter
 @Getter
 @Table(name = "leads")
-@Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
-public class Lead extends ClientInformation {
+@Inheritance(strategy = InheritanceType.JOINED)
+public class Lead {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    protected Long id;
 
     @Column(name="contact_name")
     protected String name;
@@ -124,7 +128,7 @@ public class Lead extends ClientInformation {
     }
 
 
-    public String getId() {
+    public Long getId() {
         return id;
     }
 
@@ -141,8 +145,8 @@ public class Lead extends ClientInformation {
                                         colorMain + "║",
                                         colorHeadlineBold + "Company Name",
                                         colorMain + "║\n" +
-                                        colorMain + "╠════════════╬═════════════════════════════════════════════╬══════════════════════╬══════════════════════════════════════════╬═════════════════════════════════════════════╣"
-                                        + reset));
+                                                colorMain + "╠════════════╬═════════════════════════════════════════════╬══════════════════════╬══════════════════════════════════════════╬═════════════════════════════════════════════╣"
+                                                + reset));
         return  String.format("%-1s %-15s %-1s %-48s %-1s %-25s %-1s %-45s %-1s %-48s %-1s\n",
                               colorMain + "║",
                               colorTable + getId(),

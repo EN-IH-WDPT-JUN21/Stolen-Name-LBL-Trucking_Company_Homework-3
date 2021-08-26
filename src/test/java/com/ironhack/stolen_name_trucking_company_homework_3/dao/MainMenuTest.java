@@ -1,6 +1,5 @@
 package com.ironhack.stolen_name_trucking_company_homework_3.dao;
 
-import com.ironhack.stolen_name_trucking_company_homework_3.enums.Status;
 import com.ironhack.stolen_name_trucking_company_homework_3.enums.Truck;
 import com.ironhack.stolen_name_trucking_company_homework_3.exceptions.*;
 import com.ironhack.stolen_name_trucking_company_homework_3.repository.*;
@@ -9,12 +8,10 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
-import java.io.InputStream;
 import java.io.PrintStream;
 
-class MainMenuTest {
+/*class MainMenuTest {
 
     Integer counterStatus;
     Lead lead1;
@@ -58,7 +55,7 @@ class MainMenuTest {
         MainMenu.theOpportunities.clear();
     }
 
-   /* @Test
+   @Test
     void testNewLeadPositive() {
         String data = "y \n Nathan \n 0028263 \n 122@gmail.com \n Santander \n"; // Used to simulate user input
         InputStream stdin = System.in; // Used to store default System.in
@@ -77,7 +74,7 @@ class MainMenuTest {
         } finally {
             System.setIn(stdin); /// Resets System.in to default state
         }
-    }*/
+    }
 
     @Test
     void testConvertLeadThrowsNullPointerException(){
@@ -89,7 +86,7 @@ class MainMenuTest {
 
 
 
-   /* @Test
+   @Test
     void testConvertLeadPositive() throws NameContainsNumbersException, EmptyStringException, EmailNotValidException, ExceedsMaxLength, PhoneNumberContainsLettersException {
         //Assertions.assertEquals(0, MainMenu.theOpportunities.size());
         //Assertions.assertEquals(0, MainMenu.theContacts.size());
@@ -165,7 +162,7 @@ class MainMenuTest {
         }finally {
             System.setIn(stdin); /// Resets System.in to default state
         }
-    }*/
+    }
 
     @Test
     void showLeads() {
@@ -289,7 +286,7 @@ class MainMenuTest {
     }
 
 
-    /*@Test
+    @Test
     void closeLost() throws NameContainsNumbersException, EmptyStringException, EmailNotValidException, PhoneNumberContainsLettersException, ExceedsMaxLength {
 
         String data = "y";
@@ -329,6 +326,6 @@ class MainMenuTest {
         } finally {
             System.setIn(stdin);
         }
-    }*/
-}
+    }
+} */
 

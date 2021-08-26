@@ -1,8 +1,7 @@
 package com.ironhack.stolen_name_trucking_company_homework_3.dao;
 
-import com.ironhack.stolen_name_trucking_company_homework_3.exceptions.NoSuchValueException;
-import com.ironhack.stolen_name_trucking_company_homework_3.dao.MainMenu;
-import org.springframework.boot.autoconfigure.SpringBootApplication;
+import com.ironhack.stolen_name_trucking_company_homework_3.StolenNameTruckingCompanyHomework3Application;
+import org.springframework.boot.SpringApplication;
 import org.springframework.stereotype.Component;
 
 import javax.swing.*;
@@ -27,9 +26,7 @@ public class Login implements ActionListener {
     private static JFrame frame;
     private static String username;
     private static char[] userPassword;
-    public static boolean isLoggedIn = false;
-
-    public static MainMenu menu = new MainMenu();
+    public static int isLoggedIn;
 
     // Creates login window
     public static void login() {
@@ -101,6 +98,9 @@ public class Login implements ActionListener {
         return String.valueOf(userPassword);
     }
 
+    public static int getIsLoggedIn() {
+        return isLoggedIn;
+    }
     @Override
     public void actionPerformed(ActionEvent e) {
         char[] password = passwordText.getPassword();
@@ -108,35 +108,37 @@ public class Login implements ActionListener {
 
         // Checks if username and password input equals to any of registered users and runs OS or OSGuest menu
         if (getUsername().equals("Lee") && pass.equals("lee")
-                || getUsername().equals("Sebastian") && pass.equals("sebastian")
-                || getUsername().equals("Mariana") && pass.equals("mariana")
-                || getUsername().equals("NataliaS") && pass.equals("natalias")
-                || getUsername().equals("Nathan") && pass.equals("nathan")
-                || getUsername().equals("NataliaN") && pass.equals("natalian")
-                || getUsername().equals("Katarzyna") && pass.equals("katarzyna")
-                || getUsername().equals("Urszula") && pass.equals("urszula")
-                || getUsername().equals("Anna") && pass.equals("anna")
-                || getUsername().equals("Admin") && pass.equals("admin")) {
+        || getUsername().equals("Sebastian") && pass.equals("sebastian")
+        || getUsername().equals("Mariana") && pass.equals("mariana")
+        || getUsername().equals("NataliaS") && pass.equals("natalias")
+        || getUsername().equals("Nathan") && pass.equals("nathan")
+        || getUsername().equals("NataliaN") && pass.equals("natalian")
+        || getUsername().equals("Katarzyna") && pass.equals("katarzyna")
+        || getUsername().equals("Urszula") && pass.equals("urszula")
+        || getUsername().equals("Anna") && pass.equals("anna")
+        || getUsername().equals("Admin") && pass.equals("admin")) {
 
 
             frame.dispose(); // Closes login window
-            /*try {
-                menu.OS();
-            } catch (RuntimeException | AWTException | NoSuchValueException ex) {
+            isLoggedIn = 1;
+            try {
+                SpringApplication.run(StolenNameTruckingCompanyHomework3Application.class);
+            } catch (RuntimeException ex) {
                 System.out.println("Our server is busy! Please run the program again to login!");
-            }*/
-            isLoggedIn = true;
+            }
+
         } else if (getUsername().equals("Guest") && pass.equals("guest")) {
             frame.dispose(); // Closes login window
-            /*try {
-                menu.OSGuest();
-            } catch (RuntimeException | AWTException ex) {
+            isLoggedIn = 2;
+            try {
+                SpringApplication.run(StolenNameTruckingCompanyHomework3Application.class);
+            } catch (RuntimeException ex) {
                 System.out.println("Our server is busy! Please run the program again to login!");
-            }*/
-            isLoggedIn = true;
+            }
         } else {
             wrongInput.setText("Wrong username or password!");
         }
 
     }
+
 }

@@ -15,12 +15,15 @@ import java.util.Arrays;
 import java.util.List;
 
 @Getter
-@Setter
 @AllArgsConstructor
 @Entity
+@Setter
 @Table(name = "account")
-@Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
-public class Account extends ClientInformation{
+public class Account {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
 
     @Enumerated(EnumType.STRING)
     private Industry industry;
@@ -33,7 +36,7 @@ public class Account extends ClientInformation{
     @OneToMany(mappedBy = "account")
     private List<Contact> contactList = new ArrayList<>();
 
-    @OneToMany(mappedBy = "account")
+    @OneToMany(mappedBy = "account", fetch = FetchType.EAGER)
     private List<Opportunity> opportunityList = new ArrayList<>();
 
     private static final String colorMain = "\u001B[33m";
@@ -60,9 +63,9 @@ public class Account extends ClientInformation{
         addOpportunity(opportunity);
     }
 
-    public String getId() {
-        return id;
-    }
+    //public Long getId() {
+        //return id;
+    //}
 
     public Industry getIndustry() {
         return industry;

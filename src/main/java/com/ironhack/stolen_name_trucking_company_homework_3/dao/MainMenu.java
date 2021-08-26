@@ -7,15 +7,13 @@ import com.ironhack.stolen_name_trucking_company_homework_3.enums.Truck;
 import com.ironhack.stolen_name_trucking_company_homework_3.exceptions.*;
 import com.ironhack.stolen_name_trucking_company_homework_3.repository.*;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.SpringApplication;
 import org.springframework.stereotype.Component;
 
 
 import java.awt.*;
 import java.awt.event.KeyEvent;
-import java.util.HashMap;
-import java.util.Locale;
-import java.util.Map;
-import java.util.Scanner;
+import java.util.*;
 
 
 @Component
@@ -28,11 +26,11 @@ public class MainMenu {
     OpportunityRepository opportunityRepository;
     SalesRepRepository salesRepRepository;
 
-    public static Map<String, Lead> theLeads = new HashMap<>();
-    public static Map<String, Account> theAccounts = new HashMap<>();
-    public static Map<String, Contact> theContacts = new HashMap<>();
-    public static Map<String, Opportunity> theOpportunities = new HashMap<>();
-    public static Map<String, SalesRep> theSalesReps = new HashMap<>();
+    //public static Map<Long, Lead> theLeads = new HashMap<Long, Lead>();
+    //public static Map<Long, Account> theAccounts = new HashMap<Long, Account>();
+    //public static Map<Long, Contact> theContacts = new HashMap<Long, Contact>();
+    //public static Map<Long, Opportunity> theOpportunities = new HashMap<Long, Opportunity>();
+    //public static Map<String, SalesRep> theSalesReps = new HashMap<>();
 
     Scanner scanner = new Scanner(System.in);
 
@@ -114,7 +112,7 @@ public class MainMenu {
                 + "║ 14. To quit " + colorHeadline + "- type: 'quit'" + colorMain + "                                                                        ║\n"
                 + "╚═══════════════════════════════════════════════════════════════════════════════════════════════════╝\n" + reset);
 
-        //consoleFocusRunOnce();
+        consoleFocusRunOnce();
 
         try {
 
@@ -130,27 +128,27 @@ public class MainMenu {
                 throw new IllegalArgumentException();
             }
             else if (input[0].equals("lookup") && input[1].equals("lead") && input.length>2) {
-                if(!theLeads.containsKey((input[2]).toString())){
+                if(!leadRepository.existsById(Long.parseLong(input[2]))){
                     throw new NoSuchValueException("There is no Lead that matches that id.");
                 }
                 System.out.println(lookUpLeadId(input[2]).toString());
             } else if (input[0].equals("lookup") && input[1].equals("opportunity") && input.length>2) {
-                if(!theOpportunities.containsKey((input[2]).toString())){
+                if(!opportunityRepository.existsById(Long.parseLong(input[2]))){
                     throw new NoSuchValueException("There is no Opportunity that matches that id.");
                 }
                 System.out.println(lookUpOppId(input[2]).toString());
             } else if (input[0].equals("convert")) { // throws null point exception if number not in array
-                if(!theLeads.containsKey((input[1]).toString())){
+                if(!leadRepository.existsById(Long.parseLong(input[1]))){
                     throw new NoSuchValueException("There is no Lead that matches that id.");
                 }
                 createAccount(convertLead(input[1]));
             } else if (input[0].equals("close-lost")) {
-                if(!theOpportunities.containsKey((input[1]).toString())){
+                if(!opportunityRepository.existsById(Long.parseLong(input[1]))){
                     throw new NoSuchValueException("There is no Opportunity that matches that id.");
                 }
                 closeLost(input[1]);
             } else if (input[0].equals("close-won")) {
-                if(!theOpportunities.containsKey((input[1]).toString())){
+                if(!opportunityRepository.existsById(Long.parseLong(input[1]))){
                     throw new NoSuchValueException("There is no Opportunity that matches that id.");
                 }
                 closeWon(input[1]);
@@ -166,6 +164,7 @@ public class MainMenu {
                     case "show" + "salesreps" -> showSalesReps();
                     case "view" + "reports" -> reportMenu();
                     case "main" + "menu" -> OS();
+                    //case "populate" + "database" -> SpringApplication.run(PopulateDatabase.class);
                     default -> throw new IllegalArgumentException();
                 }
             }
@@ -245,9 +244,10 @@ public class MainMenu {
                         }
                     }
 
-                    theLeads.put(newLead.getId(), newLead);
+                    //theLeads.put(newLead.getId(), newLead);
                     System.out.println(colorMain + "\n╔════════════╦═════ " + colorMainBold + "New Lead created" + colorMain + " ══════════════════════╦══════════════════════╦══════════════════════════════════════════╦═════════════════════════════════════════════╗" + reset);
-                    System.out.println(theLeads.get(newLead.getId()));
+                    System.out.println(newLead.toString());
+                    leadRepository.save(newLead);
                     return newLead;
                 }
                 case "n" ->
@@ -266,7 +266,7 @@ public class MainMenu {
     // Method to convert Lead to Opportunity
     public Opportunity convertLead(String id) throws NullPointerException {
 
-        Lead lead = theLeads.get(id);
+        Lead lead = leadRepository.findById(Long.parseLong(id)).get();
         System.out.println(colorInput + "\nWould you like to convert " +
                                    colorTable + lead.getName().toUpperCase() +
                                    colorInput + " from " +
@@ -275,7 +275,7 @@ public class MainMenu {
                                    colorTable + "    y / n " + reset);
 
         try {
-            switch (scanner.nextLine().trim().toLowerCase()) {
+            switch (scanner.nextLine().trim().toLowerCase(Locale.ROOT)) {
                 case "y" -> {
                     Opportunity newOpp = new Opportunity();
 
@@ -312,10 +312,11 @@ public class MainMenu {
                     valid = false;
 
                     Contact newContact = new Contact(lead.getName().toUpperCase(), lead.getPhoneNumber().toUpperCase(), lead.getEmail().toUpperCase(), lead.getCompanyName().toUpperCase()); // Converts lead into contact
+                    contactRepository.save(newContact);
                     newOpp.setDecisionMaker(newContact); // Assigns contact as the decisionMaker
-                    theContacts.put(newContact.getId(), newContact);  // Adds contact to contact Map
-                    theOpportunities.put(newOpp.getId(), newOpp); // Adds Opportunity to opportunities map
-                    theLeads.remove(lead.getId()); // Removes converted lead from Leads map ("Database")
+                    //theContacts.put(newContact.getId(), newContact);  // Adds contact to contact Map
+                    //theOpportunities.put(newOpp.getId(), newOpp); // Adds Opportunity to opportunities map
+                    //theLeads.remove(lead.getId()); // Removes converted lead from Leads map ("Database")
                     System.out.println(colorMain + "\n╔════════════╦═════ " + colorMainBold + "New Opportunity created" + colorMain + " ════════════╦═══════════════════╗" + reset);
                     System.out.printf("%-1s %-17s %-1s %-27s %-1s %-24s %-1s %-24s %-1s\n",
                                       colorMain + "║",
@@ -327,8 +328,8 @@ public class MainMenu {
                                       colorMain + "║",
                                       colorHeadlineBold + "Quantity",
                                       colorMain + "║\n" +
-                                              colorMain + "╠════════════╬══════════════════════╬═══════════════════╬═══════════════════╣");
-                    System.out.println(theOpportunities.get(newOpp.getId()));
+                                      colorMain + "╠════════════╬══════════════════════╬═══════════════════╬═══════════════════╣");
+                    System.out.println(newOpp.toString());
                     System.out.println(colorInput + "Press Enter to continue..." + reset);
                     scanner.nextLine();
                     System.out.println(colorMain + "╔════════════╦═════ " + colorMainBold + "New Contact created" + colorMain + " ═══════════════════╦══════════════════════╦══════════════════════════════════════════╦═════════════════════════════════════════════╗" + reset);
@@ -344,20 +345,24 @@ public class MainMenu {
                                                     colorMain + "║",
                                                     colorHeadlineBold + "Company name",
                                                     colorMain + "║\n" +
-                                                            colorMain + "╠════════════╬═════════════════════════════════════════════╬══════════════════════╬══════════════════════════════════════════╬═════════════════════════════════════════════╣" + reset));
-                    System.out.println(theContacts.get(newContact.getId()));
+                                                    colorMain + "╠════════════╬═════════════════════════════════════════════╬══════════════════════╬══════════════════════════════════════════╬═════════════════════════════════════════════╣" + reset));
+                    System.out.println(newContact.toString());
                     System.out.println(colorInput + "Press Enter to continue..." + reset);
                     scanner.nextLine();
+                    opportunityRepository.save(newOpp);
+                    leadRepository.delete(lead); // Removes lead from repo
+
                     return newOpp;
+                    //createAccount(newContact, newOpp); // Not sure whether to put this here or in Menu
                 }
                 case "n" ->
-                        OS();
+                    OS();
                 default -> throw new IllegalArgumentException(colorError + "Invalid input - please start again" + reset);
             }
         } catch (Exception e) {
 
             System.out.println(colorError + "\nInvalid input - please start again\n" + reset);
-            convertLead(id); // Catches errors and returns to start of method
+            //convertLead(id); // Catches errors and returns to start of method - Is there a simple alternative?
         }
         return null;
     }
@@ -368,12 +373,13 @@ public class MainMenu {
         Scanner scanner = new Scanner(System.in);
         try {
 
-            Account newAccount = new Account(opportunity.getDecisionMaker(), opportunity);
+            Account newAccount = new Account(opportunityRepository.getById(opportunity.getId()).getDecisionMaker(), opportunity);
 
             valid = false;
 
             // checks if restrictions for Industry are met
             while (!valid) {
+
                 System.out.println(colorInput + "\nPlease input the company industry: \n" +
                                            colorTable + "PRODUCE, ECOMMERCE, MANUFACTURING, MEDICAL OR OTHER" + reset);
 
@@ -428,20 +434,29 @@ public class MainMenu {
 
             valid = false;
 
-            theAccounts.put(newAccount.getId(), newAccount); // Adds new account to Accounts Map (database)
-            System.out.println(theAccounts.get(newAccount.getId()));
+
+            //theAccounts.put(newAccount.getId(), newAccount); // Adds new account to Accounts Map (database)
+            //System.out.println(colorMain + "\n ═════════════ New Account Created ═════════════\n");
+            System.out.println(newAccount.toString());
+            newAccount.addContact(opportunity.getDecisionMaker());
+            accountRepository.save(newAccount);
+            opportunity.setAccount(newAccount);
+            opportunityRepository.save(opportunity);
+            //opportunity.getDecisionMaker().setAccount(newAccount);
+            //contactRepository.save(opportunity.getDecisionMaker());
             return newAccount;
         } catch (Exception e) {
 
             System.out.println(colorError + "\nInvalid input - please start again\n" + reset);
-            createAccount(opportunity); // Catches errors and returns to start of method
+            //createAccount(opportunity); // Catches errors and returns to start of method - Is there a better way??
         }
         return null;
     }
 
     // showing all leads
     public void showLeads() {
-        System.out.println(colorMain + "\n╔════════════╦═══ " + colorMainBold + "Total Number Of Leads: " + theLeads.size() + colorMain + " ════════════════╗" + reset);
+        var allLeads = leadRepository.findAllLeads();
+        System.out.println(colorMain + "\n╔════════════╦═══ " + colorMainBold + "Total Number Of Leads: " + allLeads.size() + colorMain + " ════════════════╗" + reset);
         System.out.printf("%-1s %-17s %-1s %-50s %-1s\n",
                           colorMain + "║",
                           colorHeadlineBold + "ID",
@@ -454,19 +469,20 @@ public class MainMenu {
                           "╬",
                           "═════════════════════════════════════════════",
                           "╣" + reset);
-        for (String key : theLeads.keySet()) {
+        for (int i = 0; i<allLeads.size(); i++) {
             System.out.printf("%-1s %-17s %-1s %-50s %-1s\n",
                               colorMain + "║",
-                              colorTable + key,
+                              colorTable + allLeads.get(i)[0],
                               colorMain + "║",
-                              colorTable + theLeads.get(key).getName().toUpperCase(),
+                              colorTable + allLeads.get(i)[1].toString().toUpperCase(Locale.ROOT),
                               colorMain + "║" + reset);
         }
     }
 
     // showing all contacts
     public void showContacts() {
-        System.out.println(colorMain + "\n╔════════════╦════════ " + colorMainBold + "Total Number Of Contacts: " + theContacts.size() + colorMain + " ════════╦══════════════════════════════════════════╗" + reset);
+        var allContacts = contactRepository.findAllContacts();
+        System.out.println(colorMain + "\n╔════════════╦════════ " + colorMainBold + "Total Number Of Contacts: " + allContacts.size() + colorMain + " ════════╦══════════════════════════════════════════╗" + reset);
         System.out.printf("%-1s %-17s %-1s %-50s %-1s %-47s %-1s\n",
                           colorMain + "║",
                           colorHeadlineBold + "ID",
@@ -483,21 +499,21 @@ public class MainMenu {
                           "╬",
                           "══════════════════════════════════════════",
                           "╣" + reset);
-        for (String key : theContacts.keySet()) {
+        for (int i = 0; i<allContacts.size(); i++) {
             System.out.printf("%-1s %-17s %-1s %-50s %-1s %-47s %-1s\n",
                               colorMain + "║",
-                              colorTable + key,
+                              colorTable + allContacts.get(i)[0],
                               colorMain + "║",
-                              colorTable + theContacts.get(key).getName().toUpperCase(),
+                              colorTable + allContacts.get(i)[1].toString().toUpperCase(Locale.ROOT),
                               colorMain + "║",
-                              colorTable + theContacts.get(key).getCompanyName().toUpperCase(),
+                              colorTable + allContacts.get(i)[2].toString().toUpperCase(Locale.ROOT),
                               colorMain + "║" + reset);
         }
     }
 
-    // showing all opportunities
-    public static void showOpportunities() {
-        System.out.println(colorMain + "\n╔════════════╦═════ " + colorMainBold + "Total Number Of Opportunities: " + theOpportunities.size() + colorMain + " ══════╦══════════════════════════════════════════╗" + reset);
+    public void showOpportunities() {
+        var allOpps = opportunityRepository.findAllOpportunities();
+        System.out.println(colorMain + "\n╔════════════╦═════ " + colorMainBold + "Total Number Of Opportunities: " + allOpps.size() + colorMain + " ══════╦══════════════════════════════════════════╗" + reset);
         System.out.printf("%-1s %-17s %-1s %-24s %-1s %-17s %-1s %-17s %-1s %-47s %-1s\n",
                           colorMain + "║",
                           colorHeadlineBold + "ID",
@@ -522,25 +538,25 @@ public class MainMenu {
                           "╬",
                           "══════════════════════════════════════════",
                           "╣" + reset);
-        for (String key : theOpportunities.keySet()) {
+        for (int i = 0; i<allOpps.size(); i++) {
             System.out.printf("%-1s %-17s %-1s %-24s %-1s %-17s %-1s %-17s %-1s %-47s %-1s\n",
                               colorMain + "║",
-                              colorTable + key,
+                              colorTable + allOpps.get(i)[0],
                               colorMain + "║",
-                              colorTable + theOpportunities.get(key).getStatus(),
+                              colorTable + allOpps.get(i)[1].toString().toUpperCase(Locale.ROOT),
                               colorMain + "║",
-                              colorTable + theOpportunities.get(key).getProduct(),
+                              colorTable + allOpps.get(i)[2].toString().toUpperCase(Locale.ROOT),
                               colorMain + "║",
-                              colorTable + theOpportunities.get(key).getQuantity(),
+                              colorTable + allOpps.get(i)[3].toString().toUpperCase(Locale.ROOT),
                               colorMain + "║",
-                              colorTable + theOpportunities.get(key).getDecisionMaker().getName().toUpperCase(),
+                              colorTable + allOpps.get(i)[4].toString().toUpperCase(Locale.ROOT),
                               colorMain + "║" + reset);
         }
     }
 
-    // showing all accounts
-    public static void showAccounts() {
-        System.out.println(colorMain + "\n╔════════════╦═══ " + colorMainBold + "Total Number Of Accounts: " + theAccounts.size() + colorMain + " ═════════════╗" + reset);
+    public void showAccounts() {
+        var allAccs = accountRepository.findAllAccounts();
+        System.out.println(colorMain + "\n╔════════════╦═══ " + colorMainBold + "Total Number Of Accounts: " + allAccs.size() + colorMain + " ═════════════╗" + reset);
         System.out.printf("%-1s %-17s %-1s %-50s %-1s\n",
                           colorMain + "║",
                           colorHeadlineBold + "ID",
@@ -553,40 +569,40 @@ public class MainMenu {
                           "╬",
                           "═════════════════════════════════════════════",
                           "╣" + reset);
-        for (String key : theAccounts.keySet()) {
+        for (int i = 0; i<allAccs.size(); i++) {
             System.out.printf("%-1s %-17s %-1s %-50s %-1s\n",
                               colorMain + "║",
-                              colorTable + key,
+                              colorTable + allAccs.get(i)[0],
                               colorMain + "║",
-                              colorTable + theAccounts.get(key).getCompanyName().toUpperCase(),
+                              colorTable + allAccs.get(i)[1].toString().toUpperCase(Locale.ROOT),
                               colorMain + "║" + reset);
         }
     }
 
-    // lookup lead by Id
-    public Lead lookUpLeadId(String id) throws RuntimeException {
+
+    public String lookUpLeadId(String id) throws RuntimeException {
 
         System.out.println(colorMain + "\n╔════════════╦═════ " + colorMainBold + "Lead details" + colorMain + " ══════════════════════════╦══════════════════════╦══════════════════════════════════════════╦═════════════════════════════════════════════╗" + reset);
-        return theLeads.get(id);
+        return leadRepository.findById(Long.parseLong(id)).toString();
     }
 
     // lookup opportunity by Id
     public String lookUpOppId(String id) throws RuntimeException {
         System.out.println(colorMain + "\n╔════════════╦═══ " + colorMainBold + "Contract details" + colorMain + " ═╦═══════════════════╦═══════════════════╗" + reset);
         System.out.printf("%-1s %-17s %-1s %-27s %-1s %-24s %-1s %-24s %-1s\n",
-                          colorMain + "║",
-                          colorHeadlineBold + "ID",
-                          colorMain + "║",
-                          colorHeadlineBold + "Contract status",
-                          colorMain + "║",
-                          colorHeadlineBold + "Product",
-                          colorMain + "║",
-                          colorHeadlineBold + "Quantity",
-                          colorMain + "║\n" +
-                                  colorMain + "╠════════════╬══════════════════════╬═══════════════════╬═══════════════════╣" + reset);
-        return theOpportunities.get(id) +
-                colorMain + "\n╔════════════╦═══ " + colorMainBold + "Decision maker details" + colorMain + " ══════════════════╦══════════════════════╦══════════════════════════════════════════╦═════════════════════════════════════════════╗\n" + reset +
-                String.format("%-1s %-17s %-1s %-50s %-1s %-27s %-1s %-47s %-1s %-50s %-1s\n",
+                              colorMain + "║",
+                              colorHeadlineBold + "ID",
+                              colorMain + "║",
+                              colorHeadlineBold + "Contract status",
+                              colorMain + "║",
+                              colorHeadlineBold + "Product",
+                              colorMain + "║",
+                              colorHeadlineBold + "Quantity",
+                              colorMain + "║\n" +
+                              colorMain + "╠════════════╬══════════════════════╬═══════════════════╬═══════════════════╣" + reset);
+        return opportunityRepository.findById(Long.parseLong(id)).toString() +
+                            colorMain + "\n╔════════════╦═══ " + colorMainBold + "Decision maker details" + colorMain + " ══════════════════╦══════════════════════╦══════════════════════════════════════════╦═════════════════════════════════════════════╗\n" + reset +
+                            String.format("%-1s %-17s %-1s %-50s %-1s %-27s %-1s %-47s %-1s %-50s %-1s\n",
                               colorMain + "║",
                               colorHeadlineBold + "ID",
                               colorMain + "║",
@@ -597,15 +613,13 @@ public class MainMenu {
                               colorHeadlineBold + "Email Address",
                               colorMain + "║",
                               colorHeadlineBold + "Company name",
-                              colorMain + "║\n" +
-                                      colorMain + "╠════════════╬═════════════════════════════════════════════╬══════════════════════╬══════════════════════════════════════════╬═════════════════════════════════════════════╣\n"
-                                      + reset +
-                                      theOpportunities.get(id).getDecisionMaker());
+                              colorMain + "║\n" + colorMain + "╠════════════╬═════════════════════════════════════════════╬══════════════════════╬══════════════════════════════════════════╬═════════════════════════════════════════════╣\n" + reset +
+                              opportunityRepository.findById(Long.parseLong(id)).get().getDecisionMaker().toString());
     }
 
     //Change opportunity status to LOST
     public void closeLost(String id) {
-        Opportunity opp = theOpportunities.get(id);
+        Opportunity opp = opportunityRepository.findById(Long.parseLong(id)).get();
         System.out.println(colorMain + "\n╔════════════╦═════ " + colorMainBold + "Opportunity details" + colorMain + " ════════════════╦═══════════════════╗" + reset);
         System.out.printf("%-1s %-17s %-1s %-27s %-1s %-24s %-1s %-24s %-1s\n",
                           colorMain + "║",
@@ -625,6 +639,7 @@ public class MainMenu {
             switch (scanner.nextLine().trim().toLowerCase(Locale.ROOT)) {
                 case "y" -> {
                     opp.setStatus(Status.CLOSED_LOST);
+                    opportunityRepository.save(opp); //does it override or creates a new instance?
                     System.out.println(colorMain + "\n═════════════ " + colorMainBold + "Status Changed!" + colorMain + " ═════════════" + reset);
                 }
                 case "n" ->
@@ -641,7 +656,7 @@ public class MainMenu {
 
     //Change opportunity status to Won
     public void closeWon(String id) {
-        Opportunity opp = theOpportunities.get(id);
+        Opportunity opp = opportunityRepository.findById(Long.parseLong(id)).get();
         System.out.println(colorMain + "\n╔════════════╦═════ " + colorMainBold + "Opportunity details" + colorMain + " ════════════════╦═══════════════════╗" + reset);
         System.out.printf("%-1s %-17s %-1s %-27s %-1s %-24s %-1s %-24s %-1s\n",
                           colorMain + "║",
@@ -661,6 +676,7 @@ public class MainMenu {
             switch (scanner.nextLine().trim().toLowerCase(Locale.ROOT)) {
                 case "y" -> {
                     opp.setStatus(Status.CLOSED_WON);
+                    opportunityRepository.save(opp);
                     System.out.println(colorMain + "\n═════════════ " + colorMainBold + "Status Changed!" + colorMain + " ═════════════" + reset);
                 }
                 case "n" ->
@@ -725,7 +741,7 @@ public class MainMenu {
 
                     valid = false;
                     salesRepRepository.save(newSalesRep);
-                    theSalesReps.put(newSalesRep.getId().toString(), newSalesRep);
+                    //theSalesReps.put(newSalesRep.getId().toString(), newSalesRep);
                     System.out.println(colorMain + "\n╔════════════╦═══ " + colorMainBold + "New Sales Representative created" + colorMain + " ════════╗" + reset);
                     System.out.printf("%-1s %-17s %-1s %-50s %-1s\n",
                             colorMain + "║",
@@ -748,8 +764,9 @@ public class MainMenu {
         return null;
     }
 
-    public static void showSalesReps() {
-        System.out.println(colorMain + "\n╔════════════╦═══ " + colorMainBold + "Total Number Of Sales Representatives: " + theSalesReps.size() + colorMain + " ╗" + reset);
+    public void showSalesReps() {
+        var allReps = salesRepRepository.findAllSalesreps();
+        System.out.println(colorMain + "\n╔════════════╦═══ " + colorMainBold + "Total Number Of Sales Representatives: " + allReps.size() + colorMain + " ╗" + reset);
         System.out.printf("%-1s %-17s %-1s %-50s %-1s\n",
                 colorMain + "║",
                 colorHeadlineBold + "ID",
@@ -762,20 +779,18 @@ public class MainMenu {
                 "╬",
                 "═════════════════════════════════════════════",
                 "╣" + reset);
-        for (String key : theSalesReps.keySet()) {
+        for (int i = 0; i<allReps.size(); i++) {
             System.out.printf("%-1s %-17s %-1s %-50s %-1s\n",
                     colorMain + "║",
-                    colorTable + key,
+                    colorTable + allReps.get(i)[0],
                     colorMain + "║",
-                    colorTable + theSalesReps.get(key).getRepName().toUpperCase(),
+                    colorTable + allReps.get(i)[1].toString().toUpperCase(Locale.ROOT),
                     colorMain + "║" + reset);
         }
     }
 
 
     public void reportMenu() throws NoSuchValueException, AWTException {
-
-        Scanner scanner = new Scanner(System.in);
 
         System.out.println("\n" + colorHeadline + colorLogo
                 + "                                                                                                \n" +
@@ -1121,7 +1136,7 @@ public class MainMenu {
                                    + "║ 7.  To quit " + colorHeadline + "- type: 'quit'" + colorMain + "                                                                        ║\n"
                                    + "╚═══════════════════════════════════════════════════════════════════════════════════════════════════╝\n" + reset);
 
-        //consoleFocusRunOnce();
+        consoleFocusRunOnce();
 
         try {
 
@@ -1130,7 +1145,8 @@ public class MainMenu {
 
             if (input[0].equals("quit")) {
                 System.out.println(colorMainBold + "\nThank you for using our LBL CRM SYSTEM!" + reset);
-                throw new RuntimeException(colorError + "Exiting the program" + reset);
+                System.out.println(colorError + "Exiting the program" + reset);
+                System.exit(0);
             }else if (input[0].equals("lookup") && input[1].equals("lead")) {
                 System.out.println(lookUpLeadId(input[2]).toString());
             } else if (input[0].equals("lookup") && input[1].equals("opportunity")) {
@@ -1138,7 +1154,6 @@ public class MainMenu {
             } else {
 
                 switch (input[0] + input[1]) {
-                    //String x = input.substring(input.indexOf("Lead") + 3, input.length());
                     case "new" + "lead" -> newLead();
                     case "show" + "leads" -> showLeads();
                     case "show" + "opportunities" -> showOpportunities();
