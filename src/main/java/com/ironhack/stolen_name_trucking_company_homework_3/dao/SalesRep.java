@@ -7,6 +7,8 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.hibernate.annotations.LazyCollection;
+import org.hibernate.annotations.LazyCollectionOption;
 
 import javax.persistence.*;
 import java.util.ArrayList;
@@ -27,11 +29,16 @@ public class SalesRep {
     @Column(name="sales_rep_name")
     private String repName;
 
-    @OneToMany(mappedBy = "salesRep", fetch = FetchType.EAGER, cascade = CascadeType.ALL, orphanRemoval = true)
+    @LazyCollection(LazyCollectionOption.FALSE)
+    @OneToMany(mappedBy = "salesRep", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Lead> leadList = new ArrayList<>();
 
     @OneToMany(mappedBy = "salesRep")
     private List<Opportunity> opportunityList = new ArrayList<>();
+
+    public SalesRep(String repName) {
+        this.repName = repName;
+    }
 
     public SalesRep addLead(Lead lead) {
         leadList.add(lead);
@@ -45,9 +52,8 @@ public class SalesRep {
         return this;
     }
 
-    public SalesRep(String name){
-        setRepName(name);
-    }
+
+
 
     public void setName(String repName) throws NameContainsNumbersException, EmptyStringException, ExceedsMaxLength {
         if (repName.isEmpty()) {

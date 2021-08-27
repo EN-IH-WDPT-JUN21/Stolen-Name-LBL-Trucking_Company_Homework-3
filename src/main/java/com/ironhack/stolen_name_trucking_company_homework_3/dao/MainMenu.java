@@ -25,18 +25,7 @@ public class MainMenu {
     OpportunityRepository opportunityRepository;
     SalesRepRepository salesRepRepository;
 
-    //public static Map<Long, Lead> theLeads = new HashMap<Long, Lead>();
-    //public static Map<Long, Account> theAccounts = new HashMap<Long, Account>();
-    //public static Map<Long, Contact> theContacts = new HashMap<Long, Contact>();
-    //public static Map<Long, Opportunity> theOpportunities = new HashMap<Long, Opportunity>();
-    //public static Map<String, SalesRep> theSalesReps = new HashMap<>();
-
     Scanner scanner = new Scanner(System.in);
-    Scanner scanner2 = new Scanner(System.in);
-
-    public MainMenu() {
-
-    }
 
     enum consoleTextColor {
         ANSI_BLACK("\033[0;30m"),
@@ -88,7 +77,6 @@ public class MainMenu {
     public void OS() throws RuntimeException, AWTException, NoSuchValueException {
 
         Scanner scanner = new Scanner(System.in);
-        Scanner scanner2 = new Scanner(System.in);
 
         System.out.println("\n" + colorHeadline + colorLogo
                 + "                                                                                                \n" +
@@ -201,6 +189,7 @@ public class MainMenu {
             switch (scanner.nextLine().trim().toLowerCase(Locale.ROOT)) {
                 case "y" -> {
                     Lead newLead = new Lead();
+                    leadRepository.save(newLead);
 
                     //asks and validates customer's name
                     while (!valid) {
@@ -208,11 +197,7 @@ public class MainMenu {
                         try {
                             newLead.setName(scanner.nextLine().trim().toUpperCase());
                             valid = true;
-                        } catch (EmptyStringException e) {
-                            System.out.println(colorError + e.getMessage());
-                        } catch (NameContainsNumbersException e) {
-                            System.out.println(colorError + e.getMessage());
-                        } catch (ExceedsMaxLength e) {
+                        } catch (EmptyStringException | NameContainsNumbersException | ExceedsMaxLength e) {
                             System.out.println(colorError + e.getMessage());
                         }
                     }
@@ -225,11 +210,7 @@ public class MainMenu {
                         try{
                             newLead.setPhoneNumber(scanner.nextLine().trim().toUpperCase());
                             valid = true;
-                        }catch (EmptyStringException e) {
-                            System.out.println(colorError + e.getMessage());
-                        } catch (PhoneNumberContainsLettersException e) {
-                            System.out.println(colorError + e.getMessage());
-                        } catch (ExceedsMaxLength e) {
+                        }catch (EmptyStringException | PhoneNumberContainsLettersException | ExceedsMaxLength e) {
                             System.out.println(colorError + e.getMessage());
                         }
                     }
@@ -243,11 +224,7 @@ public class MainMenu {
                         try {
                             newLead.setEmail(scanner.nextLine().trim().toUpperCase());
                             valid = true;
-                        }catch (EmptyStringException e) {
-                            System.out.println(colorError + e.getMessage());
-                        } catch (EmailNotValidException e) {
-                            System.out.println(colorError + e.getMessage());
-                        } catch (ExceedsMaxLength e) {
+                        }catch (EmptyStringException | EmailNotValidException | ExceedsMaxLength e) {
                             System.out.println(colorError + e.getMessage());
                         }
                     }
@@ -261,9 +238,7 @@ public class MainMenu {
                         try {
                             newLead.setCompanyName(scanner.nextLine().trim().toUpperCase());
                             valid = true;
-                        }catch(EmptyStringException e){
-                            System.out.println(colorError + e.getMessage());
-                        } catch (ExceedsMaxLength e) {
+                        }catch(EmptyStringException | ExceedsMaxLength e){
                             System.out.println(colorError + e.getMessage());
                         }
 
@@ -304,6 +279,7 @@ public class MainMenu {
             switch (scanner.nextLine().trim().toLowerCase(Locale.ROOT)) {
                 case "y" -> {
                     Opportunity newOpp = new Opportunity();
+                    opportunityRepository.save(newOpp);
 
                     valid = false;
 
@@ -313,9 +289,7 @@ public class MainMenu {
                         try {
                             newOpp.setTruck(Truck.getTruck(scanner.nextLine().trim().toUpperCase(Locale.ROOT)));
                             valid = true;
-                        }catch (EmptyStringException e) {
-                            System.out.println(colorError + e.getMessage());
-                        } catch (InvalidEnumException e) {
+                        }catch (EmptyStringException | InvalidEnumException e) {
                             System.out.println(colorError + e.getMessage());
                         }
                     }
@@ -377,12 +351,10 @@ public class MainMenu {
                     System.out.println(newContact.toString());
                     System.out.println(colorInput + "Press Enter to continue..." + reset);
                     scanner.nextLine();
-                    newOpp.getSalesRep().removeLead(lead);
-                    //leadRepository.delete(lead);// Removes lead from repo?
+                    leadRepository.delete(lead);// Removes lead from repo?
                     opportunityRepository.save(newOpp);
 
                     return newOpp;
-                    //createAccount(newContact, newOpp); // Not sure whether to put this here or in Menu
                 }
                 case "n" ->
                     OS();
@@ -401,8 +373,10 @@ public class MainMenu {
         System.out.println(colorMain + "\n═════════════ " + colorMainBold + "Creating new Account" + colorMain + " ═════════════");
         Scanner scanner = new Scanner(System.in);
         try {
+            System.out.println(accountRepository.count());
             Account newAccount = new Account(opportunity.getDecisionMaker(), opportunity);
-
+            accountRepository.save(newAccount);
+            System.out.println("after additiona" + accountRepository.count());
             valid = false;
 
             while (!valid) {
@@ -413,9 +387,7 @@ public class MainMenu {
                 try {
                     newAccount.setIndustry(Industry.getIndustry(scanner.nextLine().trim().toUpperCase(Locale.ROOT))); // ENUM Selection
                     valid = true;
-                } catch (EmptyStringException e) {
-                    System.out.println(colorError + e.getMessage());
-                } catch (InvalidEnumException e) {
+                } catch (EmptyStringException | InvalidEnumException e) {
                     System.out.println(colorError + e.getMessage());
                 }
             }
@@ -442,11 +414,7 @@ public class MainMenu {
                 try {
                     newAccount.setCity(scanner.nextLine().trim().toUpperCase(Locale.ROOT));
                     valid = true;
-                }catch (EmptyStringException e) {
-                    System.out.println(colorError + e.getMessage());
-                } catch (NameContainsNumbersException e) {
-                    System.out.println(colorError + e.getMessage());
-                } catch (ExceedsMaxLength e) {
+                }catch (EmptyStringException | NameContainsNumbersException | ExceedsMaxLength e) {
                     System.out.println(colorError + e.getMessage());
                 }
             }
@@ -457,25 +425,18 @@ public class MainMenu {
                 try {
                     newAccount.setCountry(scanner.nextLine().trim().toUpperCase());
                     valid = true;
-                } catch (EmptyStringException e) {
-                    System.out.println(colorError + e.getMessage());
-                }catch(ExceedsMaxLength e){
-                    System.out.println(colorError + e.getMessage());
-                }catch(InvalidCountryException e){
+                } catch (EmptyStringException | ExceedsMaxLength | InvalidCountryException e) {
                     System.out.println(colorError + e.getMessage());
                 }
             }
 
             valid = false;
+            // Setting account on contact
+            opportunity.getDecisionMaker().setAccount(newAccount);
+            contactRepository.save(opportunity.getDecisionMaker());
 
-
-            //theAccounts.put(newAccount.getId(), newAccount); // Adds new account to Accounts Map (database)
-            //System.out.println(colorMain + "\n ═════════════ New Account Created ═════════════\n");
-            System.out.println(newAccount.toString());
-            //newAccount.addContact(opportunity.getDecisionMaker());
             accountRepository.save(newAccount);
-            opportunity.setAccount(newAccount);
-            opportunityRepository.save(opportunity);
+            System.out.println(newAccount.toString());
 
             return newAccount;
         } catch (Exception e) {
@@ -764,11 +725,7 @@ public class MainMenu {
                         try {
                             newSalesRep.setName(scanner.nextLine().trim().toUpperCase());
                             valid = true;
-                        } catch (EmptyStringException e) {
-                            System.out.println(colorError + e.getMessage());
-                        } catch (NameContainsNumbersException e) {
-                            System.out.println(colorError + e.getMessage());
-                        } catch (ExceedsMaxLength e) {
+                        } catch (EmptyStringException | ExceedsMaxLength | NameContainsNumbersException e) {
                             System.out.println(colorError + e.getMessage());
                         }
                     }

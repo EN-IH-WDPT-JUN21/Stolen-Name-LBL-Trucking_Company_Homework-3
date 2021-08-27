@@ -66,20 +66,6 @@ class AccountRepositoryTest {
                 new Account(Industry.MANUFACTURING, 20, "Paris", "FRANCE",contacts.get(2), opportunities.get(2))
         ));
 
-
-
-
-
-        opportunities.get(0).setAccount(accounts.get(0));
-        opportunityRepository.save(opportunities.get(0));
-        opportunities.get(1).setAccount(accounts.get(1));
-        opportunityRepository.save(opportunities.get(1));
-        opportunities.get(2).setAccount(accounts.get(2));
-        opportunityRepository.save(opportunities.get(2));
-
-
-
-
     }
 
     @AfterEach

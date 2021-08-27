@@ -5,6 +5,7 @@ import com.ironhack.stolen_name_trucking_company_homework_3.enums.Truck;
 import com.ironhack.stolen_name_trucking_company_homework_3.exceptions.ExceedsMaxLength;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
@@ -12,6 +13,7 @@ import javax.persistence.*;
 @Setter
 @Getter
 @AllArgsConstructor
+@NoArgsConstructor
 @Entity
 @Table(name = "opportunity")
 public class Opportunity {
@@ -50,8 +52,6 @@ public class Opportunity {
     private static final String colorHeadlineBold = "\033[1;34m";
     private static final String reset = "\u001B[0m";
 
-    public Opportunity() {
-    }
 
     public Opportunity(Truck product, int quantity, Contact decisionMaker) throws ExceedsMaxLength {
         setTruck(product);
@@ -66,29 +66,12 @@ public class Opportunity {
         setSalesRep(salesRep);
     }
 
-    //public Long getId() {
-        //return id;
-    //}
-
     public Truck getProduct() {
         return product;
     }
 
     public void setTruck(Truck product) {
         this.product = product;
-    }
-
-    public Contact getDecisionMaker() {
-        return decisionMaker;
-    }
-
-    public void setDecisionMaker(Contact decisionMaker) {
-        this.decisionMaker = decisionMaker;
-    }
-
-
-    public int getQuantity() {
-        return quantity;
     }
 
     public void setQuantity(int quantity) throws ExceedsMaxLength {

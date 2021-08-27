@@ -3,12 +3,15 @@ package com.ironhack.stolen_name_trucking_company_homework_3.dao;//For creating 
 import com.ironhack.stolen_name_trucking_company_homework_3.exceptions.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.apache.commons.validator.routines.EmailValidator;
 
 import javax.persistence.*;
 
 @Entity
+@AllArgsConstructor
+@NoArgsConstructor
 @Setter
 @Getter
 @Table(name = "leads")
@@ -41,8 +44,6 @@ public class Lead {
     private static final String colorHeadlineBold = "\033[1;34m";
     private static final String reset = "\u001B[0m";
 
-    public Lead() {
-    }
 
     public Lead(String name, String phoneNumber, String email, String companyName) throws NameContainsNumbersException, EmptyStringException, PhoneNumberContainsLettersException, EmailNotValidException, ExceedsMaxLength {
         setName(name);
@@ -60,10 +61,6 @@ public class Lead {
         setSalesRep(salesRep);
     }
 
-    public String getName() {
-        return name;
-    }
-
     public void setName(String name) throws NameContainsNumbersException, EmptyStringException, ExceedsMaxLength {
         if (name.isEmpty()) {
             throw new EmptyStringException("No name input. Please try again.");
@@ -75,10 +72,6 @@ public class Lead {
         }
 
         this.name = name;
-    }
-
-    public String getPhoneNumber() {
-        return phoneNumber;
     }
 
     public void setPhoneNumber(String phoneNumber) throws EmptyStringException, PhoneNumberContainsLettersException, ExceedsMaxLength {
@@ -127,10 +120,6 @@ public class Lead {
         this.companyName = companyName;
     }
 
-
-    public Long getId() {
-        return id;
-    }
 
     public String toString() {
         System.out.printf(String.format("%-1s %-17s %-1s %-50s %-1s %-27s %-1s %-47s %-1s %-50s %-1s \n",

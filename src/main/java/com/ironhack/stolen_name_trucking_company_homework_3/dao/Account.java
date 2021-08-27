@@ -7,7 +7,10 @@ import com.ironhack.stolen_name_trucking_company_homework_3.exceptions.InvalidCo
 import com.ironhack.stolen_name_trucking_company_homework_3.exceptions.NameContainsNumbersException;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.hibernate.annotations.LazyCollection;
+import org.hibernate.annotations.LazyCollectionOption;
 
 import javax.persistence.*;
 import java.util.ArrayList;
@@ -16,6 +19,7 @@ import java.util.List;
 
 @Getter
 @AllArgsConstructor
+@NoArgsConstructor
 @Entity
 @Setter
 @Table(name = "account")
@@ -36,7 +40,8 @@ public class Account {
     @OneToMany(mappedBy = "account")
     private List<Contact> contactList = new ArrayList<>();
 
-    @OneToMany(mappedBy = "account", fetch = FetchType.EAGER)
+    @LazyCollection(LazyCollectionOption.FALSE)
+    @OneToMany(mappedBy = "account")
     private List<Opportunity> opportunityList = new ArrayList<>();
 
     private static final String colorMain = "\u001B[33m";
@@ -44,9 +49,6 @@ public class Account {
     private static final String colorTable = "\u001B[32m";
     private static final String colorHeadlineBold = "\033[1;34m";
     private static final String reset = "\u001B[0m";
-
-    public Account() {
-    }
 
     public Account(Contact contact, Opportunity opportunity){
         addContact(contact);
@@ -63,21 +65,6 @@ public class Account {
         addOpportunity(opportunity);
     }
 
-    public Long getId() {
-        return id;
-    }
-
-    public Industry getIndustry() {
-        return industry;
-    }
-
-    public void setIndustry(Industry industry) {
-        this.industry = industry;
-    }
-
-    public int getEmployeeCount() {
-        return employeeCount;
-    }
 
     public void setEmployeeCount(int employeeCount) throws ExceedsMaxLength {
         if (employeeCount <= 0) {
@@ -87,9 +74,6 @@ public class Account {
         this.employeeCount = employeeCount;
     }
 
-    public String getCity() {
-        return city;
-    }
 
     public void setCity(String city) throws EmptyStringException, NameContainsNumbersException, IllegalArgumentException, ExceedsMaxLength {
         if (city.isEmpty()) {
@@ -103,10 +87,6 @@ public class Account {
         }
 
         this.city = city;
-    }
-
-    public String getCountry() {
-        return country;
     }
 
     public void setCountry(String country) throws InvalidCountryException, EmptyStringException, ExceedsMaxLength {

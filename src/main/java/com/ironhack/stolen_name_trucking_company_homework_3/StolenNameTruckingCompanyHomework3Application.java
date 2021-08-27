@@ -35,6 +35,12 @@ public class StolenNameTruckingCompanyHomework3Application implements CommandLin
 					new SalesRep("Martha Stewart")
 			));
 
+			List<Lead> leads = leadRepository.saveAll(List.of(
+					new Lead("Jane Doe", "123475227", "sadas@beta.uk", "Galactic", salesReps.get(0)),
+					new Lead("Maurice Steward", "123467357", "dsaas@wp.pl", "Tesla", salesReps.get(1)),
+					new Lead("Georgia Truman", "292334790", "thisisverylong@gmail.com", "Trumpy",salesReps.get(0))
+			));
+
 
 			List<Contact> contacts = contactRepository.saveAll(List.of(
 					new Contact("John Doe", "123475357", "alfa@beta.uk", "Kałasznikow", salesReps.get(0)),
