@@ -373,10 +373,8 @@ public class MainMenu {
         System.out.println(colorMain + "\n═════════════ " + colorMainBold + "Creating new Account" + colorMain + " ═════════════");
         Scanner scanner = new Scanner(System.in);
         try {
-            System.out.println(accountRepository.count());
             Account newAccount = new Account(opportunity.getDecisionMaker(), opportunity);
             accountRepository.save(newAccount);
-            System.out.println("after additiona" + accountRepository.count());
             valid = false;
 
             while (!valid) {
@@ -431,7 +429,8 @@ public class MainMenu {
             }
 
             valid = false;
-            // Setting account on contact
+
+            // Assigns the Account to the contact(decision maker) of the opportunity
             opportunity.getDecisionMaker().setAccount(newAccount);
             contactRepository.save(opportunity.getDecisionMaker());
 
