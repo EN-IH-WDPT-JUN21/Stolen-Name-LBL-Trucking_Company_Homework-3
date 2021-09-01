@@ -98,8 +98,10 @@ public class MainMenu {
                 + "║ 10. To check Contact list " + colorHeadline + "- type: 'show contacts'" + colorMain + "                                                 ║\n"
                 + "║ 11. To check Account list " + colorHeadline + "- type: 'show accounts'" + colorMain + "                                                 ║\n"
                 + "║ 12. To check Sales Representatives list " + colorHeadline + "- type: 'show salesreps'" + colorMain + "                                  ║\n"
-                + "║ 13. To check available Reports " + colorHeadline + "- type: 'view reports'" + colorMain + "                                             ║\n" //shall we create another 'menu' explaining reporting options?
-                + "║ 14. To quit " + colorHeadline + "- type: 'quit'" + colorMain + "                                                                        ║\n"
+                + "║ 13. To check available Reports " + colorHeadline + "- type: 'view reports'" + colorMain + "                                             ║\n"
+                + "║ 14. To populate Database " + colorHeadline + "- type: 'populate'" + colorMain + "                                                       ║\n"
+                + "║ 15. To clear Database " + colorHeadline + "- type: 'clear'" + colorMain + "                                                             ║\n"
+                + "║ 16. To quit " + colorHeadline + "- type: 'quit'" + colorMain + "                                                                        ║\n"
                 + "╚═══════════════════════════════════════════════════════════════════════════════════════════════════╝\n" + reset);
 
         consoleFocusRunOnce();
