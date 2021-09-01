@@ -16,8 +16,12 @@ public class SalesRepService {
     public void addLeadToDb(Lead lead){
         leadRepository.save(lead);
     }
+    //Not currently sure we need this
+    public void removeLeadFromDb(Lead lead){
+        leadRepository.delete(lead);
+    }
 
-    public void addSalesRep(SalesRep salesRep){
+   public void addSalesRep(SalesRep salesRep){
         salesRepRepository.save(salesRep);
     }
 }

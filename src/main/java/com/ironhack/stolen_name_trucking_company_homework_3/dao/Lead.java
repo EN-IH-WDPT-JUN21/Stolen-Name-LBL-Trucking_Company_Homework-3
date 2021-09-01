@@ -3,17 +3,24 @@ package com.ironhack.stolen_name_trucking_company_homework_3.dao;//For creating 
 import com.ironhack.stolen_name_trucking_company_homework_3.exceptions.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.apache.commons.validator.routines.EmailValidator;
 
 import javax.persistence.*;
 
 @Entity
+@AllArgsConstructor
+@NoArgsConstructor
 @Setter
 @Getter
 @Table(name = "leads")
-@Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
-public class Lead extends ClientInformation {
+@Inheritance(strategy = InheritanceType.JOINED)
+public class Lead {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    protected Long id;
 
     @Column(name="contact_name")
     protected String name;
@@ -37,8 +44,6 @@ public class Lead extends ClientInformation {
     private static final String colorHeadlineBold = "\033[1;34m";
     private static final String reset = "\u001B[0m";
 
-    public Lead() {
-    }
 
     public Lead(String name, String phoneNumber, String email, String companyName) throws NameContainsNumbersException, EmptyStringException, PhoneNumberContainsLettersException, EmailNotValidException, ExceedsMaxLength {
         setName(name);
@@ -56,10 +61,6 @@ public class Lead extends ClientInformation {
         setSalesRep(salesRep);
     }
 
-    public String getName() {
-        return name;
-    }
-
     public void setName(String name) throws NameContainsNumbersException, EmptyStringException, ExceedsMaxLength {
         if (name.isEmpty()) {
             throw new EmptyStringException("No name input. Please try again.");
@@ -71,10 +72,6 @@ public class Lead extends ClientInformation {
         }
 
         this.name = name;
-    }
-
-    public String getPhoneNumber() {
-        return phoneNumber;
     }
 
     public void setPhoneNumber(String phoneNumber) throws EmptyStringException, PhoneNumberContainsLettersException, ExceedsMaxLength {
@@ -124,10 +121,6 @@ public class Lead extends ClientInformation {
     }
 
 
-    public String getId() {
-        return id;
-    }
-
     public String toString() {
         System.out.printf(String.format("%-1s %-17s %-1s %-50s %-1s %-27s %-1s %-47s %-1s %-50s %-1s \n",
                                         colorMain + "║",
@@ -141,8 +134,8 @@ public class Lead extends ClientInformation {
                                         colorMain + "║",
                                         colorHeadlineBold + "Company Name",
                                         colorMain + "║\n" +
-                                        colorMain + "╠════════════╬═════════════════════════════════════════════╬══════════════════════╬══════════════════════════════════════════╬═════════════════════════════════════════════╣"
-                                        + reset));
+                                                colorMain + "╠════════════╬═════════════════════════════════════════════╬══════════════════════╬══════════════════════════════════════════╬═════════════════════════════════════════════╣"
+                                                + reset));
         return  String.format("%-1s %-15s %-1s %-48s %-1s %-25s %-1s %-45s %-1s %-48s %-1s\n",
                               colorMain + "║",
                               colorTable + getId(),

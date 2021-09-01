@@ -1,0 +1,820 @@
+2021-08-14 17:36:33.709  INFO 3704 --- [main] nNameTruckingCompanyHomework3Application : Starting StolenNameTruckingCompanyHomework3Application using Java 16.0.1 on 192.168.1.113 with PID 3704 (/Users/natikyo/IdeaProjects/Stolen-Name-LBL-Trucking_Company_Homework-3/target/classes started by natikyo in /Users/natikyo/IdeaProjects/Stolen-Name-LBL-Trucking_Company_Homework-3)
+2021-08-14 17:36:33.712  INFO 3704 --- [main] nNameTruckingCompanyHomework3Application : No active profile set, falling back to default profiles: default
+2021-08-14 17:36:35.008  INFO 3704 --- [main] .s.d.r.c.RepositoryConfigurationDelegate : Multiple Spring Data modules found, entering strict repository configuration mode!
+2021-08-14 17:36:35.012  INFO 3704 --- [main] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JDBC repositories in DEFAULT mode.
+2021-08-14 17:36:35.074  INFO 3704 --- [main] .RepositoryConfigurationExtensionSupport : Spring Data JDBC - Could not safely identify store assignment for repository candidate interface com.ironhack.stolen_name_trucking_company_homework_3.repository.AccountRepository. If you want this repository to be a JDBC repository, consider annotating your entities with one of these annotations: org.springframework.data.relational.core.mapping.Table.
+2021-08-14 17:36:35.080  INFO 3704 --- [main] .RepositoryConfigurationExtensionSupport : Spring Data JDBC - Could not safely identify store assignment for repository candidate interface com.ironhack.stolen_name_trucking_company_homework_3.repository.ContactRepository. If you want this repository to be a JDBC repository, consider annotating your entities with one of these annotations: org.springframework.data.relational.core.mapping.Table.
+2021-08-14 17:36:35.082  INFO 3704 --- [main] .RepositoryConfigurationExtensionSupport : Spring Data JDBC - Could not safely identify store assignment for repository candidate interface com.ironhack.stolen_name_trucking_company_homework_3.repository.LeadRepository. If you want this repository to be a JDBC repository, consider annotating your entities with one of these annotations: org.springframework.data.relational.core.mapping.Table.
+2021-08-14 17:36:35.084  INFO 3704 --- [main] .RepositoryConfigurationExtensionSupport : Spring Data JDBC - Could not safely identify store assignment for repository candidate interface com.ironhack.stolen_name_trucking_company_homework_3.repository.OpportunityRepository. If you want this repository to be a JDBC repository, consider annotating your entities with one of these annotations: org.springframework.data.relational.core.mapping.Table.
+2021-08-14 17:36:35.088  INFO 3704 --- [main] .RepositoryConfigurationExtensionSupport : Spring Data JDBC - Could not safely identify store assignment for repository candidate interface com.ironhack.stolen_name_trucking_company_homework_3.repository.SalesRepRepository. If you want this repository to be a JDBC repository, consider annotating your entities with one of these annotations: org.springframework.data.relational.core.mapping.Table.
+2021-08-14 17:36:35.090  INFO 3704 --- [main] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 71 ms. Found 0 JDBC repository interfaces.
+2021-08-14 17:36:35.118  INFO 3704 --- [main] .s.d.r.c.RepositoryConfigurationDelegate : Multiple Spring Data modules found, entering strict repository configuration mode!
+2021-08-14 17:36:35.121  INFO 3704 --- [main] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2021-08-14 17:36:35.209  INFO 3704 --- [main] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 71 ms. Found 5 JPA repository interfaces.
+2021-08-14 17:36:36.055  INFO 3704 --- [main] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [name: default]
+2021-08-14 17:36:36.140  INFO 3704 --- [main] org.hibernate.Version                    : HHH000412: Hibernate ORM core version 5.4.32.Final
+2021-08-14 17:36:36.452  INFO 3704 --- [main] o.hibernate.annotations.common.Version   : HCANN000001: Hibernate Commons Annotations {5.1.2.Final}
+2021-08-14 17:36:36.635  INFO 3704 --- [main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
+2021-08-14 17:36:37.544  INFO 3704 --- [main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.
+2021-08-14 17:36:37.631  INFO 3704 --- [main] org.hibernate.dialect.Dialect            : HHH000400: Using dialect: org.hibernate.dialect.MySQL8Dialect
+2021-08-14 17:36:39.212 DEBUG 3704 --- [main] org.hibernate.SQL                        : 
+    
+    alter table contact 
+       drop 
+       foreign key FK3ctagodg5h629t8ltnam39l5w
+2021-08-14 17:36:39.234 DEBUG 3704 --- [main] org.hibernate.SQL                        : 
+    
+    alter table contact 
+       drop 
+       foreign key FK_35aqn65x7cpxjaot6msrtegyj
+2021-08-14 17:36:39.300 DEBUG 3704 --- [main] org.hibernate.SQL                        : 
+    
+    alter table leads 
+       drop 
+       foreign key FKfxo14wqvkc8ba27nyy13owb14
+2021-08-14 17:36:39.309 DEBUG 3704 --- [main] org.hibernate.SQL                        : 
+    
+    alter table opportunity 
+       drop 
+       foreign key FK9mvhqgny93la8u8k2gd531nex
+2021-08-14 17:36:39.321 DEBUG 3704 --- [main] org.hibernate.SQL                        : 
+    
+    alter table opportunity 
+       drop 
+       foreign key FKo5iiy8cn6h1f2kae3s49yteot
+2021-08-14 17:36:39.332 DEBUG 3704 --- [main] org.hibernate.SQL                        : 
+    
+    alter table opportunity 
+       drop 
+       foreign key FK4k71m0964k1f2505y0vtta83l
+2021-08-14 17:36:39.345 DEBUG 3704 --- [main] org.hibernate.SQL                        : 
+    
+    drop table if exists account
+2021-08-14 17:36:39.360 DEBUG 3704 --- [main] org.hibernate.SQL                        : 
+    
+    drop table if exists contact
+2021-08-14 17:36:39.370 DEBUG 3704 --- [main] org.hibernate.SQL                        : 
+    
+    drop table if exists leads
+2021-08-14 17:36:39.381 DEBUG 3704 --- [main] org.hibernate.SQL                        : 
+    
+    drop table if exists opportunity
+2021-08-14 17:36:39.392 DEBUG 3704 --- [main] org.hibernate.SQL                        : 
+    
+    drop table if exists sales_rep
+2021-08-14 17:36:39.409 DEBUG 3704 --- [main] org.hibernate.SQL                        : 
+    
+    create table account (
+       id varchar(255) not null,
+        city varchar(255),
+        country varchar(255),
+        employee_count integer,
+        industry varchar(255),
+        primary key (id)
+    ) engine=InnoDB
+2021-08-14 17:36:39.430 DEBUG 3704 --- [main] org.hibernate.SQL                        : 
+    
+    create table contact (
+       id varchar(255) not null,
+        company_name varchar(255),
+        email varchar(255),
+        contact_name varchar(255),
+        phone_number varchar(255),
+        sales_rep_id bigint,
+        account_id varchar(255),
+        primary key (id)
+    ) engine=InnoDB
+2021-08-14 17:36:39.445 DEBUG 3704 --- [main] org.hibernate.SQL                        : 
+    
+    create table leads (
+       id varchar(255) not null,
+        company_name varchar(255),
+        email varchar(255),
+        contact_name varchar(255),
+        phone_number varchar(255),
+        sales_rep_id bigint,
+        primary key (id)
+    ) engine=InnoDB
+2021-08-14 17:36:39.484 DEBUG 3704 --- [main] org.hibernate.SQL                        : 
+    
+    create table opportunity (
+       id varchar(255) not null,
+        product varchar(255),
+        quantity integer not null,
+        status varchar(255),
+        account_id varchar(255),
+        contact_id varchar(255),
+        sales_rep_id bigint,
+        primary key (id)
+    ) engine=InnoDB
+2021-08-14 17:36:39.507 DEBUG 3704 --- [main] org.hibernate.SQL                        : 
+    
+    create table sales_rep (
+       id bigint not null auto_increment,
+        sales_rep_name varchar(255),
+        primary key (id)
+    ) engine=InnoDB
+2021-08-14 17:36:39.527 DEBUG 3704 --- [main] org.hibernate.SQL                        : 
+    
+    alter table contact 
+       add constraint FK3ctagodg5h629t8ltnam39l5w 
+       foreign key (account_id) 
+       references account (id)
+2021-08-14 17:36:39.567 DEBUG 3704 --- [main] org.hibernate.SQL                        : 
+    
+    alter table contact 
+       add constraint FK_35aqn65x7cpxjaot6msrtegyj 
+       foreign key (sales_rep_id) 
+       references sales_rep (id)
+2021-08-14 17:36:39.614 DEBUG 3704 --- [main] org.hibernate.SQL                        : 
+    
+    alter table leads 
+       add constraint FKfxo14wqvkc8ba27nyy13owb14 
+       foreign key (sales_rep_id) 
+       references sales_rep (id)
+2021-08-14 17:36:39.672 DEBUG 3704 --- [main] org.hibernate.SQL                        : 
+    
+    alter table opportunity 
+       add constraint FK9mvhqgny93la8u8k2gd531nex 
+       foreign key (account_id) 
+       references account (id)
+2021-08-14 17:36:39.718 DEBUG 3704 --- [main] org.hibernate.SQL                        : 
+    
+    alter table opportunity 
+       add constraint FKo5iiy8cn6h1f2kae3s49yteot 
+       foreign key (contact_id) 
+       references contact (id)
+2021-08-14 17:36:39.772 DEBUG 3704 --- [main] org.hibernate.SQL                        : 
+    
+    alter table opportunity 
+       add constraint FK4k71m0964k1f2505y0vtta83l 
+       foreign key (sales_rep_id) 
+       references sales_rep (id)
+2021-08-14 17:36:39.817  INFO 3704 --- [main] o.h.e.t.j.p.i.JtaPlatformInitiator       : HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
+2021-08-14 17:36:39.828  INFO 3704 --- [main] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+2021-08-14 17:36:41.078  INFO 3704 --- [main] nNameTruckingCompanyHomework3Application : Started StolenNameTruckingCompanyHomework3Application in 8.421 seconds (JVM running for 9.354)
+2021-08-14 17:36:41.136 DEBUG 3704 --- [main] org.hibernate.SQL                        : 
+    insert 
+    into
+        sales_rep
+        (sales_rep_name) 
+    values
+        (?)
+2021-08-14 17:36:41.161 TRACE 3704 --- [main] o.h.type.descriptor.sql.BasicBinder      : binding parameter [1] as [VARCHAR] - [James]
+2021-08-14 17:36:41.184 DEBUG 3704 --- [main] org.hibernate.SQL                        : 
+    insert 
+    into
+        sales_rep
+        (sales_rep_name) 
+    values
+        (?)
+2021-08-14 17:36:41.185 TRACE 3704 --- [main] o.h.type.descriptor.sql.BasicBinder      : binding parameter [1] as [VARCHAR] - [Sara]
+2021-08-14 17:36:41.190 DEBUG 3704 --- [main] org.hibernate.SQL                        : 
+    insert 
+    into
+        sales_rep
+        (sales_rep_name) 
+    values
+        (?)
+2021-08-14 17:36:41.191 TRACE 3704 --- [main] o.h.type.descriptor.sql.BasicBinder      : binding parameter [1] as [VARCHAR] - [Michael]
+2021-08-14 17:36:41.197 DEBUG 3704 --- [main] org.hibernate.SQL                        : 
+    insert 
+    into
+        sales_rep
+        (sales_rep_name) 
+    values
+        (?)
+2021-08-14 17:36:41.199 TRACE 3704 --- [main] o.h.type.descriptor.sql.BasicBinder      : binding parameter [1] as [VARCHAR] - [Julia]
+2021-08-14 17:36:41.231 DEBUG 3704 --- [main] org.hibernate.SQL                        : 
+    select
+        lead0_.id as id1_1_0_,
+        lead0_.company_name as company_1_3_0_,
+        lead0_.email as email2_3_0_,
+        lead0_.contact_name as contact_3_3_0_,
+        lead0_.phone_number as phone_nu4_3_0_,
+        lead0_.sales_rep_id as sales_re5_3_0_,
+        lead0_.account_id as account_1_2_0_,
+        lead0_.clazz_ as clazz_0_ 
+    from
+        ( select
+            id,
+            company_name,
+            email,
+            contact_name,
+            phone_number,
+            sales_rep_id,
+            null as account_id,
+            2 as clazz_ 
+        from
+            leads 
+        union
+        all select
+            id,
+            company_name,
+            email,
+            contact_name,
+            phone_number,
+            sales_rep_id,
+            account_id,
+            3 as clazz_ 
+        from
+            contact 
+    ) lead0_ 
+where
+    lead0_.id=?
+2021-08-14 17:36:41.232 TRACE 3704 --- [main] o.h.type.descriptor.sql.BasicBinder      : binding parameter [1] as [VARCHAR] - [1]
+2021-08-14 17:36:41.238 DEBUG 3704 --- [main] org.hibernate.SQL                        : 
+    insert 
+    into
+        leads
+        (company_name, email, contact_name, phone_number, sales_rep_id, id) 
+    values
+        (?, ?, ?, ?, ?, ?)
+2021-08-14 17:36:41.239 TRACE 3704 --- [main] o.h.type.descriptor.sql.BasicBinder      : binding parameter [1] as [VARCHAR] - [Wings of Freedom]
+2021-08-14 17:36:41.239 TRACE 3704 --- [main] o.h.type.descriptor.sql.BasicBinder      : binding parameter [2] as [VARCHAR] - [labedzsebastian@gmail.co]
+2021-08-14 17:36:41.239 TRACE 3704 --- [main] o.h.type.descriptor.sql.BasicBinder      : binding parameter [3] as [VARCHAR] - [Sebastian Marek Labedz]
+2021-08-14 17:36:41.240 TRACE 3704 --- [main] o.h.type.descriptor.sql.BasicBinder      : binding parameter [4] as [VARCHAR] - [123456789]
+2021-08-14 17:36:41.240 TRACE 3704 --- [main] o.h.type.descriptor.sql.BasicBinder      : binding parameter [5] as [BIGINT] - [null]
+2021-08-14 17:36:41.240 TRACE 3704 --- [main] o.h.type.descriptor.sql.BasicBinder      : binding parameter [6] as [VARCHAR] - [1]
+2021-08-14 17:36:41.287 DEBUG 3704 --- [main] org.hibernate.SQL                        : 
+    select
+        lead0_.id as id1_1_0_,
+        lead0_.company_name as company_1_3_0_,
+        lead0_.email as email2_3_0_,
+        lead0_.contact_name as contact_3_3_0_,
+        lead0_.phone_number as phone_nu4_3_0_,
+        lead0_.sales_rep_id as sales_re5_3_0_,
+        lead0_.account_id as account_1_2_0_,
+        lead0_.clazz_ as clazz_0_ 
+    from
+        ( select
+            id,
+            company_name,
+            email,
+            contact_name,
+            phone_number,
+            sales_rep_id,
+            null as account_id,
+            2 as clazz_ 
+        from
+            leads 
+        union
+        all select
+            id,
+            company_name,
+            email,
+            contact_name,
+            phone_number,
+            sales_rep_id,
+            account_id,
+            3 as clazz_ 
+        from
+            contact 
+    ) lead0_ 
+where
+    lead0_.id=?
+2021-08-14 17:36:41.288 TRACE 3704 --- [main] o.h.type.descriptor.sql.BasicBinder      : binding parameter [1] as [VARCHAR] - [2]
+2021-08-14 17:36:41.291 DEBUG 3704 --- [main] org.hibernate.SQL                        : 
+    insert 
+    into
+        leads
+        (company_name, email, contact_name, phone_number, sales_rep_id, id) 
+    values
+        (?, ?, ?, ?, ?, ?)
+2021-08-14 17:36:41.292 TRACE 3704 --- [main] o.h.type.descriptor.sql.BasicBinder      : binding parameter [1] as [VARCHAR] - [LeeD]
+2021-08-14 17:36:41.293 TRACE 3704 --- [main] o.h.type.descriptor.sql.BasicBinder      : binding parameter [2] as [VARCHAR] - [ld@gmail.com]
+2021-08-14 17:36:41.293 TRACE 3704 --- [main] o.h.type.descriptor.sql.BasicBinder      : binding parameter [3] as [VARCHAR] - [Lee Dawson]
+2021-08-14 17:36:41.293 TRACE 3704 --- [main] o.h.type.descriptor.sql.BasicBinder      : binding parameter [4] as [VARCHAR] - [980651164]
+2021-08-14 17:36:41.293 TRACE 3704 --- [main] o.h.type.descriptor.sql.BasicBinder      : binding parameter [5] as [BIGINT] - [null]
+2021-08-14 17:36:41.293 TRACE 3704 --- [main] o.h.type.descriptor.sql.BasicBinder      : binding parameter [6] as [VARCHAR] - [2]
+2021-08-14 17:36:41.298 DEBUG 3704 --- [main] org.hibernate.SQL                        : 
+    select
+        lead0_.id as id1_1_0_,
+        lead0_.company_name as company_1_3_0_,
+        lead0_.email as email2_3_0_,
+        lead0_.contact_name as contact_3_3_0_,
+        lead0_.phone_number as phone_nu4_3_0_,
+        lead0_.sales_rep_id as sales_re5_3_0_,
+        lead0_.account_id as account_1_2_0_,
+        lead0_.clazz_ as clazz_0_ 
+    from
+        ( select
+            id,
+            company_name,
+            email,
+            contact_name,
+            phone_number,
+            sales_rep_id,
+            null as account_id,
+            2 as clazz_ 
+        from
+            leads 
+        union
+        all select
+            id,
+            company_name,
+            email,
+            contact_name,
+            phone_number,
+            sales_rep_id,
+            account_id,
+            3 as clazz_ 
+        from
+            contact 
+    ) lead0_ 
+where
+    lead0_.id=?
+2021-08-14 17:36:41.299 TRACE 3704 --- [main] o.h.type.descriptor.sql.BasicBinder      : binding parameter [1] as [VARCHAR] - [3]
+2021-08-14 17:36:41.301 DEBUG 3704 --- [main] org.hibernate.SQL                        : 
+    insert 
+    into
+        leads
+        (company_name, email, contact_name, phone_number, sales_rep_id, id) 
+    values
+        (?, ?, ?, ?, ?, ?)
+2021-08-14 17:36:41.302 TRACE 3704 --- [main] o.h.type.descriptor.sql.BasicBinder      : binding parameter [1] as [VARCHAR] - [Nathy From Wonderland]
+2021-08-14 17:36:41.302 TRACE 3704 --- [main] o.h.type.descriptor.sql.BasicBinder      : binding parameter [2] as [VARCHAR] - [nattyshil@yahoo.com]
+2021-08-14 17:36:41.302 TRACE 3704 --- [main] o.h.type.descriptor.sql.BasicBinder      : binding parameter [3] as [VARCHAR] - [Natalia Shilyaeva]
+2021-08-14 17:36:41.303 TRACE 3704 --- [main] o.h.type.descriptor.sql.BasicBinder      : binding parameter [4] as [VARCHAR] - [563782789]
+2021-08-14 17:36:41.303 TRACE 3704 --- [main] o.h.type.descriptor.sql.BasicBinder      : binding parameter [5] as [BIGINT] - [null]
+2021-08-14 17:36:41.303 TRACE 3704 --- [main] o.h.type.descriptor.sql.BasicBinder      : binding parameter [6] as [VARCHAR] - [3]
+2021-08-14 17:36:41.311 DEBUG 3704 --- [main] org.hibernate.SQL                        : 
+    select
+        contact0_.id as id1_1_0_,
+        contact0_.company_name as company_1_3_0_,
+        contact0_.email as email2_3_0_,
+        contact0_.contact_name as contact_3_3_0_,
+        contact0_.phone_number as phone_nu4_3_0_,
+        contact0_.sales_rep_id as sales_re5_3_0_,
+        contact0_.account_id as account_1_2_0_ 
+    from
+        contact contact0_ 
+    where
+        contact0_.id=?
+2021-08-14 17:36:41.312 TRACE 3704 --- [main] o.h.type.descriptor.sql.BasicBinder      : binding parameter [1] as [VARCHAR] - [7]
+2021-08-14 17:36:41.314 DEBUG 3704 --- [main] org.hibernate.SQL                        : 
+    insert 
+    into
+        contact
+        (company_name, email, contact_name, phone_number, sales_rep_id, account_id, id) 
+    values
+        (?, ?, ?, ?, ?, ?, ?)
+2021-08-14 17:36:41.315 TRACE 3704 --- [main] o.h.type.descriptor.sql.BasicBinder      : binding parameter [1] as [VARCHAR] - [Kałasznikow]
+2021-08-14 17:36:41.316 TRACE 3704 --- [main] o.h.type.descriptor.sql.BasicBinder      : binding parameter [2] as [VARCHAR] - [alfa@beta.uk]
+2021-08-14 17:36:41.316 TRACE 3704 --- [main] o.h.type.descriptor.sql.BasicBinder      : binding parameter [3] as [VARCHAR] - [John Doe]
+2021-08-14 17:36:41.316 TRACE 3704 --- [main] o.h.type.descriptor.sql.BasicBinder      : binding parameter [4] as [VARCHAR] - [123475357]
+2021-08-14 17:36:41.316 TRACE 3704 --- [main] o.h.type.descriptor.sql.BasicBinder      : binding parameter [5] as [BIGINT] - [null]
+2021-08-14 17:36:41.317 TRACE 3704 --- [main] o.h.type.descriptor.sql.BasicBinder      : binding parameter [6] as [VARCHAR] - [null]
+2021-08-14 17:36:41.317 TRACE 3704 --- [main] o.h.type.descriptor.sql.BasicBinder      : binding parameter [7] as [VARCHAR] - [7]
+2021-08-14 17:36:41.323 DEBUG 3704 --- [main] org.hibernate.SQL                        : 
+    select
+        contact0_.id as id1_1_0_,
+        contact0_.company_name as company_1_3_0_,
+        contact0_.email as email2_3_0_,
+        contact0_.contact_name as contact_3_3_0_,
+        contact0_.phone_number as phone_nu4_3_0_,
+        contact0_.sales_rep_id as sales_re5_3_0_,
+        contact0_.account_id as account_1_2_0_ 
+    from
+        contact contact0_ 
+    where
+        contact0_.id=?
+2021-08-14 17:36:41.324 TRACE 3704 --- [main] o.h.type.descriptor.sql.BasicBinder      : binding parameter [1] as [VARCHAR] - [8]
+2021-08-14 17:36:41.327 DEBUG 3704 --- [main] org.hibernate.SQL                        : 
+    insert 
+    into
+        contact
+        (company_name, email, contact_name, phone_number, sales_rep_id, account_id, id) 
+    values
+        (?, ?, ?, ?, ?, ?, ?)
+2021-08-14 17:36:41.328 TRACE 3704 --- [main] o.h.type.descriptor.sql.BasicBinder      : binding parameter [1] as [VARCHAR] - [My own company]
+2021-08-14 17:36:41.328 TRACE 3704 --- [main] o.h.type.descriptor.sql.BasicBinder      : binding parameter [2] as [VARCHAR] - [ms@wp.pl]
+2021-08-14 17:36:41.328 TRACE 3704 --- [main] o.h.type.descriptor.sql.BasicBinder      : binding parameter [3] as [VARCHAR] - [Martha Steward]
+2021-08-14 17:36:41.329 TRACE 3704 --- [main] o.h.type.descriptor.sql.BasicBinder      : binding parameter [4] as [VARCHAR] - [123475357]
+2021-08-14 17:36:41.329 TRACE 3704 --- [main] o.h.type.descriptor.sql.BasicBinder      : binding parameter [5] as [BIGINT] - [null]
+2021-08-14 17:36:41.329 TRACE 3704 --- [main] o.h.type.descriptor.sql.BasicBinder      : binding parameter [6] as [VARCHAR] - [null]
+2021-08-14 17:36:41.329 TRACE 3704 --- [main] o.h.type.descriptor.sql.BasicBinder      : binding parameter [7] as [VARCHAR] - [8]
+2021-08-14 17:36:41.334 DEBUG 3704 --- [main] org.hibernate.SQL                        : 
+    select
+        contact0_.id as id1_1_0_,
+        contact0_.company_name as company_1_3_0_,
+        contact0_.email as email2_3_0_,
+        contact0_.contact_name as contact_3_3_0_,
+        contact0_.phone_number as phone_nu4_3_0_,
+        contact0_.sales_rep_id as sales_re5_3_0_,
+        contact0_.account_id as account_1_2_0_ 
+    from
+        contact contact0_ 
+    where
+        contact0_.id=?
+2021-08-14 17:36:41.334 TRACE 3704 --- [main] o.h.type.descriptor.sql.BasicBinder      : binding parameter [1] as [VARCHAR] - [9]
+2021-08-14 17:36:41.336 DEBUG 3704 --- [main] org.hibernate.SQL                        : 
+    insert 
+    into
+        contact
+        (company_name, email, contact_name, phone_number, sales_rep_id, account_id, id) 
+    values
+        (?, ?, ?, ?, ?, ?, ?)
+2021-08-14 17:36:41.336 TRACE 3704 --- [main] o.h.type.descriptor.sql.BasicBinder      : binding parameter [1] as [VARCHAR] - [Truman Show]
+2021-08-14 17:36:41.337 TRACE 3704 --- [main] o.h.type.descriptor.sql.BasicBinder      : binding parameter [2] as [VARCHAR] - [thisisverylongemail@gmail.com]
+2021-08-14 17:36:41.337 TRACE 3704 --- [main] o.h.type.descriptor.sql.BasicBinder      : binding parameter [3] as [VARCHAR] - [George Truman]
+2021-08-14 17:36:41.337 TRACE 3704 --- [main] o.h.type.descriptor.sql.BasicBinder      : binding parameter [4] as [VARCHAR] - [123475357]
+2021-08-14 17:36:41.337 TRACE 3704 --- [main] o.h.type.descriptor.sql.BasicBinder      : binding parameter [5] as [BIGINT] - [null]
+2021-08-14 17:36:41.338 TRACE 3704 --- [main] o.h.type.descriptor.sql.BasicBinder      : binding parameter [6] as [VARCHAR] - [null]
+2021-08-14 17:36:41.338 TRACE 3704 --- [main] o.h.type.descriptor.sql.BasicBinder      : binding parameter [7] as [VARCHAR] - [9]
+2021-08-14 17:36:41.350 DEBUG 3704 --- [main] org.hibernate.SQL                        : 
+    select
+        opportunit0_.id as id1_1_0_,
+        opportunit0_.account_id as account_4_4_0_,
+        opportunit0_.contact_id as contact_5_4_0_,
+        opportunit0_.product as product1_4_0_,
+        opportunit0_.quantity as quantity2_4_0_,
+        opportunit0_.sales_rep_id as sales_re6_4_0_,
+        opportunit0_.status as status3_4_0_ 
+    from
+        opportunity opportunit0_ 
+    where
+        opportunit0_.id=?
+2021-08-14 17:36:41.354 TRACE 3704 --- [main] o.h.type.descriptor.sql.BasicBinder      : binding parameter [1] as [VARCHAR] - [13]
+2021-08-14 17:36:41.366 DEBUG 3704 --- [main] org.hibernate.SQL                        : 
+    select
+        contact0_.id as id1_1_0_,
+        contact0_.company_name as company_1_3_0_,
+        contact0_.email as email2_3_0_,
+        contact0_.contact_name as contact_3_3_0_,
+        contact0_.phone_number as phone_nu4_3_0_,
+        contact0_.sales_rep_id as sales_re5_3_0_,
+        contact0_.account_id as account_1_2_0_,
+        salesrep1_.id as id1_5_1_,
+        salesrep1_.sales_rep_name as sales_re2_5_1_,
+        account2_.id as id1_1_2_,
+        account2_.city as city1_0_2_,
+        account2_.country as country2_0_2_,
+        account2_.employee_count as employee3_0_2_,
+        account2_.industry as industry4_0_2_ 
+    from
+        contact contact0_ 
+    left outer join
+        sales_rep salesrep1_ 
+            on contact0_.sales_rep_id=salesrep1_.id 
+    left outer join
+        account account2_ 
+            on contact0_.account_id=account2_.id 
+    where
+        contact0_.id=?
+2021-08-14 17:36:41.366 TRACE 3704 --- [main] o.h.type.descriptor.sql.BasicBinder      : binding parameter [1] as [VARCHAR] - [7]
+2021-08-14 17:36:41.380 DEBUG 3704 --- [main] org.hibernate.SQL                        : 
+    insert 
+    into
+        opportunity
+        (account_id, contact_id, product, quantity, sales_rep_id, status, id) 
+    values
+        (?, ?, ?, ?, ?, ?, ?)
+2021-08-14 17:36:41.381 TRACE 3704 --- [main] o.h.type.descriptor.sql.BasicBinder      : binding parameter [1] as [VARCHAR] - [null]
+2021-08-14 17:36:41.382 TRACE 3704 --- [main] o.h.type.descriptor.sql.BasicBinder      : binding parameter [2] as [VARCHAR] - [7]
+2021-08-14 17:36:41.382 TRACE 3704 --- [main] o.h.type.descriptor.sql.BasicBinder      : binding parameter [3] as [VARCHAR] - [FLATBED]
+2021-08-14 17:36:41.384 TRACE 3704 --- [main] o.h.type.descriptor.sql.BasicBinder      : binding parameter [4] as [INTEGER] - [10]
+2021-08-14 17:36:41.384 TRACE 3704 --- [main] o.h.type.descriptor.sql.BasicBinder      : binding parameter [5] as [BIGINT] - [null]
+2021-08-14 17:36:41.385 TRACE 3704 --- [main] o.h.type.descriptor.sql.BasicBinder      : binding parameter [6] as [VARCHAR] - [OPEN]
+2021-08-14 17:36:41.385 TRACE 3704 --- [main] o.h.type.descriptor.sql.BasicBinder      : binding parameter [7] as [VARCHAR] - [13]
+2021-08-14 17:36:41.399 DEBUG 3704 --- [main] org.hibernate.SQL                        : 
+    select
+        opportunit0_.id as id1_1_0_,
+        opportunit0_.account_id as account_4_4_0_,
+        opportunit0_.contact_id as contact_5_4_0_,
+        opportunit0_.product as product1_4_0_,
+        opportunit0_.quantity as quantity2_4_0_,
+        opportunit0_.sales_rep_id as sales_re6_4_0_,
+        opportunit0_.status as status3_4_0_ 
+    from
+        opportunity opportunit0_ 
+    where
+        opportunit0_.id=?
+2021-08-14 17:36:41.400 TRACE 3704 --- [main] o.h.type.descriptor.sql.BasicBinder      : binding parameter [1] as [VARCHAR] - [14]
+2021-08-14 17:36:41.401 DEBUG 3704 --- [main] org.hibernate.SQL                        : 
+    select
+        contact0_.id as id1_1_0_,
+        contact0_.company_name as company_1_3_0_,
+        contact0_.email as email2_3_0_,
+        contact0_.contact_name as contact_3_3_0_,
+        contact0_.phone_number as phone_nu4_3_0_,
+        contact0_.sales_rep_id as sales_re5_3_0_,
+        contact0_.account_id as account_1_2_0_,
+        salesrep1_.id as id1_5_1_,
+        salesrep1_.sales_rep_name as sales_re2_5_1_,
+        account2_.id as id1_1_2_,
+        account2_.city as city1_0_2_,
+        account2_.country as country2_0_2_,
+        account2_.employee_count as employee3_0_2_,
+        account2_.industry as industry4_0_2_ 
+    from
+        contact contact0_ 
+    left outer join
+        sales_rep salesrep1_ 
+            on contact0_.sales_rep_id=salesrep1_.id 
+    left outer join
+        account account2_ 
+            on contact0_.account_id=account2_.id 
+    where
+        contact0_.id=?
+2021-08-14 17:36:41.402 TRACE 3704 --- [main] o.h.type.descriptor.sql.BasicBinder      : binding parameter [1] as [VARCHAR] - [8]
+2021-08-14 17:36:41.405 DEBUG 3704 --- [main] org.hibernate.SQL                        : 
+    insert 
+    into
+        opportunity
+        (account_id, contact_id, product, quantity, sales_rep_id, status, id) 
+    values
+        (?, ?, ?, ?, ?, ?, ?)
+2021-08-14 17:36:41.406 TRACE 3704 --- [main] o.h.type.descriptor.sql.BasicBinder      : binding parameter [1] as [VARCHAR] - [null]
+2021-08-14 17:36:41.406 TRACE 3704 --- [main] o.h.type.descriptor.sql.BasicBinder      : binding parameter [2] as [VARCHAR] - [8]
+2021-08-14 17:36:41.407 TRACE 3704 --- [main] o.h.type.descriptor.sql.BasicBinder      : binding parameter [3] as [VARCHAR] - [BOX]
+2021-08-14 17:36:41.407 TRACE 3704 --- [main] o.h.type.descriptor.sql.BasicBinder      : binding parameter [4] as [INTEGER] - [1150]
+2021-08-14 17:36:41.409 TRACE 3704 --- [main] o.h.type.descriptor.sql.BasicBinder      : binding parameter [5] as [BIGINT] - [null]
+2021-08-14 17:36:41.410 TRACE 3704 --- [main] o.h.type.descriptor.sql.BasicBinder      : binding parameter [6] as [VARCHAR] - [OPEN]
+2021-08-14 17:36:41.411 TRACE 3704 --- [main] o.h.type.descriptor.sql.BasicBinder      : binding parameter [7] as [VARCHAR] - [14]
+2021-08-14 17:36:41.417 DEBUG 3704 --- [main] org.hibernate.SQL                        : 
+    select
+        opportunit0_.id as id1_1_0_,
+        opportunit0_.account_id as account_4_4_0_,
+        opportunit0_.contact_id as contact_5_4_0_,
+        opportunit0_.product as product1_4_0_,
+        opportunit0_.quantity as quantity2_4_0_,
+        opportunit0_.sales_rep_id as sales_re6_4_0_,
+        opportunit0_.status as status3_4_0_ 
+    from
+        opportunity opportunit0_ 
+    where
+        opportunit0_.id=?
+2021-08-14 17:36:41.418 TRACE 3704 --- [main] o.h.type.descriptor.sql.BasicBinder      : binding parameter [1] as [VARCHAR] - [15]
+2021-08-14 17:36:41.422 DEBUG 3704 --- [main] org.hibernate.SQL                        : 
+    select
+        contact0_.id as id1_1_0_,
+        contact0_.company_name as company_1_3_0_,
+        contact0_.email as email2_3_0_,
+        contact0_.contact_name as contact_3_3_0_,
+        contact0_.phone_number as phone_nu4_3_0_,
+        contact0_.sales_rep_id as sales_re5_3_0_,
+        contact0_.account_id as account_1_2_0_,
+        salesrep1_.id as id1_5_1_,
+        salesrep1_.sales_rep_name as sales_re2_5_1_,
+        account2_.id as id1_1_2_,
+        account2_.city as city1_0_2_,
+        account2_.country as country2_0_2_,
+        account2_.employee_count as employee3_0_2_,
+        account2_.industry as industry4_0_2_ 
+    from
+        contact contact0_ 
+    left outer join
+        sales_rep salesrep1_ 
+            on contact0_.sales_rep_id=salesrep1_.id 
+    left outer join
+        account account2_ 
+            on contact0_.account_id=account2_.id 
+    where
+        contact0_.id=?
+2021-08-14 17:36:41.423 TRACE 3704 --- [main] o.h.type.descriptor.sql.BasicBinder      : binding parameter [1] as [VARCHAR] - [9]
+2021-08-14 17:36:41.427 DEBUG 3704 --- [main] org.hibernate.SQL                        : 
+    insert 
+    into
+        opportunity
+        (account_id, contact_id, product, quantity, sales_rep_id, status, id) 
+    values
+        (?, ?, ?, ?, ?, ?, ?)
+2021-08-14 17:36:41.428 TRACE 3704 --- [main] o.h.type.descriptor.sql.BasicBinder      : binding parameter [1] as [VARCHAR] - [null]
+2021-08-14 17:36:41.429 TRACE 3704 --- [main] o.h.type.descriptor.sql.BasicBinder      : binding parameter [2] as [VARCHAR] - [9]
+2021-08-14 17:36:41.429 TRACE 3704 --- [main] o.h.type.descriptor.sql.BasicBinder      : binding parameter [3] as [VARCHAR] - [HYBRID]
+2021-08-14 17:36:41.429 TRACE 3704 --- [main] o.h.type.descriptor.sql.BasicBinder      : binding parameter [4] as [INTEGER] - [1]
+2021-08-14 17:36:41.430 TRACE 3704 --- [main] o.h.type.descriptor.sql.BasicBinder      : binding parameter [5] as [BIGINT] - [null]
+2021-08-14 17:36:41.430 TRACE 3704 --- [main] o.h.type.descriptor.sql.BasicBinder      : binding parameter [6] as [VARCHAR] - [OPEN]
+2021-08-14 17:36:41.431 TRACE 3704 --- [main] o.h.type.descriptor.sql.BasicBinder      : binding parameter [7] as [VARCHAR] - [15]
+2021-08-14 17:36:41.445 DEBUG 3704 --- [main] org.hibernate.SQL                        : 
+    select
+        account0_.id as id1_1_1_,
+        account0_.city as city1_0_1_,
+        account0_.country as country2_0_1_,
+        account0_.employee_count as employee3_0_1_,
+        account0_.industry as industry4_0_1_,
+        opportunit1_.account_id as account_4_4_3_,
+        opportunit1_.id as id1_4_3_,
+        opportunit1_.id as id1_1_0_,
+        opportunit1_.account_id as account_4_4_0_,
+        opportunit1_.contact_id as contact_5_4_0_,
+        opportunit1_.product as product1_4_0_,
+        opportunit1_.quantity as quantity2_4_0_,
+        opportunit1_.sales_rep_id as sales_re6_4_0_,
+        opportunit1_.status as status3_4_0_ 
+    from
+        account account0_ 
+    left outer join
+        opportunity opportunit1_ 
+            on account0_.id=opportunit1_.account_id 
+    where
+        account0_.id=?
+2021-08-14 17:36:41.447 TRACE 3704 --- [main] o.h.type.descriptor.sql.BasicBinder      : binding parameter [1] as [VARCHAR] - [22]
+2021-08-14 17:36:41.461 DEBUG 3704 --- [main] org.hibernate.SQL                        : 
+    select
+        opportunit0_.id as id1_1_0_,
+        opportunit0_.account_id as account_4_4_0_,
+        opportunit0_.contact_id as contact_5_4_0_,
+        opportunit0_.product as product1_4_0_,
+        opportunit0_.quantity as quantity2_4_0_,
+        opportunit0_.sales_rep_id as sales_re6_4_0_,
+        opportunit0_.status as status3_4_0_ 
+    from
+        opportunity opportunit0_ 
+    where
+        opportunit0_.id=?
+2021-08-14 17:36:41.466 TRACE 3704 --- [main] o.h.type.descriptor.sql.BasicBinder      : binding parameter [1] as [VARCHAR] - [13]
+2021-08-14 17:36:41.469 DEBUG 3704 --- [main] org.hibernate.SQL                        : 
+    select
+        contact0_.id as id1_1_0_,
+        contact0_.company_name as company_1_3_0_,
+        contact0_.email as email2_3_0_,
+        contact0_.contact_name as contact_3_3_0_,
+        contact0_.phone_number as phone_nu4_3_0_,
+        contact0_.sales_rep_id as sales_re5_3_0_,
+        contact0_.account_id as account_1_2_0_ 
+    from
+        contact contact0_ 
+    where
+        contact0_.id=?
+2021-08-14 17:36:41.470 TRACE 3704 --- [main] o.h.type.descriptor.sql.BasicBinder      : binding parameter [1] as [VARCHAR] - [7]
+2021-08-14 17:36:41.475 DEBUG 3704 --- [main] org.hibernate.SQL                        : 
+    insert 
+    into
+        account
+        (city, country, employee_count, industry, id) 
+    values
+        (?, ?, ?, ?, ?)
+2021-08-14 17:36:41.475 TRACE 3704 --- [main] o.h.type.descriptor.sql.BasicBinder      : binding parameter [1] as [VARCHAR] - [null]
+2021-08-14 17:36:41.475 TRACE 3704 --- [main] o.h.type.descriptor.sql.BasicBinder      : binding parameter [2] as [VARCHAR] - [null]
+2021-08-14 17:36:41.476 TRACE 3704 --- [main] o.h.type.descriptor.sql.BasicBinder      : binding parameter [3] as [INTEGER] - [0]
+2021-08-14 17:36:41.476 TRACE 3704 --- [main] o.h.type.descriptor.sql.BasicBinder      : binding parameter [4] as [VARCHAR] - [null]
+2021-08-14 17:36:41.476 TRACE 3704 --- [main] o.h.type.descriptor.sql.BasicBinder      : binding parameter [5] as [VARCHAR] - [22]
+2021-08-14 17:36:41.520 DEBUG 3704 --- [main] org.hibernate.SQL                        : 
+    select
+        account0_.id as id1_1_1_,
+        account0_.city as city1_0_1_,
+        account0_.country as country2_0_1_,
+        account0_.employee_count as employee3_0_1_,
+        account0_.industry as industry4_0_1_,
+        opportunit1_.account_id as account_4_4_3_,
+        opportunit1_.id as id1_4_3_,
+        opportunit1_.id as id1_1_0_,
+        opportunit1_.account_id as account_4_4_0_,
+        opportunit1_.contact_id as contact_5_4_0_,
+        opportunit1_.product as product1_4_0_,
+        opportunit1_.quantity as quantity2_4_0_,
+        opportunit1_.sales_rep_id as sales_re6_4_0_,
+        opportunit1_.status as status3_4_0_ 
+    from
+        account account0_ 
+    left outer join
+        opportunity opportunit1_ 
+            on account0_.id=opportunit1_.account_id 
+    where
+        account0_.id=?
+2021-08-14 17:36:41.521 TRACE 3704 --- [main] o.h.type.descriptor.sql.BasicBinder      : binding parameter [1] as [VARCHAR] - [23]
+2021-08-14 17:36:41.523 DEBUG 3704 --- [main] org.hibernate.SQL                        : 
+    select
+        opportunit0_.id as id1_1_0_,
+        opportunit0_.account_id as account_4_4_0_,
+        opportunit0_.contact_id as contact_5_4_0_,
+        opportunit0_.product as product1_4_0_,
+        opportunit0_.quantity as quantity2_4_0_,
+        opportunit0_.sales_rep_id as sales_re6_4_0_,
+        opportunit0_.status as status3_4_0_ 
+    from
+        opportunity opportunit0_ 
+    where
+        opportunit0_.id=?
+2021-08-14 17:36:41.523 TRACE 3704 --- [main] o.h.type.descriptor.sql.BasicBinder      : binding parameter [1] as [VARCHAR] - [14]
+2021-08-14 17:36:41.525 DEBUG 3704 --- [main] org.hibernate.SQL                        : 
+    select
+        contact0_.id as id1_1_0_,
+        contact0_.company_name as company_1_3_0_,
+        contact0_.email as email2_3_0_,
+        contact0_.contact_name as contact_3_3_0_,
+        contact0_.phone_number as phone_nu4_3_0_,
+        contact0_.sales_rep_id as sales_re5_3_0_,
+        contact0_.account_id as account_1_2_0_ 
+    from
+        contact contact0_ 
+    where
+        contact0_.id=?
+2021-08-14 17:36:41.526 TRACE 3704 --- [main] o.h.type.descriptor.sql.BasicBinder      : binding parameter [1] as [VARCHAR] - [8]
+2021-08-14 17:36:41.529 DEBUG 3704 --- [main] org.hibernate.SQL                        : 
+    insert 
+    into
+        account
+        (city, country, employee_count, industry, id) 
+    values
+        (?, ?, ?, ?, ?)
+2021-08-14 17:36:41.530 TRACE 3704 --- [main] o.h.type.descriptor.sql.BasicBinder      : binding parameter [1] as [VARCHAR] - [null]
+2021-08-14 17:36:41.530 TRACE 3704 --- [main] o.h.type.descriptor.sql.BasicBinder      : binding parameter [2] as [VARCHAR] - [null]
+2021-08-14 17:36:41.530 TRACE 3704 --- [main] o.h.type.descriptor.sql.BasicBinder      : binding parameter [3] as [INTEGER] - [0]
+2021-08-14 17:36:41.530 TRACE 3704 --- [main] o.h.type.descriptor.sql.BasicBinder      : binding parameter [4] as [VARCHAR] - [null]
+2021-08-14 17:36:41.530 TRACE 3704 --- [main] o.h.type.descriptor.sql.BasicBinder      : binding parameter [5] as [VARCHAR] - [23]
+2021-08-14 17:36:41.536 DEBUG 3704 --- [main] org.hibernate.SQL                        : 
+    select
+        account0_.id as id1_1_1_,
+        account0_.city as city1_0_1_,
+        account0_.country as country2_0_1_,
+        account0_.employee_count as employee3_0_1_,
+        account0_.industry as industry4_0_1_,
+        opportunit1_.account_id as account_4_4_3_,
+        opportunit1_.id as id1_4_3_,
+        opportunit1_.id as id1_1_0_,
+        opportunit1_.account_id as account_4_4_0_,
+        opportunit1_.contact_id as contact_5_4_0_,
+        opportunit1_.product as product1_4_0_,
+        opportunit1_.quantity as quantity2_4_0_,
+        opportunit1_.sales_rep_id as sales_re6_4_0_,
+        opportunit1_.status as status3_4_0_ 
+    from
+        account account0_ 
+    left outer join
+        opportunity opportunit1_ 
+            on account0_.id=opportunit1_.account_id 
+    where
+        account0_.id=?
+2021-08-14 17:36:41.536 TRACE 3704 --- [main] o.h.type.descriptor.sql.BasicBinder      : binding parameter [1] as [VARCHAR] - [24]
+2021-08-14 17:36:41.539 DEBUG 3704 --- [main] org.hibernate.SQL                        : 
+    select
+        opportunit0_.id as id1_1_0_,
+        opportunit0_.account_id as account_4_4_0_,
+        opportunit0_.contact_id as contact_5_4_0_,
+        opportunit0_.product as product1_4_0_,
+        opportunit0_.quantity as quantity2_4_0_,
+        opportunit0_.sales_rep_id as sales_re6_4_0_,
+        opportunit0_.status as status3_4_0_ 
+    from
+        opportunity opportunit0_ 
+    where
+        opportunit0_.id=?
+2021-08-14 17:36:41.539 TRACE 3704 --- [main] o.h.type.descriptor.sql.BasicBinder      : binding parameter [1] as [VARCHAR] - [15]
+2021-08-14 17:36:41.541 DEBUG 3704 --- [main] org.hibernate.SQL                        : 
+    select
+        contact0_.id as id1_1_0_,
+        contact0_.company_name as company_1_3_0_,
+        contact0_.email as email2_3_0_,
+        contact0_.contact_name as contact_3_3_0_,
+        contact0_.phone_number as phone_nu4_3_0_,
+        contact0_.sales_rep_id as sales_re5_3_0_,
+        contact0_.account_id as account_1_2_0_ 
+    from
+        contact contact0_ 
+    where
+        contact0_.id=?
+2021-08-14 17:36:41.542 TRACE 3704 --- [main] o.h.type.descriptor.sql.BasicBinder      : binding parameter [1] as [VARCHAR] - [9]
+2021-08-14 17:36:41.544 DEBUG 3704 --- [main] org.hibernate.SQL                        : 
+    insert 
+    into
+        account
+        (city, country, employee_count, industry, id) 
+    values
+        (?, ?, ?, ?, ?)
+2021-08-14 17:36:41.545 TRACE 3704 --- [main] o.h.type.descriptor.sql.BasicBinder      : binding parameter [1] as [VARCHAR] - [null]
+2021-08-14 17:36:41.546 TRACE 3704 --- [main] o.h.type.descriptor.sql.BasicBinder      : binding parameter [2] as [VARCHAR] - [null]
+2021-08-14 17:36:41.546 TRACE 3704 --- [main] o.h.type.descriptor.sql.BasicBinder      : binding parameter [3] as [INTEGER] - [0]
+2021-08-14 17:36:41.546 TRACE 3704 --- [main] o.h.type.descriptor.sql.BasicBinder      : binding parameter [4] as [VARCHAR] - [null]
+2021-08-14 17:36:41.547 TRACE 3704 --- [main] o.h.type.descriptor.sql.BasicBinder      : binding parameter [5] as [VARCHAR] - [24]
+2021-08-14 17:37:01.346 DEBUG 3704 --- [main] org.hibernate.SQL                        : 
+    select
+        salesrep1_.sales_rep_name as col_0_0_,
+        count(lead0_.id) as col_1_0_ 
+    from
+        ( select
+            id,
+            company_name,
+            email,
+            contact_name,
+            phone_number,
+            sales_rep_id,
+            null as account_id,
+            2 as clazz_ 
+        from
+            leads 
+        union
+        all select
+            id,
+            company_name,
+            email,
+            contact_name,
+            phone_number,
+            sales_rep_id,
+            account_id,
+            3 as clazz_ 
+        from
+            contact 
+    ) lead0_ 
+inner join
+    sales_rep salesrep1_ 
+        on lead0_.sales_rep_id=salesrep1_.id 
+group by
+    salesrep1_.sales_rep_name 
+order by
+    salesrep1_.sales_rep_name
+2021-08-14 17:38:52.227  INFO 3704 --- [SpringApplicationShutdownHook] j.LocalContainerEntityManagerFactoryBean : Closing JPA EntityManagerFactory for persistence unit 'default'
+2021-08-14 17:38:52.234  INFO 3704 --- [SpringApplicationShutdownHook] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown initiated...
+2021-08-14 17:38:52.253  INFO 3704 --- [SpringApplicationShutdownHook] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown completed.

@@ -3,13 +3,24 @@ package com.ironhack.stolen_name_trucking_company_homework_3.dao;//Extends com.i
 import com.ironhack.stolen_name_trucking_company_homework_3.enums.Status;
 import com.ironhack.stolen_name_trucking_company_homework_3.enums.Truck;
 import com.ironhack.stolen_name_trucking_company_homework_3.exceptions.ExceedsMaxLength;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
 
-@Entity
 @Setter
-public class Opportunity extends ClientInformation {
+@Getter
+@AllArgsConstructor
+@NoArgsConstructor
+@Entity
+@Table(name = "opportunity")
+public class Opportunity {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
 
     // This sets the status to Enum Open whenever an opportunity object is created
     @Enumerated(EnumType.STRING)
@@ -18,11 +29,11 @@ public class Opportunity extends ClientInformation {
     // com.ironhack.stolen_name_trucking_company_homework_3.Opportunity Specific variable - EnumTruck com.ironhack.stolen_name_trucking_company_homework_3.enums.Truck, int quantity, ObjectContact DecisionMaker
     @Enumerated(EnumType.STRING)
     private Truck product;
-    private int quantity;
+    private Integer quantity;
 
 
     @OneToOne
-    @JoinColumn(name = "contact_id", referencedColumnName = "id")
+    @JoinColumn(name = "contact_id")
     private Contact decisionMaker;
 
     @ManyToOne
@@ -41,8 +52,6 @@ public class Opportunity extends ClientInformation {
     private static final String colorHeadlineBold = "\033[1;34m";
     private static final String reset = "\u001B[0m";
 
-    public Opportunity() {
-    }
 
     public Opportunity(Truck product, int quantity, Contact decisionMaker) throws ExceedsMaxLength {
         setTruck(product);
@@ -57,30 +66,12 @@ public class Opportunity extends ClientInformation {
         setSalesRep(salesRep);
     }
 
-
-    public String getId() {
-        return id;
-    }
-
     public Truck getProduct() {
         return product;
     }
 
     public void setTruck(Truck product) {
         this.product = product;
-    }
-
-    public Contact getDecisionMaker() {
-        return decisionMaker;
-    }
-
-    public void setDecisionMaker(Contact decisionMaker) {
-        this.decisionMaker = decisionMaker;
-    }
-
-
-    public int getQuantity() {
-        return quantity;
     }
 
     public void setQuantity(int quantity) throws ExceedsMaxLength {

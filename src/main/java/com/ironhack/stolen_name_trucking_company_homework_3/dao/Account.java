@@ -5,19 +5,34 @@ import com.ironhack.stolen_name_trucking_company_homework_3.exceptions.EmptyStri
 import com.ironhack.stolen_name_trucking_company_homework_3.exceptions.ExceedsMaxLength;
 import com.ironhack.stolen_name_trucking_company_homework_3.exceptions.InvalidCountryException;
 import com.ironhack.stolen_name_trucking_company_homework_3.exceptions.NameContainsNumbersException;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+import org.hibernate.annotations.LazyCollection;
+import org.hibernate.annotations.LazyCollectionOption;
 
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+@Getter
+@AllArgsConstructor
+@NoArgsConstructor
 @Entity
-public class Account extends ClientInformation{
+@Setter
+@Table(name = "account")
+public class Account {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
 
     @Enumerated(EnumType.STRING)
     private Industry industry;
     @Column(name="employee_count")
-    private int employeeCount;
+    private Integer employeeCount;
 
     private String city;
     private String country;
@@ -25,7 +40,8 @@ public class Account extends ClientInformation{
     @OneToMany(mappedBy = "account")
     private List<Contact> contactList = new ArrayList<>();
 
-    @OneToMany(mappedBy = "account", cascade = CascadeType.ALL)
+    @LazyCollection(LazyCollectionOption.FALSE)
+    @OneToMany(mappedBy = "account")
     private List<Opportunity> opportunityList = new ArrayList<>();
 
     private static final String colorMain = "\u001B[33m";
@@ -33,9 +49,6 @@ public class Account extends ClientInformation{
     private static final String colorTable = "\u001B[32m";
     private static final String colorHeadlineBold = "\033[1;34m";
     private static final String reset = "\u001B[0m";
-
-    public Account() {
-    }
 
     public Account(Contact contact, Opportunity opportunity){
         addContact(contact);
@@ -52,21 +65,6 @@ public class Account extends ClientInformation{
         addOpportunity(opportunity);
     }
 
-    public String getId() {
-        return id;
-    }
-
-    public Industry getIndustry() {
-        return industry;
-    }
-
-    public void setIndustry(Industry industry) {
-        this.industry = industry;
-    }
-
-    public int getEmployeeCount() {
-        return employeeCount;
-    }
 
     public void setEmployeeCount(int employeeCount) throws ExceedsMaxLength {
         if (employeeCount <= 0) {
@@ -76,9 +74,6 @@ public class Account extends ClientInformation{
         this.employeeCount = employeeCount;
     }
 
-    public String getCity() {
-        return city;
-    }
 
     public void setCity(String city) throws EmptyStringException, NameContainsNumbersException, IllegalArgumentException, ExceedsMaxLength {
         if (city.isEmpty()) {
@@ -92,10 +87,6 @@ public class Account extends ClientInformation{
         }
 
         this.city = city;
-    }
-
-    public String getCountry() {
-        return country;
     }
 
     public void setCountry(String country) throws InvalidCountryException, EmptyStringException, ExceedsMaxLength {

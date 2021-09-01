@@ -1,7 +1,9 @@
 package com.ironhack.stolen_name_trucking_company_homework_3;
 
 import com.ironhack.stolen_name_trucking_company_homework_3.dao.*;
+import com.ironhack.stolen_name_trucking_company_homework_3.enums.Industry;
 import com.ironhack.stolen_name_trucking_company_homework_3.enums.Truck;
+import com.ironhack.stolen_name_trucking_company_homework_3.exceptions.NoSuchValueException;
 import com.ironhack.stolen_name_trucking_company_homework_3.repository.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
@@ -10,6 +12,11 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 
+import java.awt.*;
+import java.util.List;
+
+import static com.ironhack.stolen_name_trucking_company_homework_3.dao.Login.getIsLoggedIn;
+
 @SpringBootApplication
 
 public class StolenNameTruckingCompanyHomework3Application implements CommandLineRunner{
@@ -17,84 +24,71 @@ public class StolenNameTruckingCompanyHomework3Application implements CommandLin
 	@Autowired
 	MainMenu menu;
 
-	//public static MainMenu menu = new MainMenu(leadRepository, accountRepository, contactRepository, opportunityRepository, salesRepRepository);
-
 	public static void main(String[] args) {
+		System.setProperty("java.awt.headless", "false");
 		SpringApplication.run(StolenNameTruckingCompanyHomework3Application.class, args);
-
 	}
 	@Bean
-	CommandLineRunner commandLineRunner(SalesRepRepository salesRepRepository, AccountRepository accountRepository, LeadRepository leadRepository, OpportunityRepository opportunityRepository, ContactRepository contactRepository) {
+	CommandLineRunner commandLineRunner(SalesRepRepository salesRepRepository, AccountRepository accountRepository, LeadRepository leadRepository, OpportunityRepository opportunityRepository, ContactRepository contactRepository, Login login) throws NoSuchValueException, AWTException {
 		return args -> {
 
-			SalesRep salesRep1 = new SalesRep("James");
-			SalesRep salesRep2 = new SalesRep("Sara");
-			SalesRep salesRep3 = new SalesRep("Michael");
-			SalesRep salesRep4 = new SalesRep("Julia");
-			salesRepRepository.save(salesRep1);
-			salesRepRepository.save(salesRep2);
-			salesRepRepository.save(salesRep3);
-			salesRepRepository.save(salesRep4);
+			List<SalesRep> salesReps = salesRepRepository.saveAll(List.of(
+					new SalesRep("David Lynch"),
+					new SalesRep("Martha Stewart")
+			));
 
-			Lead lead1 = new Lead("Sebastian Marek Labedz", "123456789", "labedzsebastian@gmail.co", "Wings of Freedom");
-			Lead lead2 = new Lead("Lee Dawson", "980651164", "ld@gmail.com", "LeeD");
-			Lead lead3 = new Lead("Natalia Shilyaeva", "563782789", "nattyshil@yahoo.com", "Nathy From Wonderland");
-			leadRepository.save(lead1);
-			leadRepository.save(lead2);
-			leadRepository.save(lead3);
-
-			Contact contact1 = new Contact("John Doe", "123475357", "alfa@beta.uk", "Kałasznikow");
-			Contact contact2 = new Contact("Martha Steward", "123475357", "ms@wp.pl", "My own company");
-			Contact contact3 = new Contact("George Truman", "123475357", "thisisverylongemail@gmail.com", "Truman Show");
-			contactRepository.save(contact1);
-			contactRepository.save(contact2);
-			contactRepository.save(contact3);
+			List<Lead> leads = leadRepository.saveAll(List.of(
+					new Lead("Jane Doe", "123475227", "sadas@beta.uk", "Galactic", salesReps.get(0)),
+					new Lead("Maurice Steward", "123467357", "dsaas@wp.pl", "Tesla", salesReps.get(1)),
+					new Lead("Georgia Truman", "292334790", "thisisverylong@gmail.com", "Trumpy",salesReps.get(0))
+			));
 
 
-			Opportunity opportunity1 = new Opportunity(Truck.FLATBED, 10, contact1);
-			Opportunity opportunity2 = new Opportunity(Truck.BOX, 1150, contact2);
-			Opportunity opportunity3 = new Opportunity(Truck.HYBRID, 1, contact3);
-			opportunityRepository.save(opportunity1);
-			opportunityRepository.save(opportunity2);
-			opportunityRepository.save(opportunity3);
+			List<Contact> contacts = contactRepository.saveAll(List.of(
+					new Contact("John Doe", "123475357", "alfa@beta.uk", "Kałasznikow", salesReps.get(0)),
+					new Contact("Martha Steward", "123475357", "ms@wp.pl", "My own company", salesReps.get(1)),
+					new Contact("George Truman", "123475357", "thisisverylongemail@gmail.com", "Truman Show", salesReps.get(0))
 
-			Account account1 = new Account(contact1, opportunity1);
-			Account account2 = new Account(contact2, opportunity2);
-			Account account3 = new Account(contact3, opportunity3);
-			accountRepository.save(account1);
-			accountRepository.save(account2);
-			accountRepository.save(account3);
+			));
 
+			List<Opportunity> opportunities = opportunityRepository.saveAll(List.of(
+					new Opportunity(Truck.FLATBED, 10, contacts.get(0), salesReps.get(0)),
+					new Opportunity(Truck.BOX, 1150, contacts.get(1), salesReps.get(0)),
+					new Opportunity(Truck.HYBRID, 1, contacts.get(2), salesReps.get(1))
 
-			MainMenu.theLeads.put(lead1.getId(), lead1);
-			MainMenu.theLeads.put(lead2.getId(), lead2);
-			MainMenu.theLeads.put(lead3.getId(), lead3);
+			));
 
-			MainMenu.theContacts.put(contact1.getId(), contact1);
-			MainMenu.theContacts.put(contact2.getId(), contact2);
-			MainMenu.theContacts.put(contact3.getId(), contact3);
+			List<Account> accounts = accountRepository.saveAll(List.of(
+					new Account(Industry.PRODUCE, 50, "London", "UNITED KINGDOM", contacts.get(0), opportunities.get(0)),
+					new Account(Industry.ECOMMERCE, 500, "Madrid", "SPAIN", contacts.get(1), opportunities.get(1)),
+					new Account(Industry.MANUFACTURING, 20, "Paris", "FRANCE", contacts.get(2), opportunities.get(2))
+			));
 
-			MainMenu.theOpportunities.put(opportunity1.getId(), opportunity1);
-			MainMenu.theOpportunities.put(opportunity2.getId(), opportunity2);
-			MainMenu.theOpportunities.put(opportunity3.getId(), opportunity3);
+			contacts.get(0).setAccount(accounts.get(0));
+			contactRepository.save(contacts.get(0));
+			contacts.get(1).setAccount(accounts.get(1));
+			contactRepository.save(contacts.get(1));
+			contacts.get(2).setAccount(accounts.get(2));
+			contactRepository.save(contacts.get(2));
 
-			MainMenu.theAccounts.put(account1.getId(), account1);
-			MainMenu.theAccounts.put(account2.getId(), account2);
-			MainMenu.theAccounts.put(account3.getId(), account3);
-
-			MainMenu.theSalesReps.put(salesRep1.getId().toString(),salesRep1);
-			MainMenu.theSalesReps.put(salesRep2.getId().toString(),salesRep2);
-			MainMenu.theSalesReps.put(salesRep3.getId().toString(),salesRep3);
-			MainMenu.theSalesReps.put(salesRep4.getId().toString(),salesRep4);
-
-			menu.OS();
+			opportunities.get(0).setAccount(accounts.get(0));
+			opportunityRepository.save(opportunities.get(0));
+			opportunities.get(1).setAccount(accounts.get(1));
+			opportunityRepository.save(opportunities.get(1));
+			opportunities.get(2).setAccount(accounts.get(2));
+			opportunityRepository.save(opportunities.get(2));
 
 		};
-
-
 	}
-	@Override
-	public void run(String...args){
+		@Override
+		public void run (String...args) throws NoSuchValueException, AWTException {
+		if (getIsLoggedIn() == 1) {
+			menu.OS();
+		} else if (getIsLoggedIn() == 2) {
+			menu.OSGuest();
+		} else {
+			menu.OS();
+		}
 	}
-
 }
+
