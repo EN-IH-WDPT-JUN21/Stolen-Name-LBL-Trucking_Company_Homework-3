@@ -77,8 +77,8 @@ class AccountRepositoryTest {
 
     @AfterEach
     void tearDown() {
-        opportunityRepository.deleteAll();
         accountRepository.deleteAll();
+        opportunityRepository.deleteAll();
         contactRepository.deleteAll();
         salesRepRepository.deleteAll();
 

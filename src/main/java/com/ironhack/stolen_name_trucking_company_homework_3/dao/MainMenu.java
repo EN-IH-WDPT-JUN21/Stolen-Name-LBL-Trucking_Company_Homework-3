@@ -1056,7 +1056,9 @@ public class MainMenu {
                     case MEAN_EMPCOUNT:
                         System.out.println("Average number of employees is: " + accountRepository.findMeanEmployeeCount().get().doubleValue());
                         break;
-                    //case MEDIAN_EMPCOUNT -> accountRepository.findMedianEmployeeCountStep1();
+                    case MEDIAN_EMPCOUNT:
+                        System.out.println("Median number of employees is: " + getMedian(accountRepository.findMedianEmployeeCountStep1()));
+                        break;
                     case MAX_EMPCOUNT:
                         System.out.println("Maximum number of employees is: " + accountRepository.findMaxEmployeeCount().get());
                         break;
@@ -1066,7 +1068,9 @@ public class MainMenu {
                     case MEAN_QUANT:
                         System.out.println("Average quantity of trucks is: " + opportunityRepository.findMeanProductQuantity().get().doubleValue());
                         break;
-                    //case MED_QUANT -> opportunityRepository.findMedianQuantityStep1();
+                    case MED_QUANT:
+                        System.out.println("Median quantity of trucks is: " + getMedian(opportunityRepository.findMedianQuantityStep1()));
+                        break;
                     case MAX_QUANT:
                         System.out.println("Maximum quantity of trucks is: " + opportunityRepository.findMaxProductQuantity().get());
                         break;
@@ -1076,7 +1080,9 @@ public class MainMenu {
                     case MEAN_OPPS_PERR_ACC:
                         System.out.println("Average number of opportunities per account is: " + opportunityRepository.findMeanOpportunitiesPerAccount().get().doubleValue());
                         break;
-                    //case MED_OPPS_PERR_ACC -> opportunityRepository.findMedianOppsPerAccountStep1();
+                    case MED_OPPS_PERR_ACC:
+                        System.out.println("Median number of opportunities per account is: " + getMedian(opportunityRepository.findMedianOppsPerAccountStep1()));
+                        break;
                     case MAX_OPPS_PERR_ACC:
                         System.out.println("Maximum number of opportunities per account is: " + opportunityRepository.findMaxOpportunitiesPerAccount().get());
                         break;
@@ -1100,6 +1106,19 @@ public class MainMenu {
         System.out.println(colorInput + "\nPress Enter to continue..." + reset);
         scanner.nextLine();
         reportMenu();
+    }
+
+    public int getMedian(int[] intArray){
+        try {
+            int sizeOfArray = intArray.length;
+            if (sizeOfArray % 2 == 1) {
+                return intArray[(sizeOfArray + 1) / 2 - 1];
+            } else {
+                return (intArray[sizeOfArray / 2 - 1] + intArray[sizeOfArray / 2]) / 2;
+            }
+        }catch (ArrayIndexOutOfBoundsException e){
+            return 0;
+        }
     }
 
     public void OSGuest() throws RuntimeException, AWTException {
