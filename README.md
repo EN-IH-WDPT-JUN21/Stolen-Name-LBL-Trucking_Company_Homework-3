@@ -11,8 +11,13 @@ Use, Class and EER Diagrams
 The use diagram reflects the project from the Sales Associate's perspective, defined as the primary user of the CRM system.
 The functionality of the system is presented in the diagram below.
 
+<<<<<<< HEAD
 <img alt="class diagram" src="https://github.com/EN-IH-WDPT-JUN21/Stolen-Name-LBL-Trucking_Company_Homework-3/blob/Natalia/images/Class_diagram_LBL-Page-1.png">
 
 EER diagram is presented below:
+=======
+<img alt="class diagram" src="https://github.com/EN-IH-WDPT-JUN21/Stolen-Name-LBL-Trucking_Company_Homework-3/blob/main/images/Class_diagram_LBL-Page-1%20copy.png">
+
+Based on the use and class diagrams, an updatable database has been created with the following schema:
 
 <img alt="eer diagram" src="https://github.com/EN-IH-WDPT-JUN21/Stolen-Name-LBL-Trucking_Company_Homework-3/blob/Natalia/images/EER%20diagram.png">

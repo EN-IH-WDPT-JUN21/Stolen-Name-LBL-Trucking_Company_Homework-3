@@ -1,7 +1,6 @@
 package com.ironhack.stolen_name_trucking_company_homework_3.repository;
 
 import com.ironhack.stolen_name_trucking_company_homework_3.dao.Lead;
-import com.ironhack.stolen_name_trucking_company_homework_3.dao.Opportunity;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;

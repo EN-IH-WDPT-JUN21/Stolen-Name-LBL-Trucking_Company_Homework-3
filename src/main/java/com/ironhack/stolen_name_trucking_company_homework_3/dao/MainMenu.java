@@ -7,6 +7,7 @@ import com.ironhack.stolen_name_trucking_company_homework_3.enums.Truck;
 import com.ironhack.stolen_name_trucking_company_homework_3.exceptions.*;
 import com.ironhack.stolen_name_trucking_company_homework_3.repository.*;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.SpringApplication;
 import org.springframework.stereotype.Component;
 
 
@@ -27,22 +28,18 @@ public class MainMenu {
 
     Scanner scanner = new Scanner(System.in);
 
+    public MainMenu() {
+
+    }
+
     enum consoleTextColor {
-        ANSI_BLACK("\033[0;30m"),
         ANSI_RED("\033[0;31m"),
         ANSI_GREEN("\033[0;32m"),
         ANSI_YELLOW("\033[0;33m"),
         ANSI_BLUE("\033[0;34m"),
-        ANSI_PURPLE("\033[0;35m"),
-        ANSI_CYAN("\033[0;36m"),
-        ANSI_WHITE("\033[0;37m"),
         ANSI_RESET("\u001B[0m"),
-        BLACK_BOLD("\033[1;30m"),
-        RED_BOLD("\033[1;31m"),
         GREEN_BOLD("\033[1;32m"),
-        YELLOW_BOLD("\033[1;33m"),
         BLUE_BOLD("\033[1;34m"),
-        PURPLE_BOLD("\033[1;35m"),
         CYAN_BOLD("\033[1;36m"),
         WHITE_BOLD("\033[1;37m");
 
@@ -91,7 +88,7 @@ public class MainMenu {
                 colorHeadline + colorMain + "╔═══════════════════════════════════════════════════════════════════════════════════════════════════╗\n"
                 + "║                                " + colorTable + "WELCOME TO LBL CRM SYSTEM" + colorMain + "                                          ║\n"
                 + "╠═══════════════════════════════════════════════════════════════════════════════════════════════════╣\n"
-                + "║     " + colorTable + "WHAT WOULD YOU LIKE TO DO " /*+ Login.getUsername().toUpperCase()*/ +  "?" + colorMain /*+ insertLine()*/ + "║\n"
+                + "║     " + colorTable + "WHAT WOULD YOU LIKE TO DO " + /*Login.getUsername().toUpperCase() +*/ "?" + colorMain + insertLine() + "║\n"
                 + "╠═══════════════════════════════════════════════════════════════════════════════════════════════════╣\n"
                 + "║ 1.  To create new Lead " + colorHeadline + "- type: 'new lead'" + colorMain + "                                                         ║\n"
                 + "║ 2.  To create new Sales Representative " + colorHeadline + "- type: 'new salesrep'" + colorMain + "                                     ║\n"
@@ -109,7 +106,7 @@ public class MainMenu {
                 + "║ 14. To quit " + colorHeadline + "- type: 'quit'" + colorMain + "                                                                        ║\n"
                 + "╚═══════════════════════════════════════════════════════════════════════════════════════════════════╝\n" + reset);
 
-        //consoleFocusRunOnce();
+        consoleFocusRunOnce();
 
         try {
 
@@ -152,7 +149,6 @@ public class MainMenu {
             } else {
 
                 switch (input[0] + input[1]) {
-                    //String x = input.substring(input.indexOf("Lead") + 3, input.length());
                     case "new" + "lead" -> newLead();
                     case "new" + "salesrep" -> newSalesRep();
                     case "show" + "leads" -> showLeads();
@@ -162,6 +158,7 @@ public class MainMenu {
                     case "show" + "salesreps" -> showSalesReps();
                     case "view" + "reports" -> reportMenu();
                     case "main" + "menu" -> OS();
+                    //case "populate" + "database" -> SpringApplication.run(PopulateDatabase.class);
                     default -> throw new IllegalArgumentException();
                 }
             }
@@ -191,7 +188,7 @@ public class MainMenu {
                     Lead newLead = new Lead();
                     leadRepository.save(newLead);
 
-                    //asks and validates customer's name
+                    //checks if restrictions for Customer name are met
                     while (!valid) {
                         System.out.println(colorInput + "\nPlease input the customer's name: " + reset);
                         try {
@@ -204,9 +201,9 @@ public class MainMenu {
 
                     valid = false;
 
-                    //asks and validates customer's phone number
+                    //checks if restrictions for Phone number are met
                     while (!valid) {
-                        System.out.println(colorInput + "\nPlease input the customer's phone number: " + reset);
+                        System.out.println(colorInput + "\nPlease input the customer's phone number without spaces: " + reset);
                         try{
                             newLead.setPhoneNumber(scanner.nextLine().trim().toUpperCase());
                             valid = true;
@@ -218,7 +215,7 @@ public class MainMenu {
                     valid = false;
 
 
-                    //asks and validates customer's e-mail address
+                    //checks if restrictions for E-mail address are met
                     while (!valid) {
                         System.out.println(colorInput + "\nPlease input the customer's email address: " + reset);
                         try {
@@ -231,8 +228,7 @@ public class MainMenu {
 
                     valid = false;
 
-
-                    //asks and validates customer's company name
+                    //checks if restrictions for Company name are met
                     while (!valid) {
                         System.out.println(colorInput + "\nPlease input the customer's company name: " + reset);
                         try {
@@ -241,7 +237,6 @@ public class MainMenu {
                         }catch(EmptyStringException | ExceedsMaxLength e){
                             System.out.println(colorError + e.getMessage());
                         }
-
                     }
 
                     //theLeads.put(newLead.getId(), newLead);
@@ -250,8 +245,8 @@ public class MainMenu {
                     leadRepository.save(newLead);
                     return newLead;
                 }
-                case "n" -> // Would normally go back in the menu at this point
-                    OS();
+                case "n" ->
+                        OS();
 
                 default -> throw new IllegalArgumentException();
             }
@@ -268,13 +263,12 @@ public class MainMenu {
 
         Lead lead = leadRepository.findById(Long.parseLong(id)).get();
         System.out.println(colorInput + "\nWould you like to convert " +
-                           colorTable + lead.getName() +
-                           colorInput + " from " +
-                           colorTable + lead.getCompanyName() +
-                           colorInput + " into an opportunity?" +
-                           colorTable + "    y / n " + reset);
-        /*Scanner scanner = new Scanner(System.in);
-        Scanner scanner2 = new Scanner(System.in);*/
+                                   colorTable + lead.getName().toUpperCase() +
+                                   colorInput + " from " +
+                                   colorTable + lead.getCompanyName().toUpperCase() +
+                                   colorInput + " into an opportunity?" +
+                                   colorTable + "    y / n " + reset);
+
         try {
             switch (scanner.nextLine().trim().toLowerCase(Locale.ROOT)) {
                 case "y" -> {
@@ -283,9 +277,10 @@ public class MainMenu {
 
                     valid = false;
 
+                    // checks if restrictions for Product are met
                     while (!valid) {
-                        System.out.println(colorInput + "\nPlease input the product that " + colorTable + lead.getCompanyName() + colorInput + " is interested in: \n " +
-                                colorTable + "HYBRID, FLATBED OR BOX" + reset);
+                        System.out.println(colorInput + "\nPlease input the product that " + colorTable + lead.getCompanyName().toUpperCase() + colorInput + " is interested in: \n " +
+                                                   colorTable + "HYBRID, FLATBED OR BOX" + reset);
                         try {
                             newOpp.setTruck(Truck.getTruck(scanner.nextLine().trim().toUpperCase(Locale.ROOT)));
                             valid = true;
@@ -296,8 +291,9 @@ public class MainMenu {
 
                     valid = false;
 
+                    // checks if restrictions for Quantity are met
                     while (!valid) {
-                        System.out.println(colorInput + "\nPlease input the quantity that " + colorTable + lead.getCompanyName() + colorInput + " is interested in: " + reset);
+                        System.out.println(colorInput + "\nPlease input the quantity that " + colorTable + lead.getCompanyName().toUpperCase() + colorInput + " is interested in: " + reset);
 
                         try {
                             newOpp.setQuantity(Integer.parseInt(scanner.nextLine().trim()));
@@ -377,10 +373,11 @@ public class MainMenu {
             accountRepository.save(newAccount);
             valid = false;
 
+            // checks if restrictions for Industry are met
             while (!valid) {
 
                 System.out.println(colorInput + "\nPlease input the company industry: \n" +
-                        colorTable + "PRODUCE, ECOMMERCE, MANUFACTURING, MEDICAL OR OTHER" + reset);
+                                           colorTable + "PRODUCE, ECOMMERCE, MANUFACTURING, MEDICAL OR OTHER" + reset);
 
                 try {
                     newAccount.setIndustry(Industry.getIndustry(scanner.nextLine().trim().toUpperCase(Locale.ROOT))); // ENUM Selection
@@ -389,10 +386,11 @@ public class MainMenu {
                     System.out.println(colorError + e.getMessage());
                 }
             }
+
             valid = false;
 
+            // checks if restrictions for Employee count are met
             while (!valid) {
-
                 System.out.println(colorInput + "\nPlease input the employee count for " + colorTable + newAccount.getCompanyName() + colorInput + ":  " + reset); //**Needs amending to display name in contact list
                 try {
                     newAccount.setEmployeeCount(Integer.parseInt(scanner.nextLine().trim()));
@@ -406,9 +404,9 @@ public class MainMenu {
 
             valid = false;
 
+            // checks if restrictions for City name are met
             while (!valid) {
                 System.out.println(colorInput + "\nPlease input the city for " + colorTable + newAccount.getCompanyName() + colorInput + ":  " + reset);
-
                 try {
                     newAccount.setCity(scanner.nextLine().trim().toUpperCase(Locale.ROOT));
                     valid = true;
@@ -416,10 +414,12 @@ public class MainMenu {
                     System.out.println(colorError + e.getMessage());
                 }
             }
+
             valid = false;
 
+            // checks if Country is in country array
             while (!valid) {
-                System.out.println(colorInput + "\nPlease input the Country for " + newAccount.getCompanyName() + ":  " + reset);
+                System.out.println(colorInput + "\nPlease input the Country for " + colorTable + newAccount.getCompanyName() + ":  " + reset);
                 try {
                     newAccount.setCountry(scanner.nextLine().trim().toUpperCase());
                     valid = true;
@@ -433,7 +433,6 @@ public class MainMenu {
             // Assigns the Account to the contact(decision maker) of the opportunity
             opportunity.getDecisionMaker().setAccount(newAccount);
             contactRepository.save(opportunity.getDecisionMaker());
-
             accountRepository.save(newAccount);
             System.out.println(newAccount.toString());
 
@@ -446,6 +445,7 @@ public class MainMenu {
         return null;
     }
 
+    // showing all leads
     public void showLeads() {
         var allLeads = leadRepository.findAllLeads();
         System.out.println(colorMain + "\n╔════════════╦═══ " + colorMainBold + "Total Number Of Leads: " + allLeads.size() + colorMain + " ════════════════╗" + reset);
@@ -471,6 +471,7 @@ public class MainMenu {
         }
     }
 
+    // showing all contacts
     public void showContacts() {
         var allContacts = contactRepository.findAllContacts();
         System.out.println(colorMain + "\n╔════════════╦════════ " + colorMainBold + "Total Number Of Contacts: " + allContacts.size() + colorMain + " ════════╦══════════════════════════════════════════╗" + reset);
@@ -577,7 +578,7 @@ public class MainMenu {
         return leadRepository.findById(Long.parseLong(id)).toString();
     }
 
-    //look up opportunity by Id
+    // lookup opportunity by Id
     public String lookUpOppId(String id) throws RuntimeException {
         System.out.println(colorMain + "\n╔════════════╦═══ " + colorMainBold + "Contract details" + colorMain + " ═╦═══════════════════╦═══════════════════╗" + reset);
         System.out.printf("%-1s %-17s %-1s %-27s %-1s %-24s %-1s %-24s %-1s\n",
@@ -604,9 +605,7 @@ public class MainMenu {
                               colorHeadlineBold + "Email Address",
                               colorMain + "║",
                               colorHeadlineBold + "Company name",
-                              colorMain + "║\n" +
-                                      colorMain + "╠════════════╬═════════════════════════════════════════════╬══════════════════════╬══════════════════════════════════════════╬═════════════════════════════════════════════╣\n"
-                                      + reset +
+                              colorMain + "║\n" + colorMain + "╠════════════╬═════════════════════════════════════════════╬══════════════════════╬══════════════════════════════════════════╬═════════════════════════════════════════════╣\n" + reset +
                               opportunityRepository.findById(Long.parseLong(id)).get().getDecisionMaker().toString());
     }
 
@@ -627,22 +626,18 @@ public class MainMenu {
                                   colorMain + "╠════════════╬══════════════════════╬═══════════════════╬═══════════════════╣");
         System.out.println(opp);
         System.out.println(colorInput + "Would you like to change the status of this opportunity to " + colorTable + "LOST?   y / n" + reset);
-        // Scanner scanner = new Scanner(System.in);
+
         try {
             switch (scanner.nextLine().trim().toLowerCase(Locale.ROOT)) {
-                case "y": {
+                case "y" -> {
                     opp.setStatus(Status.CLOSED_LOST);
                     opportunityRepository.save(opp); //does it override or creates a new instance?
                     System.out.println(colorMain + "\n═════════════ " + colorMainBold + "Status Changed!" + colorMain + " ═════════════" + reset);
                 }
-                break;
-                case "n": {
-                    OS();
-                }
-                break;
+                case "n" ->
+                        OS();
 
-                default:
-                    throw new IllegalArgumentException(colorError + "Invalid input - please try again" + reset);
+                default -> throw new IllegalArgumentException(colorError + "Invalid input - please try again" + reset);
             }
 
         } catch (Exception e) {
@@ -671,19 +666,15 @@ public class MainMenu {
         Scanner scanner = new Scanner(System.in);
         try {
             switch (scanner.nextLine().trim().toLowerCase(Locale.ROOT)) {
-                case "y": {
+                case "y" -> {
                     opp.setStatus(Status.CLOSED_WON);
                     opportunityRepository.save(opp);
                     System.out.println(colorMain + "\n═════════════ " + colorMainBold + "Status Changed!" + colorMain + " ═════════════" + reset);
                 }
-                break;
-                case "n": {
-                    OS();
-                }
-                break;
+                case "n" ->
+                        OS();
 
-                default:
-                    throw new IllegalArgumentException(colorError + "Invalid input - please try again" + reset);
+                default -> throw new IllegalArgumentException(colorError + "Invalid input - please try again" + reset);
             }
 
         } catch (Exception e) {
@@ -692,6 +683,7 @@ public class MainMenu {
         }
     }
 
+    // Focuses cursor inside console for IntelliJ users
     public void consoleFocus() throws AWTException {
         Robot robot = new Robot();
 
@@ -701,11 +693,21 @@ public class MainMenu {
         robot.keyRelease(KeyEvent.VK_ALT);
     }
 
+    // Makes sure that method consoleFocus is run only once during the program runtime
     public void consoleFocusRunOnce() throws AWTException {
         if (!wasRun) {
             wasRun = true;
             consoleFocus();
         }
+    }
+
+    // Adjusts number of characters printed for different usernames
+    public static StringBuilder insertLine() {
+        StringBuilder line = new StringBuilder();
+        for (int i = 1; i < (68 /*- Login.getUsername().length()*/); i++) {
+            line.append(" ");
+        }
+        return line;
     }
 
     public SalesRep newSalesRep() {
@@ -724,7 +726,7 @@ public class MainMenu {
                         try {
                             newSalesRep.setName(scanner.nextLine().trim().toUpperCase());
                             valid = true;
-                        } catch (EmptyStringException | ExceedsMaxLength | NameContainsNumbersException e) {
+                        } catch (EmptyStringException | NameContainsNumbersException | ExceedsMaxLength e) {
                             System.out.println(colorError + e.getMessage());
                         }
                     }
@@ -1100,27 +1102,6 @@ public class MainMenu {
         reportMenu();
     }
 
-
-    /*//Email format validation
-    public static boolean isValidEmail(String email){
-        return email.matches("^[\\w-_\\.+]*[\\w-_\\.]\\@([\\w]+\\.)+[\\w]+[\\w]$");
-    }
-
-
-
-    //Name input validation (contains only alphabetic characters)
-    public static boolean isValidName(String name){
-        return name.matches("^[A-Za-z\\s]{1,}[\\.]{0,1}[A-Za-z\\s]{0,}$");
-    }*/
-
-   /* public static StringBuilder insertLine() {
-        StringBuilder line = new StringBuilder();
-        for (int i = 1; i < (68 - Login.getUsername().length()); i++) {
-            line.append(" ");
-        }
-        return line;
-    }*/
-
     public void OSGuest() throws RuntimeException, AWTException {
 
         System.out.println("\n" + colorHeadline + colorLogo
@@ -1136,7 +1117,7 @@ public class MainMenu {
                                    colorHeadline + colorMain + "╔═══════════════════════════════════════════════════════════════════════════════════════════════════╗\n"
                                    + "║                                " + colorTable + "WELCOME TO LBL CRM SYSTEM" + colorMain + "                                          ║\n"
                                    + "╠═══════════════════════════════════════════════════════════════════════════════════════════════════╣\n"
-                                   + "║     " + colorTable + "WHAT WOULD YOU LIKE TO DO " + /*Login.getUsername().toUpperCase() + */ "?" + colorMain /*+ insertLine()*/ + "║\n"
+                                   + "║     " + colorTable + "WHAT WOULD YOU LIKE TO DO " + /*Login.getUsername().toUpperCase() + */ "?" + colorMain + insertLine() + "║\n"
                                    + "╠═══════════════════════════════════════════════════════════════════════════════════════════════════╣\n"
                                    + "║ 1.  To check Leads list " + colorHeadline + "- type: 'show leads'" + colorMain + "                                                      ║\n"
                                    + "║ 2.  To check individual Lead's details " + colorHeadline + "- type: 'lookup lead ' + Lead Id" + colorMain + "                           ║\n"
@@ -1147,7 +1128,7 @@ public class MainMenu {
                                    + "║ 7.  To quit " + colorHeadline + "- type: 'quit'" + colorMain + "                                                                        ║\n"
                                    + "╚═══════════════════════════════════════════════════════════════════════════════════════════════════╝\n" + reset);
 
-        //consoleFocusRunOnce();
+        consoleFocusRunOnce();
 
         try {
 
@@ -1156,7 +1137,8 @@ public class MainMenu {
 
             if (input[0].equals("quit")) {
                 System.out.println(colorMainBold + "\nThank you for using our LBL CRM SYSTEM!" + reset);
-                throw new RuntimeException(colorError + "Exiting the program" + reset);
+                System.out.println(colorError + "Exiting the program" + reset);
+                System.exit(0);
             }else if (input[0].equals("lookup") && input[1].equals("lead")) {
                 System.out.println(lookUpLeadId(input[2]).toString());
             } else if (input[0].equals("lookup") && input[1].equals("opportunity")) {
@@ -1164,7 +1146,6 @@ public class MainMenu {
             } else {
 
                 switch (input[0] + input[1]) {
-                    //String x = input.substring(input.indexOf("Lead") + 3, input.length());
                     case "new" + "lead" -> newLead();
                     case "show" + "leads" -> showLeads();
                     case "show" + "opportunities" -> showOpportunities();

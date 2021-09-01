@@ -1,6 +1,8 @@
-/*package com.ironhack.stolen_name_trucking_company_homework_3.dao;
+package com.ironhack.stolen_name_trucking_company_homework_3.dao;
 
-import com.ironhack.stolen_name_trucking_company_homework_3.exceptions.NoSuchValueException;
+import com.ironhack.stolen_name_trucking_company_homework_3.StolenNameTruckingCompanyHomework3Application;
+import org.springframework.boot.SpringApplication;
+import org.springframework.stereotype.Component;
 
 import javax.swing.*;
 import javax.swing.border.LineBorder;
@@ -8,6 +10,7 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+@Component
 public class Login implements ActionListener {
 
     private static JLabel title;
@@ -17,16 +20,16 @@ public class Login implements ActionListener {
     private static JLabel password;
     private static JPasswordField passwordText;
     private static JButton submit;
-    private static JLabel success;
-    private static JLabel success2;
+    private static JLabel wrongInput;
+    private static JLabel dummyLabel;
     private static JLabel hint;
     private static JFrame frame;
     private static String username;
+    private static char[] userPassword;
+    public static int isLoggedIn;
 
-
-    //public static MainMenu menu = new MainMenu(leadRepository, accountRepository, contactRepository, opportunityRepository, salesRepRepository);
-
-    public static void login2() {
+    // Creates login window
+    public static void login() {
 
         frame = new JFrame("LBL CRM SYSTEM LOGIN");
         frame.setUndecorated(true);
@@ -64,9 +67,9 @@ public class Login implements ActionListener {
         submit.addActionListener(new Login());
         panel.add(submit);
 
-        success = new JLabel();
-        success.setBounds(30, 140, 300, 25);
-        panel.add(success);
+        wrongInput = new JLabel();
+        wrongInput.setBounds(30, 140, 300, 25);
+        panel.add(wrongInput);
 
         hint = new JLabel("Make your console full screen for a better experience");
         hint.setFont(new Font("Serif", Font.BOLD, 16));
@@ -74,28 +77,36 @@ public class Login implements ActionListener {
         hint.setBounds(20, 190, 380, 25);
         panel.add(hint);
 
-        success2 = new JLabel();
-        panel.add(success2);
+        dummyLabel = new JLabel();
+        panel.add(dummyLabel);
 
         frame.add(panel);
 
         frame.setVisible(true);
         frame.setLocationRelativeTo(null);
-        frame.getRootPane().setDefaultButton(submit); // Let's you press "Submit" button using ENTER
-
+        frame.getRootPane().setDefaultButton(submit); // Lets you press "Submit" button using ENTER
     }
 
+    // Method to get username input value
     public static String getUsername() {
         username = userText.getText() ;
         return username;
     }
 
+    public static String getPassword() {
+        userPassword = passwordText.getPassword();
+        return String.valueOf(userPassword);
+    }
+
+    public static int getIsLoggedIn() {
+        return isLoggedIn;
+    }
     @Override
     public void actionPerformed(ActionEvent e) {
-        //username = userText.getText();
         char[] password = passwordText.getPassword();
         String pass = String.valueOf(password);
 
+        // Checks if username and password input equals to any of registered users and runs OS or OSGuest menu
         if (getUsername().equals("Lee") && pass.equals("lee")
         || getUsername().equals("Sebastian") && pass.equals("sebastian")
         || getUsername().equals("Mariana") && pass.equals("mariana")
@@ -107,21 +118,27 @@ public class Login implements ActionListener {
         || getUsername().equals("Anna") && pass.equals("anna")
         || getUsername().equals("Admin") && pass.equals("admin")) {
 
-            frame.dispose();
+
+            frame.dispose(); // Closes login window
+            isLoggedIn = 1;
             try {
-                menu.OS();
-            } catch (RuntimeException | AWTException | NoSuchValueException ex) {
+                SpringApplication.run(StolenNameTruckingCompanyHomework3Application.class);
+            } catch (RuntimeException ex) {
+                System.out.println("Our server is busy! Please run the program again to login!");
             }
+
         } else if (getUsername().equals("Guest") && pass.equals("guest")) {
-            frame.dispose();
+            frame.dispose(); // Closes login window
+            isLoggedIn = 2;
             try {
-                menu.OSGuest();
-            } catch (RuntimeException | AWTException ex) {
+                SpringApplication.run(StolenNameTruckingCompanyHomework3Application.class);
+            } catch (RuntimeException ex) {
+                System.out.println("Our server is busy! Please run the program again to login!");
             }
         } else {
-            success.setText("Wrong username or password!");
+            wrongInput.setText("Wrong username or password!");
         }
 
     }
+
 }
-*/
