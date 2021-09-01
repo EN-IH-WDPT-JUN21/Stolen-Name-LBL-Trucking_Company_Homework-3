@@ -127,12 +127,14 @@ public class MainMenu {
                 if(!leadRepository.existsById(Long.parseLong(input[2]))){
                     throw new NoSuchValueException("There is no Lead that matches that id.");
                 }
-                System.out.println(lookUpLeadId(input[2]));
+                //System.out.println(lookUpLeadId(input[2]));
+                lookUpLeadId(input[2]);
             } else if (input[0].equals("lookup") && input[1].equals("opportunity") && input.length>2) {
                 if(!opportunityRepository.existsById(Long.parseLong(input[2]))){
                     throw new NoSuchValueException("There is no Opportunity that matches that id.");
                 }
-                System.out.println(lookUpOppId(input[2]));
+                //System.out.println(lookUpOppId(input[2]));
+                lookUpOppId(input[2]);
             } else if (input[0].equals("convert")) { // throws null point exception if number not in array
                 if(!leadRepository.existsById(Long.parseLong(input[1]))){
                     throw new NoSuchValueException("There is no Lead that matches that id.");
@@ -574,7 +576,6 @@ public class MainMenu {
 
 
     public String lookUpLeadId(String id) throws RuntimeException {
-
         System.out.println(colorMain + "\n╔════════════╦═════ " + colorMainBold + "Lead details" + colorMain + " ══════════════════════════╦══════════════════════╦══════════════════════════════════════════╦═════════════════════════════════════════════╗" + reset);
         return leadRepository.findById(Long.parseLong(id)).toString();
     }
@@ -1159,9 +1160,11 @@ public class MainMenu {
                 System.out.println(colorError + "Exiting the program" + reset);
                 System.exit(0);
             }else if (input[0].equals("lookup") && input[1].equals("lead")) {
-                System.out.println(lookUpLeadId(input[2]));
+                //System.out.println(lookUpLeadId(input[2]));
+                lookUpLeadId(input[2]);
             } else if (input[0].equals("lookup") && input[1].equals("opportunity")) {
-                System.out.println(lookUpOppId(input[2]));
+                //System.out.println(lookUpOppId(input[2]));
+                lookUpOppId(input[2]);
             } else {
 
                 switch (input[0] + input[1]) {
