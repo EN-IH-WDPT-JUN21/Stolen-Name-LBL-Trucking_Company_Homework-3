@@ -39,7 +39,8 @@ class AccountRepositoryTest {
     private List<Account> accounts;
 
     @BeforeEach
-    void setUp() throws NameContainsNumbersException, EmptyStringException, EmailNotValidException, ExceedsMaxLength, PhoneNumberContainsLettersException, InvalidCountryException {
+    void setUp() throws NameContainsNumbersException, EmptyStringException, EmailNotValidException, ExceedsMaxLength,
+            PhoneNumberContainsLettersException, InvalidCountryException {
 
         salesReps = salesRepRepository.saveAll(List.of(
                 new SalesRep("David Lynch"),
@@ -47,9 +48,12 @@ class AccountRepositoryTest {
         ));
 
         contacts = contactRepository.saveAll(List.of(
-                new Contact("John Doe", "123475357", "alfa@beta.uk", "Kałasznikow", salesReps.get(0)),
-                new Contact("Martha Steward", "123475357", "ms@wp.pl", "My own company", salesReps.get(1)),
-                new Contact("George Truman", "123475357", "thisisverylongemail@gmail.com", "Truman Show",salesReps.get(0))
+                new Contact("John Doe", "123475357", "alfa@beta.uk", "Kałasznikow",
+                        salesReps.get(0)),
+                new Contact("Martha Steward", "123475357", "ms@wp.pl",
+                        "My own company", salesReps.get(1)),
+                new Contact("George Truman", "123475357", "thisisverylongemail@gmail.com",
+                        "Truman Show",salesReps.get(0))
 
         ));
 
@@ -61,9 +65,12 @@ class AccountRepositoryTest {
         ));
 
         accounts = accountRepository.saveAll(List.of(
-                new Account(Industry.PRODUCE, 50, "London", "UNITED KINGDOM",contacts.get(0), opportunities.get(0))  ,
-                new Account(Industry.ECOMMERCE, 500, "Madrid", "SPAIN",contacts.get(1), opportunities.get(1)),
-                new Account(Industry.MANUFACTURING, 20, "Paris", "FRANCE",contacts.get(2), opportunities.get(2))
+                new Account(Industry.PRODUCE, 50, "London", "UNITED KINGDOM",contacts.get(0),
+                        opportunities.get(0))  ,
+                new Account(Industry.ECOMMERCE, 500, "Madrid", "SPAIN",contacts.get(1),
+                        opportunities.get(1)),
+                new Account(Industry.MANUFACTURING, 20, "Paris", "FRANCE",contacts.get(2),
+                        opportunities.get(2))
         ));
 
     }
