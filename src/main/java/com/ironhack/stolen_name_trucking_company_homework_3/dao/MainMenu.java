@@ -7,7 +7,6 @@ import com.ironhack.stolen_name_trucking_company_homework_3.enums.Truck;
 import com.ironhack.stolen_name_trucking_company_homework_3.exceptions.*;
 import com.ironhack.stolen_name_trucking_company_homework_3.repository.*;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.SpringApplication;
 import org.springframework.stereotype.Component;
 
 
@@ -15,10 +14,8 @@ import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.util.*;
 
-
 @Component
 public class MainMenu {
-
 
     LeadRepository leadRepository;
     AccountRepository accountRepository;
@@ -29,7 +26,6 @@ public class MainMenu {
     Scanner scanner = new Scanner(System.in);
 
     public MainMenu() {
-
     }
 
     enum consoleTextColor {
@@ -117,6 +113,10 @@ public class MainMenu {
                 System.out.println(colorMainBold + "\nThank you for using our LBL CRM SYSTEM!" + reset);
                 System.out.println(colorError + "Exiting the program" + reset);
                 System.exit(0);
+            } else if (input[0].equals("populate")) {
+                PopulateDatabase.populateDatabase(leadRepository, salesRepRepository, contactRepository, opportunityRepository, accountRepository);
+            } else if (input[0].equals("clear")){
+                PopulateDatabase.clearDatabase(leadRepository, salesRepRepository, contactRepository, opportunityRepository, accountRepository);
 
             } else if (input.length < 2) {
                 throw new IllegalArgumentException();
@@ -125,12 +125,12 @@ public class MainMenu {
                 if(!leadRepository.existsById(Long.parseLong(input[2]))){
                     throw new NoSuchValueException("There is no Lead that matches that id.");
                 }
-                System.out.println(lookUpLeadId(input[2]).toString());
+                System.out.println(lookUpLeadId(input[2]));
             } else if (input[0].equals("lookup") && input[1].equals("opportunity") && input.length>2) {
                 if(!opportunityRepository.existsById(Long.parseLong(input[2]))){
                     throw new NoSuchValueException("There is no Opportunity that matches that id.");
                 }
-                System.out.println(lookUpOppId(input[2]).toString());
+                System.out.println(lookUpOppId(input[2]));
             } else if (input[0].equals("convert")) { // throws null point exception if number not in array
                 if(!leadRepository.existsById(Long.parseLong(input[1]))){
                     throw new NoSuchValueException("There is no Lead that matches that id.");
@@ -158,14 +158,13 @@ public class MainMenu {
                     case "show" + "salesreps" -> showSalesReps();
                     case "view" + "reports" -> reportMenu();
                     case "main" + "menu" -> OS();
-                    //case "populate" + "database" -> SpringApplication.run(PopulateDatabase.class);
                     default -> throw new IllegalArgumentException();
                 }
             }
         } catch (IllegalArgumentException | NullPointerException  e) {
             System.out.println(colorError + "\nInvalid input" + reset);
         }
-        catch (NoSuchValueException e){
+        catch (NameContainsNumbersException | EmptyStringException | InvalidCountryException | EmailNotValidException | ExceedsMaxLength | PhoneNumberContainsLettersException | NoSuchValueException e){
             System.out.println(colorError + e.getMessage() + reset);
         }
 
@@ -327,7 +326,7 @@ public class MainMenu {
                                       colorHeadlineBold + "Quantity",
                                       colorMain + "║\n" +
                                       colorMain + "╠════════════╬══════════════════════╬═══════════════════╬═══════════════════╣");
-                    System.out.println(newOpp.toString());
+                    System.out.println(newOpp);
                     System.out.println(colorInput + "Press Enter to continue..." + reset);
                     scanner.nextLine();
                     System.out.println(colorMain + "╔════════════╦═════ " + colorMainBold + "New Contact created" + colorMain + " ═══════════════════╦══════════════════════╦══════════════════════════════════════════╦═════════════════════════════════════════════╗" + reset);
@@ -344,7 +343,7 @@ public class MainMenu {
                                                     colorHeadlineBold + "Company name",
                                                     colorMain + "║\n" +
                                                     colorMain + "╠════════════╬═════════════════════════════════════════════╬══════════════════════╬══════════════════════════════════════════╬═════════════════════════════════════════════╣" + reset));
-                    System.out.println(newContact.toString());
+                    System.out.println(newContact);
                     System.out.println(colorInput + "Press Enter to continue..." + reset);
                     scanner.nextLine();
                     leadRepository.delete(lead);// Removes lead from repo?
@@ -434,7 +433,7 @@ public class MainMenu {
             opportunity.getDecisionMaker().setAccount(newAccount);
             contactRepository.save(opportunity.getDecisionMaker());
             accountRepository.save(newAccount);
-            System.out.println(newAccount.toString());
+            System.out.println(newAccount);
 
             return newAccount;
         } catch (Exception e) {
@@ -733,7 +732,6 @@ public class MainMenu {
 
                     valid = false;
                     salesRepRepository.save(newSalesRep);
-                    //theSalesReps.put(newSalesRep.getId().toString(), newSalesRep);
                     System.out.println(colorMain + "\n╔════════════╦═══ " + colorMainBold + "New Sales Representative created" + colorMain + " ════════╗" + reset);
                     System.out.printf("%-1s %-17s %-1s %-50s %-1s\n",
                             colorMain + "║",
@@ -1159,9 +1157,9 @@ public class MainMenu {
                 System.out.println(colorError + "Exiting the program" + reset);
                 System.exit(0);
             }else if (input[0].equals("lookup") && input[1].equals("lead")) {
-                System.out.println(lookUpLeadId(input[2]).toString());
+                System.out.println(lookUpLeadId(input[2]));
             } else if (input[0].equals("lookup") && input[1].equals("opportunity")) {
-                System.out.println(lookUpOppId(input[2]).toString());
+                System.out.println(lookUpOppId(input[2]));
             } else {
 
                 switch (input[0] + input[1]) {
