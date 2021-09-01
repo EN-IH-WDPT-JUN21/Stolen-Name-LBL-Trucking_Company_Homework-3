@@ -116,7 +116,8 @@ public class Login implements ActionListener {
         || getUsername().equals("Katarzyna") && pass.equals("katarzyna")
         || getUsername().equals("Urszula") && pass.equals("urszula")
         || getUsername().equals("Anna") && pass.equals("anna")
-        || getUsername().equals("Admin") && pass.equals("admin")) {
+        || getUsername().equals("Admin") && pass.equals("admin")
+        || getUsername().equals("1") && pass.equals("1")) {
 
 
             frame.dispose(); // Closes login window
