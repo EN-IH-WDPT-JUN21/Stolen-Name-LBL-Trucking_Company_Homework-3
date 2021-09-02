@@ -128,7 +128,7 @@ public class MainMenu {
                     throw new NoSuchValueException("There is no Lead that matches that id.");
                 }
                 //System.out.println(lookUpLeadId(input[2]));
-                lookUpLeadId(input[2]);
+                lookUpLeadId(Long.parseLong(input[2]));
             } else if (input[0].equals("lookup") && input[1].equals("opportunity") && input.length>2) {
                 if(!opportunityRepository.existsById(Long.parseLong(input[2]))){
                     throw new NoSuchValueException("There is no Opportunity that matches that id.");
@@ -575,13 +575,13 @@ public class MainMenu {
     }
 
 
-    public String lookUpLeadId(String id) throws RuntimeException {
+    public void lookUpLeadId(Long id) throws RuntimeException {
         System.out.println(colorMain + "\n╔════════════╦═════ " + colorMainBold + "Lead details" + colorMain + " ══════════════════════════╦══════════════════════╦══════════════════════════════════════════╦═════════════════════════════════════════════╗" + reset);
-        return leadRepository.findById(Long.parseLong(id)).toString();
+        System.out.println(leadRepository.findById(id).get());
     }
 
     // lookup opportunity by Id
-    public String lookUpOppId(String id) throws RuntimeException {
+    public void lookUpOppId(String id) throws RuntimeException {
         System.out.println(colorMain + "\n╔════════════╦═══ " + colorMainBold + "Contract details" + colorMain + " ═╦═══════════════════╦═══════════════════╗" + reset);
         System.out.printf("%-1s %-17s %-1s %-27s %-1s %-24s %-1s %-24s %-1s\n",
                               colorMain + "║",
@@ -593,8 +593,8 @@ public class MainMenu {
                               colorMain + "║",
                               colorHeadlineBold + "Quantity",
                               colorMain + "║\n" +
-                              colorMain + "╠════════════╬══════════════════════╬═══════════════════╬═══════════════════╣" + reset);
-        return opportunityRepository.findById(Long.parseLong(id)).toString() +
+                              colorMain + "╠════════════╬══════════════════════╬═══════════════════╬═══════════════════╣\n" + reset+
+                                  opportunityRepository.findById(Long.parseLong(id)).get() +
                             colorMain + "\n╔════════════╦═══ " + colorMainBold + "Decision maker details" + colorMain + " ══════════════════╦══════════════════════╦══════════════════════════════════════════╦═════════════════════════════════════════════╗\n" + reset +
                             String.format("%-1s %-17s %-1s %-50s %-1s %-27s %-1s %-47s %-1s %-50s %-1s\n",
                               colorMain + "║",
@@ -608,7 +608,7 @@ public class MainMenu {
                               colorMain + "║",
                               colorHeadlineBold + "Company name",
                               colorMain + "║\n" + colorMain + "╠════════════╬═════════════════════════════════════════════╬══════════════════════╬══════════════════════════════════════════╬═════════════════════════════════════════════╣\n" + reset +
-                              opportunityRepository.findById(Long.parseLong(id)).get().getDecisionMaker().toString());
+                              opportunityRepository.findById(Long.parseLong(id)).get().getDecisionMaker().toString()));
     }
 
     //Change opportunity status to LOST
@@ -1161,7 +1161,7 @@ public class MainMenu {
                 System.exit(0);
             }else if (input[0].equals("lookup") && input[1].equals("lead")) {
                 //System.out.println(lookUpLeadId(input[2]));
-                lookUpLeadId(input[2]);
+                lookUpLeadId(Long.parseLong(input[2]));
             } else if (input[0].equals("lookup") && input[1].equals("opportunity")) {
                 //System.out.println(lookUpOppId(input[2]));
                 lookUpOppId(input[2]);
