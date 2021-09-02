@@ -1,6 +1,7 @@
 package com.ironhack.stolen_name_trucking_company_homework_3.enums;
 
 public enum ReportCommands {
+    SALESREP("SALESREP"),
     REPORT_LEAD_BY_SALESREP("REPORT LEAD BY SALESREP"),
     REPORT_OPP_BY_SALESREP("REPORT OPPORTUNITY BY SALESREP"),
     REPORT_CLOSE_W_BY_SALESREP("REPORT CLOSED-WON BY SALESREP"),
@@ -34,6 +35,7 @@ public enum ReportCommands {
     MED_OPPS_PERR_ACC("MEDIAN OPPS PER ACCOUNT"),
     MAX_OPPS_PERR_ACC("MAX OPPS PER ACCOUNT"),
     MIN_OPPS_PERR_ACC("MIN OPPS PER ACCOUNT"),
+    BACK("BACK"),
     MAIN_MENU("MAIN MENU"),
     QUIT("QUIT"),
     NONE("");

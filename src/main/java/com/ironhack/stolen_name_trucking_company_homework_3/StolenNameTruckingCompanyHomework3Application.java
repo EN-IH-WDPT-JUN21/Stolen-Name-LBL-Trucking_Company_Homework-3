@@ -28,7 +28,7 @@ public class StolenNameTruckingCompanyHomework3Application implements CommandLin
 		System.setProperty("java.awt.headless", "false");
 		SpringApplication.run(StolenNameTruckingCompanyHomework3Application.class, args);
 	}
-	@Bean
+	/*@Bean
 	CommandLineRunner commandLineRunner(SalesRepRepository salesRepRepository, AccountRepository accountRepository, LeadRepository leadRepository, OpportunityRepository opportunityRepository, ContactRepository contactRepository, Login login) throws NoSuchValueException, AWTException {
 		return args -> {
 
@@ -79,7 +79,7 @@ public class StolenNameTruckingCompanyHomework3Application implements CommandLin
 			opportunityRepository.save(opportunities.get(2));
 
 		};
-	}
+	}*/
 		@Override
 		public void run (String...args) throws NoSuchValueException, AWTException {
 		if (getIsLoggedIn() == 1) {
@@ -87,7 +87,7 @@ public class StolenNameTruckingCompanyHomework3Application implements CommandLin
 		} else if (getIsLoggedIn() == 2) {
 			menu.OSGuest();
 		} else {
-			menu.OS();
+			throw new Error("Our server is busy! Please run the program again to login!");
 		}
 	}
 }
