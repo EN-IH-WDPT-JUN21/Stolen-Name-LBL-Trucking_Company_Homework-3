@@ -1,10 +1,7 @@
 package com.ironhack.stolen_name_trucking_company_homework_3.dao;//For creating basic Leads. Extends Client information in order to retain a unique ID counter.
 
 import com.ironhack.stolen_name_trucking_company_homework_3.exceptions.*;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 import org.apache.commons.validator.routines.EmailValidator;
 
 import javax.persistence.*;
@@ -134,8 +131,8 @@ public class Lead {
                                         colorMain + "║",
                                         colorHeadlineBold + "Company Name",
                                         colorMain + "║\n" +
-                                                colorMain + "╠════════════╬═════════════════════════════════════════════╬══════════════════════╬══════════════════════════════════════════╬═════════════════════════════════════════════╣"
-                                                + reset));
+                                        colorMain + "╠════════════╬═════════════════════════════════════════════╬══════════════════════╬══════════════════════════════════════════╬═════════════════════════════════════════════╣"
+                                        + reset));
         return  String.format("%-1s %-15s %-1s %-48s %-1s %-25s %-1s %-45s %-1s %-48s %-1s\n",
                               colorMain + "║",
                               colorTable + getId(),
@@ -149,7 +146,6 @@ public class Lead {
                               colorTable + getCompanyName().toUpperCase(),
                               colorMain + "║"+ reset);
     }
-
 }
 
 
