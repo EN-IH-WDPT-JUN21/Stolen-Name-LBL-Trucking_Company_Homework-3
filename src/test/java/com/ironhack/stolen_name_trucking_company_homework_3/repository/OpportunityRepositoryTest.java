@@ -145,7 +145,7 @@ class OpportunityRepositoryTest {
 
     @Test
     void findCountOpportunityByProductForStatus_OPEN(){
-        var oppByProdOpen = opportunityRepository.findCountOpportunityByProductForStatus(Status.OPEN.toString());
+        var oppByProdOpen = opportunityRepository.findCountOpportunityByProductForStatus(Status.OPEN);
         assertEquals(Truck.BOX, oppByProdOpen.get(0)[0]);
         assertEquals(1, oppByProdOpen.get(0)[1]);
         assertEquals(Truck.FLATBED, oppByProdOpen.get(1)[0]);
@@ -158,7 +158,7 @@ class OpportunityRepositoryTest {
     void findCountOpportunityByProductForStatus_CLOSED_WON(){
         opportunities.get(0).setStatus(Status.CLOSED_WON);
         opportunityRepository.save(opportunities.get(0));
-        var oppByProdCloseWon = opportunityRepository.findCountOpportunityByProductForStatus(Status.CLOSED_WON.toString());
+        var oppByProdCloseWon = opportunityRepository.findCountOpportunityByProductForStatus(Status.CLOSED_WON);
         assertEquals(Truck.FLATBED, oppByProdCloseWon.get(0)[0]);
         assertEquals(1, oppByProdCloseWon.get(0)[1]);
 
@@ -168,7 +168,7 @@ class OpportunityRepositoryTest {
     void findCountOpportunityByProductForStatus_CLOSED_LOST(){
         opportunities.get(0).setStatus(Status.CLOSED_LOST);
         opportunityRepository.save(opportunities.get(0));
-        var oppByProdCloseWon = opportunityRepository.findCountOpportunityByProductForStatus(Status.CLOSED_LOST.toString());
+        var oppByProdCloseWon = opportunityRepository.findCountOpportunityByProductForStatus(Status.CLOSED_LOST);
         assertEquals(Truck.FLATBED, oppByProdCloseWon.get(0)[0]);
         assertEquals(1, oppByProdCloseWon.get(0)[1]);
 

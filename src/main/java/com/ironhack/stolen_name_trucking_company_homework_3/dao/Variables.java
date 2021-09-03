@@ -1,7 +1,6 @@
 package com.ironhack.stolen_name_trucking_company_homework_3.dao;
 
 import com.ironhack.stolen_name_trucking_company_homework_3.enums.ConsoleTextColors;
-import com.ironhack.stolen_name_trucking_company_homework_3.menus.SalesRepMenu;
 
 import java.util.Scanner;
 
@@ -18,7 +17,5 @@ public interface Variables {
     String reset = ConsoleTextColors.ANSI_RESET.getColor();
 
     Scanner scanner = new Scanner(System.in);
-
-    SalesRepMenu salesRepMenu = new SalesRepMenu();
 
 }

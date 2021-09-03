@@ -32,8 +32,8 @@ public interface OpportunityRepository extends JpaRepository<Opportunity, Long> 
     List<Object[]> findCountOppForProduct();
 
     //Report CLOSED-WON, CLOSED-LOST, and OPEN opportunities by Product (takes a parameter argument)
-    @Query("SELECT o.product, COUNT(o) FROM Opportunity o WHERE status = :status  GROUP BY o.product ORDER BY o.product")
-    List<Object[]> findCountOpportunityByProductForStatus(@Param("status") String status);
+    @Query("SELECT o.product, COUNT(o) FROM Opportunity o WHERE status = :status GROUP BY o.product ORDER BY o.product")
+    List<Object[]> findCountOpportunityByProductForStatus(@Param("status") Enum status);
 
     //Report Opportunities by Country
     @Query("SELECT ac.country, COUNT(o) FROM Opportunity o JOIN o.account ac GROUP BY ac.country ORDER BY ac.country")
@@ -59,7 +59,7 @@ public interface OpportunityRepository extends JpaRepository<Opportunity, Long> 
     @Query("SELECT ac.industry, COUNT(o) FROM Opportunity o JOIN o.account ac  WHERE status = :status  GROUP BY ac.industry ORDER BY ac.industry")
     List<Object[]> findCountOpportunityByIndustryForStatus(@Param("status") String status);
 
-    //Report mean number products quantity for all Opportunities
+    //Report mean number of products quantity for all Opportunities
     @Query("SELECT AVG(quantity) FROM Opportunity")
     Optional<Double> findMeanProductQuantity();
 

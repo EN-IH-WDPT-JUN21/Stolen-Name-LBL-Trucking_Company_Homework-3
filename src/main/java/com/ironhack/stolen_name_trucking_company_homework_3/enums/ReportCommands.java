@@ -2,6 +2,13 @@ package com.ironhack.stolen_name_trucking_company_homework_3.enums;
 
 public enum ReportCommands {
     SALESREP("SALESREP"),
+    PRODUCT("PRODUCT"),
+    COUNTRY("COUNTRY"),
+    CITY("CITY"),
+    INDUSTRY("INDUSTRY"),
+    EMPLOYEE("EMPLOYEE"),
+    QUANTITY("QUANTITY"),
+    OPPORTUNITY("OPPORTUNITY"),
     REPORT_LEAD_BY_SALESREP("REPORT LEAD BY SALESREP"),
     REPORT_OPP_BY_SALESREP("REPORT OPPORTUNITY BY SALESREP"),
     REPORT_CLOSE_W_BY_SALESREP("REPORT CLOSED-WON BY SALESREP"),
@@ -42,7 +49,7 @@ public enum ReportCommands {
 
     public String value;
 
-    private ReportCommands(String value) {
+    ReportCommands(String value) {
         this.value=value;
     }
 

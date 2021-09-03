@@ -1,32 +1,30 @@
-package com.ironhack.stolen_name_trucking_company_homework_3.dao;
+package com.ironhack.stolen_name_trucking_company_homework_3.menus;
 
+import com.ironhack.stolen_name_trucking_company_homework_3.dao.MainMenu;
+import com.ironhack.stolen_name_trucking_company_homework_3.dao.ReportMainMenu;
+import com.ironhack.stolen_name_trucking_company_homework_3.dao.Variables;
 import com.ironhack.stolen_name_trucking_company_homework_3.enums.ReportCommands;
 import com.ironhack.stolen_name_trucking_company_homework_3.exceptions.NoSuchValueException;
-import com.ironhack.stolen_name_trucking_company_homework_3.menus.*;
+import com.ironhack.stolen_name_trucking_company_homework_3.repository.AccountRepository;
+import com.ironhack.stolen_name_trucking_company_homework_3.repository.OpportunityRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.awt.*;
 
 @Component
-public class ReportMainMenu implements Variables {
+public class OpportunityReportMenu implements Variables {
 
     @Autowired
-    SalesRepReportMenu salesRepReportMenu;
-    @Autowired
-    ProductReportMenu productReportMenu;
-    @Autowired
-    CountryReportMenu countryReportMenu;
-    @Autowired
-    CityReportMenu cityReportMenu;
-    @Autowired
-    EmployeeCountReportMenu employeeCountReportMenu;
-    @Autowired
-    QuantityReportMenu quantityReportMenu;
-    @Autowired
-    OpportunityReportMenu opportunityReportMenu;
+    OpportunityRepository opportunityRepository;
 
-    public void reportMainMenu() throws NoSuchValueException, AWTException {
+    @Autowired
+    ReportMainMenu reportMainMenu;
+
+    @Autowired
+    MainMenu mainMenu;
+
+    public void opportunityReportMenu() throws NoSuchValueException, AWTException {
 
         System.out.println("\n" + colorHeadline + colorLogo
                                    + "                                                                                                \n" +
@@ -39,18 +37,15 @@ public class ReportMainMenu implements Variables {
                                    "             ####################.###### ############ ###################### ############         \n" +
                                    "             ################ ####### # ############ #####################  ############          \n" + reset +
                                    colorMain + "╔══════════════════════════════════════════════════════════════════════════════════════════════════════════════════╗\n"
-                                   + "║                                " + colorTable + "WELCOME TO LBL CRM SYSTEM REPORTING MENU" + colorMain + "                                          ║\n"
+                                   + "║                                                 " + colorTable + "OPPORTUNITY REPORTING MENU" + colorMain + "                                   ║\n"
                                    + "╠══════════════════════════════════════════════════════════════════════════════════════════════════════════════════╣\n"
-                                   + "║ 1.  Display all reports for Sales Representatives " + colorHeadline + "- type: 'salesrep'" + colorMain + "                                             ║\n"
-                                   + "║ 2.  Display all reports for Products " + colorHeadline + "- type: 'product'" + colorMain + "                                                           ║\n"
-                                   + "║ 3.  Display all reports for Countries " + colorHeadline + "- type: 'country'" + colorMain + "                                                          ║\n"
-                                   + "║ 4.  Display all reports for Cities " + colorHeadline + "- type: 'city'" + colorMain + "                                                                ║\n"
-                                   + "║ 5.  Display all reports for Industries " + colorHeadline + "- type: 'industry'" + colorMain + "                                                        ║\n"
-                                   + "║ 6.  Display all reports for Employee Count States" + colorHeadline + "- type: 'employee'" + colorMain + "                                              ║\n"
-                                   + "║ 7.  Display all reports for Quantity States " + colorHeadline + "- type: 'quantity'" + colorMain + "                                                   ║\n"
-                                   + "║ 8.  Display all reports for Opportunity states " + colorHeadline + "- type: 'opportunity'" + colorMain + "                                             ║\n"
-                                   + "║ 9. To return to the main menu " + colorHeadline + "- type: 'main menu'" + colorMain + "                                                                ║\n"
-                                   + "║ 10. To quit " + colorHeadline + "- type: 'quit'" + colorMain + "                                                                                       ║\n"
+                                   + "║ 1. Display MEAN number of Opportunities per Account" + colorHeadline + "- type: 'mean opps per account'" + colorMain + "                              ║\n"
+                                   + "║ 2. Display MEDIAN number of Opportunities per Account" + colorHeadline + "- type: 'median opps per account'" + colorMain + "                          ║\n"
+                                   + "║ 3. Display MAXIMUM number of Opportunities per Account" + colorHeadline + "- type: 'max opps per account'" + colorMain + "                            ║\n"
+                                   + "║ 4. Display MINIMUM number of Opportunities per Account" + colorHeadline + "- type: 'min opps per account'" + colorMain + "                            ║\n"
+                                   + "║ 5. To return to the Report menu " + colorHeadline + "- type: 'back'" + colorMain + "                                                                  ║\n"
+                                   + "║ 6. To return to the Main menu " + colorHeadline + "- type: 'main menu'" + colorMain + "                                                               ║\n"
+                                   + "║ 7. To quit " + colorHeadline + "- type: 'quit'" + colorMain + "                                                                                       ║\n"
                                    + "╚══════════════════════════════════════════════════════════════════════════════════════════════════════════════════╝\n" + reset);
 
         try {
@@ -62,23 +57,20 @@ public class ReportMainMenu implements Variables {
                 throw new IllegalArgumentException();
             } else {
                 switch (ReportCommands.getCommandType(input)){
-                    case SALESREP:
-                        salesRepReportMenu.salesRepReportMenu();
-                    case PRODUCT:
-                        productReportMenu.productReportMenu();
-                    case COUNTRY:
-                        countryReportMenu.countryReportMenu();
-                    case CITY:
-                        cityReportMenu.cityReportMenu();
-                    case INDUSTRY:
-                        cityReportMenu.cityReportMenu();
-                    case EMPLOYEE:
-                        employeeCountReportMenu.employeeCountReportMenu();
-                    case QUANTITY:
-                        quantityReportMenu.quantityReportMenu();
-                    case OPPORTUNITY:
-                        opportunityReportMenu.opportunityReportMenu();
-                    case MAIN_MENU: new MainMenu().OS();
+                    case MEAN_OPPS_PERR_ACC:
+                        System.out.println("Average number of opportunities per account is: " + opportunityRepository.findMeanOpportunitiesPerAccount().get().doubleValue());
+                        break;
+                    case MED_OPPS_PERR_ACC:
+                        System.out.println("Median number of opportunities per account is: " + getMedian(opportunityRepository.findMedianOppsPerAccountStep1()));
+                        break;
+                    case MAX_OPPS_PERR_ACC:
+                        System.out.println("Maximum number of opportunities per account is: " + opportunityRepository.findMaxOpportunitiesPerAccount().get());
+                        break;
+                    case MIN_OPPS_PERR_ACC:
+                        System.out.println("Minimum number of opportunities per account is: " + opportunityRepository.findMinOpportunitiesPerAccount().get());
+                        break;
+                    case BACK: reportMainMenu.reportMainMenu();
+                    case MAIN_MENU: mainMenu.OS();
                         break;
                     case QUIT:
                         System.out.println(colorMainBold + "\nThank you for using our LBL CRM SYSTEM!" + reset);
@@ -94,6 +86,19 @@ public class ReportMainMenu implements Variables {
 
         System.out.println(colorInput + "\nPress Enter to continue..." + reset);
         scanner.nextLine();
-        reportMainMenu();
+        opportunityReportMenu();
+    }
+
+    public int getMedian(int[] intArray){
+        try {
+            int sizeOfArray = intArray.length;
+            if (sizeOfArray % 2 == 1) {
+                return intArray[(sizeOfArray + 1) / 2 - 1];
+            } else {
+                return (intArray[sizeOfArray / 2 - 1] + intArray[sizeOfArray / 2]) / 2;
+            }
+        }catch (ArrayIndexOutOfBoundsException e){
+            return 0;
+        }
     }
 }
