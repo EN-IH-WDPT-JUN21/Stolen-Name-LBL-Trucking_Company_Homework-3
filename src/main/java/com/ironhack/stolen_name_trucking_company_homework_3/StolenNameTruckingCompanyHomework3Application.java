@@ -1,19 +1,14 @@
 package com.ironhack.stolen_name_trucking_company_homework_3;
 
-import com.ironhack.stolen_name_trucking_company_homework_3.dao.*;
-import com.ironhack.stolen_name_trucking_company_homework_3.enums.Industry;
-import com.ironhack.stolen_name_trucking_company_homework_3.enums.Truck;
 import com.ironhack.stolen_name_trucking_company_homework_3.exceptions.NoSuchValueException;
-import com.ironhack.stolen_name_trucking_company_homework_3.repository.*;
+import com.ironhack.stolen_name_trucking_company_homework_3.menus.MainMenu;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.context.annotation.Bean;
 
 import java.awt.*;
-import java.util.List;
 
 import static com.ironhack.stolen_name_trucking_company_homework_3.dao.Login.getIsLoggedIn;
 
@@ -22,7 +17,7 @@ import static com.ironhack.stolen_name_trucking_company_homework_3.dao.Login.get
 public class StolenNameTruckingCompanyHomework3Application implements CommandLineRunner{
 
 	@Autowired
-	MainMenu menu;
+    MainMenu menu;
 
 	public static void main(String[] args) {
 		System.setProperty("java.awt.headless", "false");

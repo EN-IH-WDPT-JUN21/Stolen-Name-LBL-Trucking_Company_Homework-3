@@ -1,5 +1,6 @@
-package com.ironhack.stolen_name_trucking_company_homework_3.dao;
+package com.ironhack.stolen_name_trucking_company_homework_3.menus;
 
+import com.ironhack.stolen_name_trucking_company_homework_3.dao.*;
 import com.ironhack.stolen_name_trucking_company_homework_3.enums.*;
 import com.ironhack.stolen_name_trucking_company_homework_3.exceptions.*;
 import com.ironhack.stolen_name_trucking_company_homework_3.repository.*;

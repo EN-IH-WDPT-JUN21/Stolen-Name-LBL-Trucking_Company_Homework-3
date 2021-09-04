@@ -1,8 +1,8 @@
-package com.ironhack.stolen_name_trucking_company_homework_3.dao;
+package com.ironhack.stolen_name_trucking_company_homework_3.menus;
 
+import com.ironhack.stolen_name_trucking_company_homework_3.dao.Variables;
 import com.ironhack.stolen_name_trucking_company_homework_3.enums.ReportCommands;
 import com.ironhack.stolen_name_trucking_company_homework_3.exceptions.NoSuchValueException;
-import com.ironhack.stolen_name_trucking_company_homework_3.menus.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -11,6 +11,8 @@ import java.awt.*;
 @Component
 public class ReportMainMenu implements Variables {
 
+    @Autowired
+    MainMenu mainMenu;
     @Autowired
     SalesRepReportMenu salesRepReportMenu;
     @Autowired
@@ -49,7 +51,7 @@ public class ReportMainMenu implements Variables {
                                    + "║ 6.  Display all reports for Employee Count States" + colorHeadline + "- type: 'employee'" + colorMain + "                                              ║\n"
                                    + "║ 7.  Display all reports for Quantity States " + colorHeadline + "- type: 'quantity'" + colorMain + "                                                   ║\n"
                                    + "║ 8.  Display all reports for Opportunity states " + colorHeadline + "- type: 'opportunity'" + colorMain + "                                             ║\n"
-                                   + "║ 9. To return to the main menu " + colorHeadline + "- type: 'main menu'" + colorMain + "                                                                ║\n"
+                                   + "║ 9.  To return to the main menu " + colorHeadline + "- type: 'main menu'" + colorMain + "                                                                ║\n"
                                    + "║ 10. To quit " + colorHeadline + "- type: 'quit'" + colorMain + "                                                                                       ║\n"
                                    + "╚══════════════════════════════════════════════════════════════════════════════════════════════════════════════════╝\n" + reset);
 
@@ -78,7 +80,7 @@ public class ReportMainMenu implements Variables {
                         quantityReportMenu.quantityReportMenu();
                     case OPPORTUNITY:
                         opportunityReportMenu.opportunityReportMenu();
-                    case MAIN_MENU: new MainMenu().OS();
+                    case MAIN_MENU: mainMenu.OS();
                         break;
                     case QUIT:
                         System.out.println(colorMainBold + "\nThank you for using our LBL CRM SYSTEM!" + reset);
