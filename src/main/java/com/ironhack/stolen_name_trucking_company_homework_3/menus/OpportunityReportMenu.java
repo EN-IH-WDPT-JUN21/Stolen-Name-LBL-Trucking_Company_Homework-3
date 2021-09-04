@@ -1,11 +1,8 @@
 package com.ironhack.stolen_name_trucking_company_homework_3.menus;
 
-import com.ironhack.stolen_name_trucking_company_homework_3.dao.MainMenu;
-import com.ironhack.stolen_name_trucking_company_homework_3.dao.ReportMainMenu;
 import com.ironhack.stolen_name_trucking_company_homework_3.dao.Variables;
 import com.ironhack.stolen_name_trucking_company_homework_3.enums.ReportCommands;
 import com.ironhack.stolen_name_trucking_company_homework_3.exceptions.NoSuchValueException;
-import com.ironhack.stolen_name_trucking_company_homework_3.repository.AccountRepository;
 import com.ironhack.stolen_name_trucking_company_homework_3.repository.OpportunityRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
