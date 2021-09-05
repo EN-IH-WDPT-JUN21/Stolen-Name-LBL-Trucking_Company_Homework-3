@@ -1,20 +1,14 @@
 package com.ironhack.stolen_name_trucking_company_homework_3;
 
-import com.ironhack.stolen_name_trucking_company_homework_3.dao.*;
-import com.ironhack.stolen_name_trucking_company_homework_3.enums.Industry;
-import com.ironhack.stolen_name_trucking_company_homework_3.enums.Truck;
 import com.ironhack.stolen_name_trucking_company_homework_3.exceptions.NoSuchValueException;
-import com.ironhack.stolen_name_trucking_company_homework_3.repository.*;
+import com.ironhack.stolen_name_trucking_company_homework_3.menus.MainMenu;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Profile;
 
 import java.awt.*;
-import java.util.List;
 
 import static com.ironhack.stolen_name_trucking_company_homework_3.dao.Login.getIsLoggedIn;
 
@@ -22,13 +16,13 @@ import static com.ironhack.stolen_name_trucking_company_homework_3.dao.Login.get
 public class StolenNameTruckingCompanyHomework3Application implements CommandLineRunner{
 
 	@Autowired
-	MainMenu menu;
+    MainMenu menu;
 
 	public static void main(String[] args) {
 		System.setProperty("java.awt.headless", "false");
 		SpringApplication.run(StolenNameTruckingCompanyHomework3Application.class, args);
 	}
-	@Bean
+	/*@Bean
 	CommandLineRunner commandLineRunner(SalesRepRepository salesRepRepository, AccountRepository accountRepository, LeadRepository leadRepository, OpportunityRepository opportunityRepository, ContactRepository contactRepository, Login login) throws NoSuchValueException, AWTException {
 		return args -> {
 
@@ -79,7 +73,7 @@ public class StolenNameTruckingCompanyHomework3Application implements CommandLin
 			opportunityRepository.save(opportunities.get(2));
 
 		};
-	}
+	}*/
 		@Override
 		public void run (String...args) throws NoSuchValueException, AWTException {
 		if (getIsLoggedIn() == 1) {
@@ -87,7 +81,7 @@ public class StolenNameTruckingCompanyHomework3Application implements CommandLin
 		} else if (getIsLoggedIn() == 2) {
 			menu.OSGuest();
 		} else {
-			menu.OS();
+			throw new Error("Our server is busy! Please run the program again to login!");
 		}
 	}
 }

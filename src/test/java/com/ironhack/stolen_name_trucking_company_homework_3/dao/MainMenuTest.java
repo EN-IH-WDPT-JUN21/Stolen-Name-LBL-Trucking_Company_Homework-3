@@ -3,6 +3,7 @@ package com.ironhack.stolen_name_trucking_company_homework_3.dao;
 import com.ironhack.stolen_name_trucking_company_homework_3.StolenNameTruckingCompanyHomework3Application;
 import com.ironhack.stolen_name_trucking_company_homework_3.enums.Truck;
 import com.ironhack.stolen_name_trucking_company_homework_3.exceptions.*;
+import com.ironhack.stolen_name_trucking_company_homework_3.menus.MainMenu;
 import com.ironhack.stolen_name_trucking_company_homework_3.repository.*;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Assertions;
@@ -32,6 +33,15 @@ class MainMenuTest {
     @MockBean
     private StolenNameTruckingCompanyHomework3Application application;
 
+    @Autowired
+    private LeadRepository leadRepository;
+    @Autowired
+    private ContactRepository contactRepository;
+    @Autowired
+    private OpportunityRepository opportunityRepository;
+    @Autowired
+    private SalesRepRepository salesRepRepository;
+
     Lead lead1;
     Lead lead2;
     Lead lead3;
@@ -48,7 +58,7 @@ class MainMenuTest {
     @BeforeEach
     void setUp() throws NameContainsNumbersException, EmptyStringException, EmailNotValidException, PhoneNumberContainsLettersException, ExceedsMaxLength {
 
-        List<Lead> leads = test.leadRepository.saveAll(List.of(
+        List<Lead> leads = leadRepository.saveAll(List.of(
                 new Lead("TestOne", "123546", "test1@test.gmail.com", "TestCompany1"),
                 new Lead("TestTwo", "654987", "test1@test.gmail.com", "TestCompany1"),
                 new Lead("TestThree", "7536836", "test1@test.gmail.com", "TestCompany1")
@@ -58,9 +68,9 @@ class MainMenuTest {
 
     @AfterEach
     void tearDown() {
-        test.contactRepository.deleteAll();
-        test.opportunityRepository.deleteAll();
-        test.leadRepository.deleteAll();
+        contactRepository.deleteAll();
+        opportunityRepository.deleteAll();
+        leadRepository.deleteAll();
     }
 
    @Test
@@ -71,10 +81,10 @@ class MainMenuTest {
             System.setIn(new ByteArrayInputStream(data.getBytes())); // Sets System.In to test
             Lead theNewLead = test.newLead(); // creates new lead
             //Assertions check Object created correctly and added to repository
-            Assertions.assertEquals("NATHAN", test.leadRepository.getById(theNewLead.getId()).getName());
-            Assertions.assertEquals("SANTANDER", test.leadRepository.getById(theNewLead.getId()).getCompanyName());
-            Assertions.assertEquals("0028263", test.leadRepository.getById(theNewLead.getId()).getPhoneNumber());
-            Assertions.assertEquals("122@GMAIL.COM", test.leadRepository.getById(theNewLead.getId()).getEmail());
+            Assertions.assertEquals("NATHAN", leadRepository.getById(theNewLead.getId()).getName());
+            Assertions.assertEquals("SANTANDER", leadRepository.getById(theNewLead.getId()).getCompanyName());
+            Assertions.assertEquals("0028263", leadRepository.getById(theNewLead.getId()).getPhoneNumber());
+            Assertions.assertEquals("122@GMAIL.COM", leadRepository.getById(theNewLead.getId()).getEmail());
         } finally {
             System.setIn(stdin); /// Resets System.in to default state
         }
