@@ -55,7 +55,7 @@ public class QuantityReportMenu implements Variables {
             } else {
                 switch (ReportCommands.getCommandType(input)){
                     case MEAN_QUANT:
-                        System.out.println("Average quantity of trucks is: " + opportunityRepository.findMeanProductQuantity().get().doubleValue());
+                        System.out.println("Average quantity of trucks is: " + opportunityRepository.findMeanProductQuantity().get());
                         break;
                     case MED_QUANT:
                         System.out.println("Median quantity of trucks is: " + getMedian(opportunityRepository.findMedianQuantityStep1()));

@@ -55,7 +55,7 @@ public class OpportunityReportMenu implements Variables {
             } else {
                 switch (ReportCommands.getCommandType(input)){
                     case MEAN_OPPS_PERR_ACC:
-                        System.out.println("Average number of opportunities per account is: " + opportunityRepository.findMeanOpportunitiesPerAccount().get().doubleValue());
+                        System.out.println("Average number of opportunities per account is: " + opportunityRepository.findMeanOpportunitiesPerAccount().get());
                         break;
                     case MED_OPPS_PERR_ACC:
                         System.out.println("Median number of opportunities per account is: " + getMedian(opportunityRepository.findMedianOppsPerAccountStep1()));

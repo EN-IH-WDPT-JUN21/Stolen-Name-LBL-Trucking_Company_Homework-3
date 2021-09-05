@@ -22,6 +22,9 @@ public class MainMenu implements Variables {
     @Autowired
     ReportMainMenu reportMainMenu;
 
+    @Autowired
+    SalesRepReportMenu salesRepReportMenu;
+
     public MainMenu() {
     }
 
@@ -52,7 +55,7 @@ public class MainMenu implements Variables {
                 colorHeadline + colorMain + "╔═══════════════════════════════════════════════════════════════════════════════════════════════════╗\n"
                 + "║                                " + colorTable + "WELCOME TO LBL CRM SYSTEM" + colorMain + "                                          ║\n"
                 + "╠═══════════════════════════════════════════════════════════════════════════════════════════════════╣\n"
-                + "║     " + colorTable + "WHAT WOULD YOU LIKE TO DO " + Login.getUsername().toUpperCase() + "?" + colorMain + insertLine() + "║\n"
+                + String.format("%-1s %-104s %-1s","║", colorTable + "WHAT WOULD YOU LIKE TO DO " + Login.getUsername().toUpperCase() + "?", colorMain + /*insertLine(68) +*/ "║\n")
                 + "╠═══════════════════════════════════════════════════════════════════════════════════════════════════╣\n"
                 + "║ 1.  To create new Lead " + colorHeadline + "- type: 'new lead'" + colorMain + "                                                         ║\n"
                 + "║ 2.  To create new Sales Representative " + colorHeadline + "- type: 'new salesrep'" + colorMain + "                                     ║\n"
@@ -87,7 +90,16 @@ public class MainMenu implements Variables {
                 PopulateDatabase.populateDatabase(leadRepository, salesRepRepository, contactRepository, opportunityRepository, accountRepository);
             } else if (input[0].equals("clear")){
                 PopulateDatabase.clearDatabase(leadRepository, salesRepRepository, contactRepository, opportunityRepository, accountRepository);
-
+            /*}else if(input[0].equals("rep")) {
+                var leadByRep = leadRepository.findCountLeadByRepName();
+                if(leadByRep.isEmpty()){
+                    System.out.println("\nThere are no entries matching reporting criteria");
+                } else {
+                    System.out.println(printCountReport("Lead"));
+                    for (int i = 0; i < leadByRep.size(); i++) {
+                        printTableRow(leadByRep, i);
+                    }
+                }*/
             } else if (input.length < 2) {
                 throw new IllegalArgumentException();
             }
@@ -95,13 +107,11 @@ public class MainMenu implements Variables {
                 if(!leadRepository.existsById(Long.parseLong(input[2]))){
                     throw new NoSuchValueException("There is no Lead that matches that id.");
                 }
-                //System.out.println(lookUpLeadId(input[2]));
                 lookUpLeadId(Long.parseLong(input[2]));
             } else if (input[0].equals("lookup") && input[1].equals("opportunity") && input.length>2) {
                 if(!opportunityRepository.existsById(Long.parseLong(input[2]))){
                     throw new NoSuchValueException("There is no Opportunity that matches that id.");
                 }
-                //System.out.println(lookUpOppId(input[2]));
                 lookUpOppId(input[2]);
             } else if (input[0].equals("convert")) { // throws null point exception if number not in array
                 if(!leadRepository.existsById(Long.parseLong(input[1]))){
@@ -209,6 +219,19 @@ public class MainMenu implements Variables {
                             System.out.println(colorError + e.getMessage());
                         }
                     }
+
+                    /*valid = false;
+
+                    //checks if restrictions for Company name are met
+                    while (!valid) {
+                        System.out.println(colorInput + "\nPlease input Sales Representative id: " + reset);
+                        try {
+                            newLead.setSalesRep(salesRepRepository.getById(Long.parseLong(scanner.nextLine().trim())));
+                            valid = true;
+                        }catch(EmptyStringException | ExceedsMaxLength e){
+                            System.out.println(colorError + e.getMessage());
+                        }
+                    }*/
 
                     //theLeads.put(newLead.getId(), newLead);
                     System.out.println(colorMain + "\n╔════════════╦═════ " + colorMainBold + "New Lead created" + colorMain + " ══════════════════════╦══════════════════════╦══════════════════════════════════════════╦═════════════════════════════════════════════╗" + reset);
@@ -671,15 +694,6 @@ public class MainMenu implements Variables {
         }
     }
 
-    // Adjusts number of characters printed for different usernames
-    public static StringBuilder insertLine() {
-        StringBuilder line = new StringBuilder();
-        for (int i = 1; i < (68 /*- Login.getUsername().length()*/); i++) {
-            line.append(" ");
-        }
-        return line;
-    }
-
     public SalesRep newSalesRep() {
 
         valid = false;
@@ -765,7 +779,7 @@ public class MainMenu implements Variables {
                                    colorHeadline + colorMain + "╔═══════════════════════════════════════════════════════════════════════════════════════════════════╗\n"
                                    + "║                                " + colorTable + "WELCOME TO LBL CRM SYSTEM" + colorMain + "                                          ║\n"
                                    + "╠═══════════════════════════════════════════════════════════════════════════════════════════════════╣\n"
-                                   + "║     " + colorTable + "WHAT WOULD YOU LIKE TO DO " + Login.getUsername().toUpperCase() + "?" + colorMain + insertLine() + "║\n"
+                                   + String.format("%-1s %-73s %-1s", colorTable + "WHAT WOULD YOU LIKE TO DO " + Login.getUsername().toUpperCase() + "?", colorMain + /*insertLine(68) +*/ "║\n")
                                    + "╠═══════════════════════════════════════════════════════════════════════════════════════════════════╣\n"
                                    + "║ 1.  To check Leads list " + colorHeadline + "- type: 'show leads'" + colorMain + "                                                      ║\n"
                                    + "║ 2.  To check individual Lead's details " + colorHeadline + "- type: 'lookup lead ' + Lead Id" + colorMain + "                           ║\n"

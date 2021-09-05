@@ -58,40 +58,44 @@ public class ProductReportMenu implements Variables {
                     case REPORT_OPP_BY_PRODUCT:
                         var countOppProd = opportunityRepository.findCountOppForProduct();
                         if(countOppProd.isEmpty()){
-                            System.out.println("\nThere are no entries matching reporting criteria");
+                            System.out.println(colorTable + "\nThere are no entries matching reporting criteria" + reset);
                         } else {
+                            System.out.println(printCountReport("Opportunity"));
                             for (int i = 0; i < countOppProd.size(); i++) {
-                                System.out.println(countOppProd.get(i)[0] + ": " + countOppProd.get(i)[1]);
+                                printTableRow(countOppProd, i);
                             }
                         }
                         break;
                     case REPORT_CLOSE_W_BY_PRODUCT:
                         var countProdW = opportunityRepository.findCountOpportunityByProductForStatus(Status.CLOSED_WON);
                         if(countProdW.isEmpty()){
-                            System.out.println("\nThere are no entries matching reporting criteria");
+                            System.out.println(colorTable + "\nThere are no entries matching reporting criteria" + reset);
                         } else {
+                            System.out.println(printCountReport("Opportunity"));
                             for (int i = 0; i < countProdW.size(); i++) {
-                                System.out.println(countProdW.get(i)[0] + ": " + countProdW.get(i)[1]);
+                                printTableRow(countProdW, i);
                             }
                         }
                         break;
                     case REPORT_CLOSE_L_BY_PRODUCT:
                         var countProdL = opportunityRepository.findCountOpportunityByProductForStatus(Status.CLOSED_LOST);
                         if(countProdL.isEmpty()){
-                            System.out.println("\nThere are no entries matching reporting criteria");
+                            System.out.println(colorTable + "\nThere are no entries matching reporting criteria" + reset);
                         } else {
+                            System.out.println(printCountReport("Opportunity"));
                             for (int i = 0; i < countProdL.size(); i++) {
-                                System.out.println(countProdL.get(i)[0] + ": " + countProdL.get(i)[1]);
+                                printTableRow(countProdL, i);
                             }
                         }
                         break;
                     case REPORT_OPEN_BY_PRODUCT:
                         var countProdOp = opportunityRepository.findCountOpportunityByProductForStatus(Status.OPEN);
                         if(countProdOp.isEmpty()){
-                            System.out.println("\nThere are no entries matching reporting criteria");
+                            System.out.println(colorTable + "\nThere are no entries matching reporting criteria" + reset);
                         } else {
+                            System.out.println(printCountReport("Opportunity"));
                             for (int i = 0; i < countProdOp.size(); i++) {
-                                System.out.println(countProdOp.get(i)[0] + ": " + countProdOp.get(i)[1]);
+                                printTableRow(countProdOp, i);
                             }
                         }
                         break;

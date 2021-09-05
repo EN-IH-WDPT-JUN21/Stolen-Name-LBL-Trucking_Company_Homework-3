@@ -58,40 +58,44 @@ public class CityReportMenu implements Variables {
                     case REPORT_OPP_BY_CITY:
                         var oppCountCity = opportunityRepository.findCountOppForCity();
                         if(oppCountCity.isEmpty()){
-                            System.out.println("There are no entries matching reporting criteria");
+                            System.out.println(colorTable + "\nThere are no entries matching reporting criteria" + reset);
                         } else {
+                            System.out.println(printCountReport("Opportunity"));
                             for (int i = 0; i < oppCountCity.size(); i++) {
-                                System.out.println(oppCountCity.get(i)[0] + ": " + oppCountCity.get(i)[1]);
+                                printTableRow(oppCountCity, i);
                             }
                         }
                         break;
                     case REPORT_CLOSE_W_BY_CITY:
                         var oppCityW = opportunityRepository.findCountOpportunityByCityForStatus(Status.CLOSED_WON.toString());
                         if(oppCityW.isEmpty()){
-                            System.out.println("There are no entries matching reporting criteria");
+                            System.out.println(colorTable + "\nThere are no entries matching reporting criteria" + reset);
                         } else {
+                            System.out.println(printCountReport("Opportunity"));
                             for (int i = 0; i < oppCityW.size(); i++) {
-                                System.out.println(oppCityW.get(i)[0] + ": " + oppCityW.get(i)[1]);
+                                printTableRow(oppCityW, i);
                             }
                         }
                         break;
                     case REPORT_CLOSE_L_BY_CITY:
                         var oppCityL = opportunityRepository.findCountOpportunityByCityForStatus(Status.CLOSED_LOST.toString());
                         if(oppCityL.isEmpty()){
-                            System.out.println("There are no entries matching reporting criteria");
+                            System.out.println(colorTable + "\nThere are no entries matching reporting criteria" + reset);
                         } else {
+                            System.out.println(printCountReport("Opportunity"));
                             for (int i = 0; i < oppCityL.size(); i++) {
-                                System.out.println(oppCityL.get(i)[0] + ": " + oppCityL.get(i)[1]);
+                                printTableRow(oppCityL, i);
                             }
                         }
                         break;
                     case REPORT_OPEN_BY_CITY:
                         var oppCityOp = opportunityRepository.findCountOpportunityByCityForStatus(Status.OPEN.toString());
                         if(oppCityOp.isEmpty()){
-                            System.out.println("There are no entries matching reporting criteria");
+                            System.out.println(colorTable + "\nThere are no entries matching reporting criteria" + reset);
                         } else {
+                            System.out.println(printCountReport("Opportunity"));
                             for (int i = 0; i < oppCityOp.size(); i++) {
-                                System.out.println(oppCityOp.get(i)[0] + ": " + oppCityOp.get(i)[1]);
+                                printTableRow(oppCityOp, i);
                             }
                         }
                         break;
