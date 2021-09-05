@@ -1,5 +1,6 @@
 package com.ironhack.stolen_name_trucking_company_homework_3;
 
+import com.ironhack.stolen_name_trucking_company_homework_3.dao.Login;
 import com.ironhack.stolen_name_trucking_company_homework_3.exceptions.NoSuchValueException;
 import com.ironhack.stolen_name_trucking_company_homework_3.menus.MainMenu;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -81,7 +82,7 @@ public class StolenNameTruckingCompanyHomework3Application implements CommandLin
 		} else if (getIsLoggedIn() == 2) {
 			menu.OSGuest();
 		} else {
-			throw new Error("Our server is busy! Please run the program again to login!");
+			throw new Error("<<<Our server is busy! Please run the program again to login!>>>");
 		}
 	}
 }
