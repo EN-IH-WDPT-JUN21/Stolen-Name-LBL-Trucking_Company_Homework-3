@@ -11,6 +11,7 @@ import org.springframework.boot.SpringApplication;
 
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Profile;
 
 import java.awt.*;
 import java.util.List;
@@ -18,7 +19,6 @@ import java.util.List;
 import static com.ironhack.stolen_name_trucking_company_homework_3.dao.Login.getIsLoggedIn;
 
 @SpringBootApplication
-
 public class StolenNameTruckingCompanyHomework3Application implements CommandLineRunner{
 
 	@Autowired

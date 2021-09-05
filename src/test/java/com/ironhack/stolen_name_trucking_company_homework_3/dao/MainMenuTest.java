@@ -1,5 +1,6 @@
 package com.ironhack.stolen_name_trucking_company_homework_3.dao;
 
+import com.ironhack.stolen_name_trucking_company_homework_3.StolenNameTruckingCompanyHomework3Application;
 import com.ironhack.stolen_name_trucking_company_homework_3.enums.Truck;
 import com.ironhack.stolen_name_trucking_company_homework_3.exceptions.*;
 import com.ironhack.stolen_name_trucking_company_homework_3.repository.*;
@@ -7,13 +8,30 @@ import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.runner.RunWith;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.test.context.TestComponent;
+import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.context.annotation.Profile;
+import org.springframework.test.context.junit4.SpringRunner;
+import org.springframework.web.context.WebApplicationContext;
 
+import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
+import java.io.InputStream;
 import java.io.PrintStream;
+import java.util.List;
 
-/*class MainMenuTest {
+@SpringBootTest
+class MainMenuTest {
 
-    Integer counterStatus;
+    @Autowired
+    private MainMenu test;
+
+    @MockBean
+    private StolenNameTruckingCompanyHomework3Application application;
+
     Lead lead1;
     Lead lead2;
     Lead lead3;
@@ -25,68 +43,52 @@ import java.io.PrintStream;
     String reset = "\u001B[0m";
     String os = System.getProperty("os.name").toLowerCase();
     String expectedOutput;
-    LeadRepository leadRepository;
-    AccountRepository accountRepository;
-    ContactRepository contactRepository;
-    OpportunityRepository opportunityRepository;
-    SalesRepRepository salesRepRepository;
 
 
     @BeforeEach
     void setUp() throws NameContainsNumbersException, EmptyStringException, EmailNotValidException, PhoneNumberContainsLettersException, ExceedsMaxLength {
-        counterStatus = ClientInformation.getUniqueID();
-        ClientInformation.setUniqueID(0);
-        lead1 = new Lead("TestOne", "123546", "test1@test.gmail.com", "TestCompany1");
-        lead2 = new Lead("TestTwo", "654987", "test1@test.gmail.com", "TestCompany1");
-        lead3 = new Lead("TestThree", "7536836", "test1@test.gmail.com", "TestCompany1");
 
-        MainMenu.theLeads.put(lead1.getId(), lead1);
-        MainMenu.theLeads.put(lead2.getId(), lead2);
-        MainMenu.theLeads.put(lead3.getId(), lead3);
+        List<Lead> leads = test.leadRepository.saveAll(List.of(
+                new Lead("TestOne", "123546", "test1@test.gmail.com", "TestCompany1"),
+                new Lead("TestTwo", "654987", "test1@test.gmail.com", "TestCompany1"),
+                new Lead("TestThree", "7536836", "test1@test.gmail.com", "TestCompany1")
+        ));
+
     }
 
     @AfterEach
     void tearDown() {
-        MainMenu.theLeads.remove(lead1.getId(), lead1);
-        MainMenu.theLeads.remove(lead2.getId(), lead2);
-        MainMenu.theLeads.remove(lead3.getId(), lead3);
-        ClientInformation.setUniqueID(counterStatus);
-        MainMenu.theContacts.clear();
-        MainMenu.theOpportunities.clear();
+        test.contactRepository.deleteAll();
+        test.opportunityRepository.deleteAll();
+        test.leadRepository.deleteAll();
     }
 
    @Test
     void testNewLeadPositive() {
-        String data = "y \n Nathan \n 0028263 \n 122@gmail.com \n Santander \n"; // Used to simulate user input
+        String data = "y \n Nathan \n 0028263 \n 122@gmail.com \n Santander"; // Used to simulate user input
         InputStream stdin = System.in; // Used to store default System.in
         try {
-            System.setIn(new ByteArrayInputStream(data.getBytes())); // Sets System.In to test1
-            int hashMapSize = MainMenu.theLeads.size();
-            MainMenu test = new MainMenu(); // Creates a sales associate to test method
-
+            System.setIn(new ByteArrayInputStream(data.getBytes())); // Sets System.In to test
             Lead theNewLead = test.newLead(); // creates new lead
-            //Assertions check Object created correctly and added to hashmap
-            Assertions.assertEquals(hashMapSize + 1, MainMenu.theLeads.size()); // Checks that new lead is added to array
-            Assertions.assertEquals("NATHAN", MainMenu.theLeads.get(theNewLead.getId()).getName());
-            Assertions.assertEquals("SANTANDER", MainMenu.theLeads.get(theNewLead.getId()).getCompanyName());
-            Assertions.assertEquals("0028263", MainMenu.theLeads.get(theNewLead.getId()).getPhoneNumber());
-            Assertions.assertEquals("122@GMAIL.COM", MainMenu.theLeads.get(theNewLead.getId()).getEmail());
+            //Assertions check Object created correctly and added to repository
+            Assertions.assertEquals("NATHAN", test.leadRepository.getById(theNewLead.getId()).getName());
+            Assertions.assertEquals("SANTANDER", test.leadRepository.getById(theNewLead.getId()).getCompanyName());
+            Assertions.assertEquals("0028263", test.leadRepository.getById(theNewLead.getId()).getPhoneNumber());
+            Assertions.assertEquals("122@GMAIL.COM", test.leadRepository.getById(theNewLead.getId()).getEmail());
         } finally {
             System.setIn(stdin); /// Resets System.in to default state
         }
     }
 
-    @Test
+    /*@Test
     void testConvertLeadThrowsNullPointerException(){
-        MainMenu test = new MainMenu(leadRepository, accountRepository, contactRepository, opportunityRepository, salesRepRepository); // Creates a sales associate to test method
-
         Assertions.assertThrows(NullPointerException.class, () -> test.convertLead("239832487248"));
         Assertions.assertThrows(NullPointerException.class, () -> test.convertLead("Sausage"));
     }
 
 
 
-   @Test
+   /*@Test
     void testConvertLeadPositive() throws NameContainsNumbersException, EmptyStringException, EmailNotValidException, ExceedsMaxLength, PhoneNumberContainsLettersException {
         //Assertions.assertEquals(0, MainMenu.theOpportunities.size());
         //Assertions.assertEquals(0, MainMenu.theContacts.size());
@@ -326,6 +328,6 @@ import java.io.PrintStream;
         } finally {
             System.setIn(stdin);
         }
-    }
-} */
+    }*/
+}
 
