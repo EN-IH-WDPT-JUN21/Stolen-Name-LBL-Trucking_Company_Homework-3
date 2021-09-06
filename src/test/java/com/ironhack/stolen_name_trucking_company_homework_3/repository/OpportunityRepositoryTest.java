@@ -12,6 +12,7 @@ import com.ironhack.stolen_name_trucking_company_homework_3.enums.Truck;
 import com.ironhack.stolen_name_trucking_company_homework_3.exceptions.*;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -89,19 +90,14 @@ class OpportunityRepositoryTest {
         opportunityRepository.deleteAll();
         contactRepository.deleteAll();
         salesRepRepository.deleteAll();
-        accountRepository.deleteAll();;
-
-        opportunities.clear();
-        contacts.clear();
-        salesReps.clear();
-        accounts.clear();
-
+        accountRepository.deleteAll();
     }
 
     @Test
+    @Order(1)
     void findOpportunityById_Test(){
-        var opportunity = opportunityRepository.findById(1L);
-          assertEquals(10, opportunity.get().getQuantity());
+        var opportunity = opportunityRepository.findById(2L);
+          assertEquals(1150, opportunity.get().getQuantity());
     }
 
     @Test
