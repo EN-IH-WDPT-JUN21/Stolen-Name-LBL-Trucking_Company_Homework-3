@@ -13,7 +13,7 @@ import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-
+import org.springframework.boot.test.context.TestComponent;
 import org.springframework.boot.test.mock.mockito.MockBean;
 
 
@@ -114,7 +114,7 @@ class MainMenuTest {
 
     @Test
     void testNewLeadPositive() {
-        String data = "y \n Nathan \n 0028263 \n 122@gmail.com \n Santander \n"; // Used to simulate user input
+        String data = "y\n Nathan \n 0028263 \n 122@gmail.com \n Santander "; // Used to simulate user input
         InputStream stdin = System.in; // Used to store default System.in
         try {
             System.setIn(new ByteArrayInputStream(data.getBytes())); // Sets System.In to test

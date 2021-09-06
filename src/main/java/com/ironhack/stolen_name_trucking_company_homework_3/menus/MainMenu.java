@@ -160,6 +160,7 @@ public class MainMenu implements Variables {
         valid = false;
 
         System.out.println(colorInput + "\nWould you like to create a new lead?" + colorTable +"   y / n " + reset);
+        Scanner scanner = new Scanner(System.in);
         try {
             switch (scanner.nextLine().trim().toLowerCase(Locale.ROOT)) {
                 case "y" -> {
@@ -259,7 +260,7 @@ public class MainMenu implements Variables {
                                    colorTable + lead.getCompanyName().toUpperCase() +
                                    colorInput + " into an opportunity?" +
                                    colorTable + "    y / n " + reset);
-
+        Scanner scanner = new Scanner(System.in);
         try {
             switch (scanner.nextLine().trim().toLowerCase(Locale.ROOT)) {
                 case "y" -> {

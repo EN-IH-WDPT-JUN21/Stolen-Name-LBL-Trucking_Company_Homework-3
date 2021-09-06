@@ -12,6 +12,7 @@ import com.ironhack.stolen_name_trucking_company_homework_3.enums.Truck;
 import com.ironhack.stolen_name_trucking_company_homework_3.exceptions.*;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -74,9 +75,6 @@ class OpportunityRepositoryTest {
         ));
 
 
-
-
-
         opportunities.get(0).setAccount(accounts.get(0));
         opportunityRepository.save(opportunities.get(0));
         opportunities.get(1).setAccount(accounts.get(1));
@@ -85,41 +83,48 @@ class OpportunityRepositoryTest {
         opportunityRepository.save(opportunities.get(2));
 
 
-
-
-
-
     }
 
     @AfterEach
     void tearDown() {
-
         opportunityRepository.deleteAll();
         contactRepository.deleteAll();
         salesRepRepository.deleteAll();
-        accountRepository.deleteAll();;
-
+        accountRepository.deleteAll();
     }
 
     @Test
-    void findCountOpportunitySalesRepIdGroup_Test() {
+    @Order(1)
+    void findOpportunityById_Test(){
+        var opportunity = opportunityRepository.findById(2L);
+          assertEquals(1150, opportunity.get().getQuantity());
+    }
+
+    @Test
+    void finAllOpportunities_Test(){
+        var opportunityCount = opportunityRepository.findAllOpportunities().size();
+        assertEquals(3, opportunityCount);
+    }
+
+    @Test
+    void findCountOpportunityByRepName_Test() {
         var leadByRep = opportunityRepository.findCountOpportunityByRepName();
 
         assertEquals("David Lynch", leadByRep.get(0)[0]);
         assertEquals("Martha Stewart", leadByRep.get(1)[0]);
-        assertEquals(1, leadByRep.get(1)[1]);
-        assertEquals(2,leadByRep.get(0)[1]);
+        assertEquals(1L, leadByRep.get(1)[1]);
+        assertEquals(2L,leadByRep.get(0)[1]);
     }
 
     @Test
     void findCountOppForProduct_Test(){
         var oppByProd = opportunityRepository.findCountOppForProduct();
         assertEquals(Truck.BOX, oppByProd.get(0)[0]);
-        assertEquals(1, oppByProd.get(0)[1]);
+        assertEquals(1L, oppByProd.get(0)[1]);
         assertEquals(Truck.FLATBED, oppByProd.get(1)[0]);
-        assertEquals(1, oppByProd.get(1)[1]);
+        assertEquals(1L, oppByProd.get(1)[1]);
         assertEquals(Truck.HYBRID, oppByProd.get(2)[0]);
-        assertEquals(1, oppByProd.get(2)[1]);
+        assertEquals(1L, oppByProd.get(2)[1]);
     }
 
     @Test
@@ -127,8 +132,8 @@ class OpportunityRepositoryTest {
         var oppByRepOpen = opportunityRepository.findCountOpportunityByRepNameForStatus(Status.OPEN.toString());
         assertEquals("David Lynch", oppByRepOpen.get(0)[0]);
         assertEquals("Martha Stewart", oppByRepOpen.get(1)[0]);
-        assertEquals(1, oppByRepOpen.get(1)[1]);
-        assertEquals(2,oppByRepOpen.get(0)[1]);
+        assertEquals(1L, oppByRepOpen.get(1)[1]);
+        assertEquals(2L,oppByRepOpen.get(0)[1]);
     }
 
     @Test
@@ -138,7 +143,7 @@ class OpportunityRepositoryTest {
         opportunityRepository.save(opportunities.get(0));
         var oppByRepCloseWon = opportunityRepository.findCountOpportunityByRepNameForStatus(Status.CLOSED_WON.toString());
         assertEquals("David Lynch", oppByRepCloseWon.get(0)[0]);
-        assertEquals(1,oppByRepCloseWon.get(0)[1]);
+        assertEquals(1L,oppByRepCloseWon.get(0)[1]);
     }
 
     @Test
@@ -147,18 +152,18 @@ class OpportunityRepositoryTest {
         opportunityRepository.save(opportunities.get(0));
         var oppByRepCloseLost = opportunityRepository.findCountOpportunityByRepNameForStatus(Status.CLOSED_LOST.toString());
         assertEquals("David Lynch", oppByRepCloseLost.get(0)[0]);
-        assertEquals(1,oppByRepCloseLost.get(0)[1]);
+        assertEquals(1L,oppByRepCloseLost.get(0)[1]);
     }
 
     @Test
     void findCountOpportunityByProductForStatus_OPEN(){
         var oppByProdOpen = opportunityRepository.findCountOpportunityByProductForStatus(Status.OPEN);
         assertEquals(Truck.BOX, oppByProdOpen.get(0)[0]);
-        assertEquals(1, oppByProdOpen.get(0)[1]);
+        assertEquals(1L, oppByProdOpen.get(0)[1]);
         assertEquals(Truck.FLATBED, oppByProdOpen.get(1)[0]);
-        assertEquals(1, oppByProdOpen.get(1)[1]);
+        assertEquals(1L, oppByProdOpen.get(1)[1]);
         assertEquals(Truck.HYBRID, oppByProdOpen.get(2)[0]);
-        assertEquals(1, oppByProdOpen.get(2)[1]);
+        assertEquals(1L, oppByProdOpen.get(2)[1]);
     }
 
     @Test
@@ -167,7 +172,7 @@ class OpportunityRepositoryTest {
         opportunityRepository.save(opportunities.get(0));
         var oppByProdCloseWon = opportunityRepository.findCountOpportunityByProductForStatus(Status.CLOSED_WON);
         assertEquals(Truck.FLATBED, oppByProdCloseWon.get(0)[0]);
-        assertEquals(1, oppByProdCloseWon.get(0)[1]);
+        assertEquals(1L, oppByProdCloseWon.get(0)[1]);
 
     }
 
@@ -177,7 +182,7 @@ class OpportunityRepositoryTest {
         opportunityRepository.save(opportunities.get(0));
         var oppByProdCloseWon = opportunityRepository.findCountOpportunityByProductForStatus(Status.CLOSED_LOST);
         assertEquals(Truck.FLATBED, oppByProdCloseWon.get(0)[0]);
-        assertEquals(1, oppByProdCloseWon.get(0)[1]);
+        assertEquals(1L, oppByProdCloseWon.get(0)[1]);
 
     }
 
@@ -187,9 +192,9 @@ class OpportunityRepositoryTest {
         assertEquals("FRANCE", oppByCountry.get(0)[0]);
         assertEquals("SPAIN", oppByCountry.get(1)[0]);
         assertEquals("UNITED KINGDOM", oppByCountry.get(2)[0]);
-        assertEquals(1, oppByCountry.get(0)[1]);
-        assertEquals(1,oppByCountry.get(1)[1]);
-        assertEquals(1,oppByCountry.get(2)[1]);
+        assertEquals(1L, oppByCountry.get(0)[1]);
+        assertEquals(1L,oppByCountry.get(1)[1]);
+        assertEquals(1L,oppByCountry.get(2)[1]);
     }
 
     @Test
@@ -198,9 +203,9 @@ class OpportunityRepositoryTest {
         assertEquals("FRANCE", oppByCountryOpen.get(0)[0]);
         assertEquals("SPAIN", oppByCountryOpen.get(1)[0]);
         assertEquals("UNITED KINGDOM", oppByCountryOpen.get(2)[0]);
-        assertEquals(1, oppByCountryOpen.get(0)[1]);
-        assertEquals(1,oppByCountryOpen.get(1)[1]);
-        assertEquals(1,oppByCountryOpen.get(2)[1]);
+        assertEquals(1L, oppByCountryOpen.get(0)[1]);
+        assertEquals(1L,oppByCountryOpen.get(1)[1]);
+        assertEquals(1L,oppByCountryOpen.get(2)[1]);
     }
 
     @Test
@@ -209,7 +214,7 @@ class OpportunityRepositoryTest {
         opportunityRepository.save(opportunities.get(0));
         var oppByCountryCloseWon = opportunityRepository.findCountOpportunityByCountryForStatus(Status.CLOSED_WON.toString());
         assertEquals("UNITED KINGDOM", oppByCountryCloseWon.get(0)[0]);
-        assertEquals(1, oppByCountryCloseWon.get(0)[1]);
+        assertEquals(1L, oppByCountryCloseWon.get(0)[1]);
     }
 
     @Test
@@ -218,7 +223,7 @@ class OpportunityRepositoryTest {
         opportunityRepository.save(opportunities.get(0));
         var oppByCountryCloseLost = opportunityRepository.findCountOpportunityByCountryForStatus(Status.CLOSED_LOST.toString());
         assertEquals("UNITED KINGDOM", oppByCountryCloseLost.get(0)[0]);
-        assertEquals(1, oppByCountryCloseLost.get(0)[1]);
+        assertEquals(1L, oppByCountryCloseLost.get(0)[1]);
 
     }
 
@@ -228,9 +233,9 @@ class OpportunityRepositoryTest {
         assertEquals("London", oppByCity.get(0)[0]);
         assertEquals("Madrid", oppByCity.get(1)[0]);
         assertEquals("Paris", oppByCity.get(2)[0]);
-        assertEquals(1, oppByCity.get(0)[1]);
-        assertEquals(1, oppByCity.get(1)[1]);
-        assertEquals(1, oppByCity.get(2)[1]);
+        assertEquals(1L, oppByCity.get(0)[1]);
+        assertEquals(1L, oppByCity.get(1)[1]);
+        assertEquals(1L, oppByCity.get(2)[1]);
     }
 
     @Test
@@ -239,9 +244,9 @@ class OpportunityRepositoryTest {
         assertEquals("London", oppByCityOpen.get(0)[0]);
         assertEquals("Madrid", oppByCityOpen.get(1)[0]);
         assertEquals("Paris", oppByCityOpen.get(2)[0]);
-        assertEquals(1, oppByCityOpen.get(0)[1]);
-        assertEquals(1, oppByCityOpen.get(1)[1]);
-        assertEquals(1, oppByCityOpen.get(2)[1]);
+        assertEquals(1L, oppByCityOpen.get(0)[1]);
+        assertEquals(1L, oppByCityOpen.get(1)[1]);
+        assertEquals(1L, oppByCityOpen.get(2)[1]);
     }
 
     @Test
@@ -250,7 +255,7 @@ class OpportunityRepositoryTest {
         opportunityRepository.save(opportunities.get(0));
         var oppByCityCloseWon = opportunityRepository.findCountOpportunityByCityForStatus(Status.CLOSED_WON.toString());
         assertEquals("London", oppByCityCloseWon.get(0)[0]);
-        assertEquals(1, oppByCityCloseWon.get(0)[1]);
+        assertEquals(1L, oppByCityCloseWon.get(0)[1]);
     }
 
     @Test
@@ -259,7 +264,7 @@ class OpportunityRepositoryTest {
         opportunityRepository.save(opportunities.get(0));
         var oppByCityCloseLost = opportunityRepository.findCountOpportunityByCityForStatus(Status.CLOSED_LOST.toString());
         assertEquals("London", oppByCityCloseLost.get(0)[0]);
-        assertEquals(1, oppByCityCloseLost.get(0)[1]);
+        assertEquals(1L, oppByCityCloseLost.get(0)[1]);
 
     }
 
@@ -269,9 +274,9 @@ class OpportunityRepositoryTest {
         assertEquals(Industry.ECOMMERCE, oppByIndustry.get(0)[0]);
         assertEquals(Industry.MANUFACTURING, oppByIndustry.get(1)[0]);
         assertEquals(Industry.PRODUCE, oppByIndustry.get(2)[0]);
-        assertEquals(1, oppByIndustry.get(0)[1]);
-        assertEquals(1, oppByIndustry.get(1)[1]);
-        assertEquals(1, oppByIndustry.get(2)[1]);
+        assertEquals(1L, oppByIndustry.get(0)[1]);
+        assertEquals(1L, oppByIndustry.get(1)[1]);
+        assertEquals(1L, oppByIndustry.get(2)[1]);
     }
 
     @Test
@@ -280,9 +285,9 @@ class OpportunityRepositoryTest {
         assertEquals(Industry.ECOMMERCE, oppByIndustryOpen.get(0)[0]);
         assertEquals(Industry.MANUFACTURING, oppByIndustryOpen.get(1)[0]);
         assertEquals(Industry.PRODUCE, oppByIndustryOpen.get(2)[0]);
-        assertEquals(1, oppByIndustryOpen.get(0)[1]);
-        assertEquals(1, oppByIndustryOpen.get(1)[1]);
-        assertEquals(1, oppByIndustryOpen.get(2)[1]);
+        assertEquals(1L, oppByIndustryOpen.get(0)[1]);
+        assertEquals(1L, oppByIndustryOpen.get(1)[1]);
+        assertEquals(1L, oppByIndustryOpen.get(2)[1]);
     }
 
     @Test
@@ -291,7 +296,7 @@ class OpportunityRepositoryTest {
         opportunityRepository.save(opportunities.get(0));
         var oppByIndustryCloseWon = opportunityRepository.findCountOpportunityByIndustryForStatus(Status.CLOSED_WON.toString());
         assertEquals(Industry.PRODUCE, oppByIndustryCloseWon.get(0)[0]);
-        assertEquals(1, oppByIndustryCloseWon.get(0)[1]);
+        assertEquals(1L, oppByIndustryCloseWon.get(0)[1]);
     }
 
     @Test
@@ -300,7 +305,7 @@ class OpportunityRepositoryTest {
         opportunityRepository.save(opportunities.get(0));
         var oppByIndustryCloseLost = opportunityRepository.findCountOpportunityByIndustryForStatus(Status.CLOSED_LOST.toString());
         assertEquals(Industry.PRODUCE, oppByIndustryCloseLost.get(0)[0]);
-        assertEquals(1, oppByIndustryCloseLost.get(0)[1]);
+        assertEquals(1L, oppByIndustryCloseLost.get(0)[1]);
 
     }
 
@@ -311,16 +316,17 @@ class OpportunityRepositoryTest {
     }
 
     @Test
+    void findMedianQuantityStep1_test(){
+        var medianQuantity = opportunityRepository.findMedianQuantityStep1();
+        assertEquals(3, medianQuantity.length);
+    }
+
+    @Test
     void findMaxProductQuantity() {
         var maxProductQuantity = opportunityRepository.findMaxProductQuantity();
         assertEquals(1150, maxProductQuantity.get().intValue());
     }
 
-    @Test
-    void findMedianQuantityStep1_test(){
-        var medianQuantity = opportunityRepository.findMedianQuantityStep1();
-        assertEquals(3, medianQuantity.length);
-    }
 
 
     @Test
@@ -332,9 +338,13 @@ class OpportunityRepositoryTest {
     @Test
     void findMeanOpportunitiesPerAccount() throws NameContainsNumbersException, EmptyStringException, InvalidCountryException, ExceedsMaxLength {
         var testOpp1 = new Opportunity(Truck.FLATBED, 10, contacts.get(0), salesReps.get(0));
+        opportunityRepository.save(testOpp1);
         var testOpp2 = new Opportunity(Truck.BOX, 1150, contacts.get(1), salesReps.get(0));
+        opportunityRepository.save(testOpp2);
         var testOpp3 = new Opportunity(Truck.HYBRID, 1, contacts.get(2), salesReps.get(1));
+        opportunityRepository.save(testOpp3);
         var testAccount1 = new Account(Industry.PRODUCE, 50, "London", "UNITED KINGDOM",contacts.get(0), opportunities.get(0));
+        accountRepository.save(testAccount1);
         testAccount1.addOpportunity(testOpp1);
         testAccount1.addOpportunity(testOpp2);
         testAccount1.addOpportunity(testOpp3);

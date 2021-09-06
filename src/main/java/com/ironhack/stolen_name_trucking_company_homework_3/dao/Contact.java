@@ -6,8 +6,12 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.apache.commons.validator.routines.EmailValidator;
+import org.hibernate.annotations.LazyCollection;
+import org.hibernate.annotations.LazyCollectionOption;
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 @Setter
 @Getter
@@ -41,8 +45,9 @@ public class Contact{
     @JoinColumn(name = "account_id", referencedColumnName = "id")
     private Account account;
 
-    @OneToOne(mappedBy = "decisionMaker")
-    private Opportunity opportunity;
+    @LazyCollection(LazyCollectionOption.FALSE)
+    @OneToMany(mappedBy = "decisionMaker")
+    private List<Opportunity> opportunity = new ArrayList<>();
 
     private static final String colorMain = "\u001B[33m";
     private static final String colorMainBold = "\033[1;37m";
