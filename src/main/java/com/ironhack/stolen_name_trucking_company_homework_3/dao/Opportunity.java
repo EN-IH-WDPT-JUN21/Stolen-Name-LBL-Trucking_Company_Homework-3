@@ -32,8 +32,8 @@ public class Opportunity {
     private Integer quantity;
 
 
-    @OneToOne
-    @JoinColumn(name = "contact_id")
+    @ManyToOne
+    @JoinColumn(name = "decision_maker", referencedColumnName = "id")
     private Contact decisionMaker;
 
     @ManyToOne
