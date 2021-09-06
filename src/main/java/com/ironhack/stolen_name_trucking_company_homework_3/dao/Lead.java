@@ -12,7 +12,6 @@ import javax.persistence.*;
 @Setter
 @Getter
 @Table(name = "leads")
-@Inheritance(strategy = InheritanceType.JOINED)
 public class Lead {
 
     @Id

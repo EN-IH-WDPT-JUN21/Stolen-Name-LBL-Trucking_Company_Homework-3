@@ -93,10 +93,11 @@ class OpportunityRepositoryTest {
 
     @AfterEach
     void tearDown() {
-        accountRepository.deleteAll();
+
         opportunityRepository.deleteAll();
         contactRepository.deleteAll();
         salesRepRepository.deleteAll();
+        accountRepository.deleteAll();;
 
     }
 

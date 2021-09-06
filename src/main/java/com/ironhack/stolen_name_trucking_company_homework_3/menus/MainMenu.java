@@ -13,29 +13,27 @@ import java.util.*;
 @Component
 public class MainMenu implements Variables {
 
-    LeadRepository leadRepository;
-    AccountRepository accountRepository;
-    ContactRepository contactRepository;
-    OpportunityRepository opportunityRepository;
-    SalesRepRepository salesRepRepository;
+    @Autowired
+    private LeadRepository leadRepository;
+    @Autowired
+    private AccountRepository accountRepository;
+    @Autowired
+    private ContactRepository contactRepository;
+    @Autowired
+    private OpportunityRepository opportunityRepository;
+    @Autowired
+    private SalesRepRepository salesRepRepository;
 
     @Autowired
     ReportMainMenu reportMainMenu;
 
+    @Autowired
     public MainMenu() {
     }
 
     private static boolean wasRun = false;
     private static boolean valid;
 
-    @Autowired
-    public MainMenu(LeadRepository leadRepository, AccountRepository accountRepository, ContactRepository contactRepository, OpportunityRepository opportunityRepository, SalesRepRepository salesRepRepository) {
-        this.leadRepository = leadRepository;
-        this.accountRepository = accountRepository;
-        this.contactRepository = contactRepository;
-        this.opportunityRepository = opportunityRepository;
-        this.salesRepRepository = salesRepRepository;
-    }
 
     public void OS() throws RuntimeException, AWTException, NoSuchValueException {
 
@@ -285,6 +283,7 @@ public class MainMenu implements Variables {
                     //theOpportunities.put(newOpp.getId(), newOpp); // Adds Opportunity to opportunities map
                     //theLeads.remove(lead.getId()); // Removes converted lead from Leads map ("Database")
                     newOpp.setSalesRep(lead.getSalesRep());
+                    leadRepository.delete(lead);
                     opportunityRepository.save(newOpp);
                     System.out.println(colorMain + "\n╔════════════╦═════ " + colorMainBold + "New Opportunity created" + colorMain + " ════════════╦═══════════════════╗" + reset);
                     System.out.printf("%-1s %-17s %-1s %-27s %-1s %-24s %-1s %-24s %-1s\n",
@@ -318,8 +317,6 @@ public class MainMenu implements Variables {
                     System.out.println(newContact);
                     System.out.println(colorInput + "Press Enter to continue..." + reset);
                     scanner.nextLine();
-                    leadRepository.delete(lead);// Removes lead from repo?
-                    opportunityRepository.save(newOpp);
 
                     return newOpp;
                 }
