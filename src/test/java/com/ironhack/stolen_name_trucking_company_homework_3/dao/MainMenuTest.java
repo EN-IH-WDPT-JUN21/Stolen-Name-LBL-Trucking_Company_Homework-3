@@ -2,6 +2,7 @@ package com.ironhack.stolen_name_trucking_company_homework_3.dao;
 
 import com.ironhack.stolen_name_trucking_company_homework_3.StolenNameTruckingCompanyHomework3Application;
 import com.ironhack.stolen_name_trucking_company_homework_3.enums.Industry;
+import com.ironhack.stolen_name_trucking_company_homework_3.enums.Status;
 import com.ironhack.stolen_name_trucking_company_homework_3.enums.Truck;
 import com.ironhack.stolen_name_trucking_company_homework_3.exceptions.*;
 import com.ironhack.stolen_name_trucking_company_homework_3.menus.MainMenu;
@@ -21,6 +22,7 @@ import java.io.ByteArrayOutputStream;
 import java.io.InputStream;
 import java.io.PrintStream;
 import java.util.List;
+import java.util.NoSuchElementException;
 import java.util.Optional;
 
 @SpringBootTest
@@ -43,12 +45,6 @@ class MainMenuTest {
     @Autowired
     private AccountRepository accountRepository;
 
-    List<Lead> leads;
-    List<SalesRep> salesReps;
-
-    Lead lead1;
-    Lead lead2;
-    Lead lead3;
     String colorMain = "\033[0;33m";
     String colorMainBold = "\033[1;37m";
     String colorHeadline = "\033[0;34m";
@@ -106,7 +102,6 @@ class MainMenuTest {
         opportunityRepository.save(opportunities.get(1));
         opportunities.get(2).setAccount(accounts.get(2));
         opportunityRepository.save(opportunities.get(2));
-
     }
 
     @AfterEach
@@ -119,7 +114,7 @@ class MainMenuTest {
 
     @Test
     void testNewLeadPositive() {
-        String data = "y \n Nathan \n 0028263 \n 122@gmail.com \n Santander"; // Used to simulate user input
+        String data = "y \n Nathan \n 0028263 \n 122@gmail.com \n Santander \n"; // Used to simulate user input
         InputStream stdin = System.in; // Used to store default System.in
         try {
             System.setIn(new ByteArrayInputStream(data.getBytes())); // Sets System.In to test
@@ -136,8 +131,8 @@ class MainMenuTest {
 
     @Test
     void testConvertLeadThrowsNullPointerException() {
-        assertThrows(NullPointerException.class, () -> test.convertLead("239832487248"));
-        assertThrows(NullPointerException.class, () -> test.convertLead("Sausage"));
+        assertThrows(NoSuchElementException.class, () -> test.convertLead("239832487248"));
+        assertThrows(NumberFormatException.class, () -> test.convertLead("Sausage"));
     }
 
 
@@ -293,80 +288,83 @@ class MainMenuTest {
 
     }
 
-//    @Test
-//    void showAccounts() throws NameContainsNumbersException, EmptyStringException, EmailNotValidException, ExceedsMaxLength, PhoneNumberContainsLettersException {
-//        Contact testContact = new Contact("TESTCONTACT", "1234567", "EMAIL@EMAIL.COM", "TESTCOMPANY");
-//        Opportunity testOpp = new Opportunity(Truck.HYBRID, 30, testContact);
-//        Account testAcc = new Account(testContact, testOpp);
-//        MainMenu.theAccounts.put(testAcc.getId(), testAcc);
-//        // After this all System.out.println() statements will come to outContent stream.
-//        ByteArrayOutputStream outContent = new ByteArrayOutputStream();
-//        System.setOut(new PrintStream(outContent));
-//        MainMenu test = new MainMenu(leadRepository, accountRepository, contactRepository, opportunityRepository, salesRepRepository);
-//        test.showAccounts();
-//
-//        //Now we have to validate the output. It has to exactly mimic the output we created.
-//        if(os.contains("win")){
-//            expectedOutput  = colorMain + "\n╔════════════╦═══ " + colorMainBold + "Total Number Of Accounts: 1" + colorMain+ " ═════════════╗"  +
-//                    reset + "\r\n" + colorMain + "║ " + colorHeadlineBold + "ID         " + colorMain + "║ " + colorHeadlineBold+"Company name                                " + colorMain +"║" +
-//                    "\n" + colorMain + "╠════════════╬═════════════════════════════════════════════╣" +
-//                    reset + "\n" + colorMain + "║ " + colorTable + "6          " + colorMain+ "║ " + colorTable + "TESTCOMPANY                                 "+ colorMain + "║" + reset + "\n";
-//        } else {
-//            expectedOutput  = colorMain + "\n╔════════════╦═══ " + colorMainBold + "Total Number Of Accounts: 1" + colorMain+ " ═════════════╗"  +
-//                    reset + "\n" + colorMain + "║ " + colorHeadlineBold + "ID         " + colorMain + "║ " + colorHeadlineBold+"Company name                                " + colorMain +"║" +
-//                    "\n" + colorMain + "╠════════════╬═════════════════════════════════════════════╣" +
-//                    reset + "\n" + colorMain + "║ " + colorTable + "6          " + colorMain+ "║ " + colorTable + "TESTCOMPANY                                 "+ colorMain + "║" + reset + "\n";
-//        }
-//
-//        assertEquals(expectedOutput, outContent.toString());
-//    }
-//
-//
-//    @Test
-//    void lookUpLeadId_FindLead() {
-//        assertEquals("TestOne", MainMenu.theLeads.get(lead1.getId()).getName());
-//    }
-//
-//
-//    @Test
-//    void closeLost() throws NameContainsNumbersException, EmptyStringException, EmailNotValidException, PhoneNumberContainsLettersException, ExceedsMaxLength {
-//
-//        String data = "y";
-//        InputStream stdin = System.in;
-//
-//        Contact testContact = new Contact("TestContact", "1234567", "email@email.com",
-//                "TestContactCompany");
-//        Opportunity testOpp = new Opportunity(Truck.HYBRID, 30, testContact);
-//        MainMenu.theOpportunities.put(testOpp.getId(), testOpp);
-//
-//        try {
-//            System.setIn(new ByteArrayInputStream(data.getBytes()));
-//            MainMenu test = new MainMenu();
-//            test.closeLost(testOpp.getId());
-//            assertEquals(Status.CLOSED_LOST, MainMenu.theOpportunities.get(testOpp.getId()).getStatus());
-//
-//        } finally {
-//            System.setIn(stdin);
-//        }
-//    }
-//
-//    @Test
-//    void closeWon() throws ExceedsMaxLength, NameContainsNumbersException, EmptyStringException, EmailNotValidException, PhoneNumberContainsLettersException {
-//        String data = "y";
-//        InputStream stdin = System.in;
-//        MainMenu test = new MainMenu(leadRepository, accountRepository, contactRepository, opportunityRepository, salesRepRepository);
-//        Contact testContact = new Contact("TestContact", "1234567", "email@email.com",
-//                "TestContactCompany");
-//        Opportunity testOpp = new Opportunity(Truck.HYBRID, 30, testContact);
-//        MainMenu.theOpportunities.put(testOpp.getId(), testOpp);
-//
-//        try {
-//            System.setIn(new ByteArrayInputStream(data.getBytes()));
-//            test.closeWon(testOpp.getId());
-//            assertEquals(Status.CLOSED_WON, MainMenu.theOpportunities.get(testOpp.getId()).getStatus());
-//
-//        } finally {
-//            System.setIn(stdin);
-//        }
-//    }
+    @Test
+    void showAccounts() throws NameContainsNumbersException, EmptyStringException, EmailNotValidException, ExceedsMaxLength, PhoneNumberContainsLettersException {
+        // Clears the repositories for easier testing
+        leadRepository.deleteAll();
+        opportunityRepository.deleteAll();
+        contactRepository.deleteAll();
+        salesRepRepository.deleteAll();
+
+        // This Block looks messy but sets up the Repositories for testing
+        Contact testContact = new Contact("TESTCONTACT", "1234567", "EMAIL@EMAIL.COM", "TESTCOMPANY");
+        contactRepository.save(testContact);
+        Opportunity testOpp = new Opportunity(Truck.HYBRID, 30, testContact);
+        opportunityRepository.save(testOpp);
+        Account testAcc = new Account(testContact, testOpp);
+        accountRepository.save(testAcc);
+        testOpp.getDecisionMaker().setAccount(testAcc);
+        contactRepository.save(testOpp.getDecisionMaker());
+        accountRepository.save(testAcc);
+
+
+        // After this all System.out.println() statements will come to outContent stream.
+        ByteArrayOutputStream outContent = new ByteArrayOutputStream();
+        System.setOut(new PrintStream(outContent));
+
+        test.showAccounts();
+
+        //Now we have to validate the output. It has to exactly mimic the output we created.
+        if(os.contains("win")){
+            expectedOutput  = colorMain + "\n╔════════════╦═══ " + colorMainBold + "Total Number Of Accounts: 1" + colorMain+ " ═════════════╗"  +
+                    reset + "\r\n" + colorMain + "║ " + colorHeadlineBold + "ID         " + colorMain + "║ " + colorHeadlineBold+"Company name                                " + colorMain +"║" +
+                    "\n" + colorMain + "╠════════════╬═════════════════════════════════════════════╣" +
+                    reset + "\n" + colorMain + "║ " + colorTable + "4          " + colorMain+ "║ " + colorTable + "TESTCOMPANY                                 "+ colorMain + "║" + reset + "\n";
+        } else {
+            expectedOutput  = colorMain + "\n╔════════════╦═══ " + colorMainBold + "Total Number Of Accounts: 1" + colorMain+ " ═════════════╗"  +
+                    reset + "\n" + colorMain + "║ " + colorHeadlineBold + "ID         " + colorMain + "║ " + colorHeadlineBold+"Company name                                " + colorMain +"║" +
+                    "\n" + colorMain + "╠════════════╬═════════════════════════════════════════════╣" +
+                    reset + "\n" + colorMain + "║ " + colorTable + "4          " + colorMain+ "║ " + colorTable + "TESTCOMPANY                                 "+ colorMain + "║" + reset + "\n";
+        }
+
+        assertEquals(expectedOutput, outContent.toString());
+    }
+
+
+    @Test
+    void lookUpLeadId_FindLead() {
+        assertEquals("Lee Dawson", leadRepository.findById(2L).get().getName());
+    }
+
+
+    @Test
+    void closeLost() throws NameContainsNumbersException, EmptyStringException, EmailNotValidException, PhoneNumberContainsLettersException, ExceedsMaxLength {
+
+        String data = "y";
+        InputStream stdin = System.in;
+
+        try {
+            assertEquals(Status.OPEN, opportunityRepository.findById(1L).get().getStatus());
+            System.setIn(new ByteArrayInputStream(data.getBytes()));
+            test.closeLost("1");
+            assertEquals(Status.CLOSED_LOST, opportunityRepository.findById(1L).get().getStatus());
+        } finally {
+            System.setIn(stdin);
+        }
+    }
+
+    @Test
+    void closeWon() throws ExceedsMaxLength, NameContainsNumbersException, EmptyStringException, EmailNotValidException, PhoneNumberContainsLettersException {
+        String data = "y";
+        InputStream stdin = System.in;
+        try {
+            assertEquals(Status.OPEN, opportunityRepository.findById(1L).get().getStatus());
+            System.setIn(new ByteArrayInputStream(data.getBytes()));
+            test.closeWon("1");
+            assertEquals(Status.CLOSED_WON, opportunityRepository.findById(1L).get().getStatus());
+
+        } finally {
+            System.setIn(stdin);
+        }
+    }
 }
