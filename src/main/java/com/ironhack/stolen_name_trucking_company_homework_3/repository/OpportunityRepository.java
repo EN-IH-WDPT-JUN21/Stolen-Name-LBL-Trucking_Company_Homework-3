@@ -91,5 +91,7 @@ public interface OpportunityRepository extends JpaRepository<Opportunity, Long> 
     @Query(value = "select min(a.count_opportunity) from (select count(distinct id) as count_opportunity from opportunity group by account_id order by count_opportunity) a", nativeQuery = true)
     Optional<Double>findMinOpportunitiesPerAccount();
 
-
+    //Report Opportunities by City
+    /*@Query("SELECT ac.:selector, COUNT(o) FROM Opportunity o JOIN o.account ac GROUP BY ac.:selector ORDER BY ac.:selector")
+    List<Object[]> findCountOpportunity(@Param("selector") String selector);*/
 }

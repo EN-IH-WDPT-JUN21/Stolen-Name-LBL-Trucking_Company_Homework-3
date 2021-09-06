@@ -33,11 +33,6 @@ public class PopulateDatabase{
                 new Lead("Natalia Shilyaeva", "563782789", "nattyshil@yahoo.com", "Nathy From Wonderland", salesReps.get(1))
         ));
 
-        /*Lead lead1 = new Lead("Sebastian Marek Labedz", "123456789", "labedzsebastian@gmail.co", "Wings of Freedom");
-        Lead lead2 = new Lead("Lee Dawson", "980651164", "ld@gmail.com", "LeeD");
-        Lead lead3 = new Lead("Natalia Shilyaeva", "563782789", "nattyshil@yahoo.com", "Nathy From Wonderland");*/
-
-
         List<Contact> contacts = contactRepository.saveAll(List.of(
                 new Contact("John Doe", "123475357", "alfa@beta.uk", "Kałasznikow", salesReps.get(0)),
                 new Contact("Martha Steward", "123475357", "ms@wp.pl", "My own company", salesReps.get(1)),

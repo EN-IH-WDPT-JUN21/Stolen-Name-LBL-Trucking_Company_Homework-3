@@ -17,16 +17,7 @@ public class SalesRepReportMenu implements Variables {
     LeadRepository leadRepository;
 
     @Autowired
-    AccountRepository accountRepository;
-
-    @Autowired
-    ContactRepository contactRepository;
-
-    @Autowired
     OpportunityRepository opportunityRepository;
-
-    @Autowired
-    SalesRepRepository salesRepRepository;
 
     @Autowired
     ReportMainMenu reportMainMenu;
@@ -47,16 +38,16 @@ public class SalesRepReportMenu implements Variables {
                                    "             ####################.###### ############ ###################### ############         \n" +
                                    "             ################ ####### # ############ #####################  ############          \n" + reset +
                                    colorMain + "╔══════════════════════════════════════════════════════════════════════════════════════════════════════════════════╗\n"
-                                   + "║                                " + colorTable + "SALES REPRESENTATIVE REPORTING MENU" + colorMain + "                                             ║\n"
+                                   + "║                                  " + colorTable + "SALES REPRESENTATIVE REPORTING MENU" + colorMain + "                                             ║\n"
                                    + "╠══════════════════════════════════════════════════════════════════════════════════════════════════════════════════╣\n"
-                                   + "║ 1. Display count of Leads by Sales Representative " + colorHeadline + "- type: 'report lead by salesrep'" + colorMain + "                             ║\n"
-                                   + "║ 2. Display count of all Opportunities by Sales Representative " + colorHeadline + "- type: 'report opportunity by salesrep'" + colorMain + "          ║\n"
-                                   + "║ 3. Display count of CLOSED-WON Opportunities by Sales Representative " + colorHeadline + "- type: 'report closed-won by salesrep'" + colorMain + "    ║\n"
-                                   + "║ 4. Display count of CLOSED-LOST Opportunities by Sales Representative " + colorHeadline + "- type: 'report closed-lost by salesrep'" + colorMain + "  ║\n"
-                                   + "║ 5. Display count of OPEN Opportunities by Sales Representative " + colorHeadline + "- type: - 'report open by salesrep'" + colorMain + "              ║\n"
-                                   + "║ 6. To return to the Report menu " + colorHeadline + "- type: 'back'" + colorMain + "                                                                  ║\n"
-                                   + "║ 7. To return to the Main menu " + colorHeadline + "- type: 'main menu'" + colorMain + "                                                               ║\n"
-                                   + "║ 8. To quit " + colorHeadline + "- type: 'quit'" + colorMain + "                                                                                       ║\n"
+                                   + "║ 1. Display count of Leads by Sales Representative " + colorHeadline + "- type: 'report lead by salesrep'" + colorMain + "                              ║\n"
+                                   + "║ 2. Display count of all Opportunities by Sales Representative " + colorHeadline + "- type: 'report opportunity by salesrep'" + colorMain + "           ║\n"
+                                   + "║ 3. Display count of CLOSED-WON Opportunities by Sales Representative " + colorHeadline + "- type: 'report closed-won by salesrep'" + colorMain + "     ║\n"
+                                   + "║ 4. Display count of CLOSED-LOST Opportunities by Sales Representative " + colorHeadline + "- type: 'report closed-lost by salesrep'" + colorMain + "   ║\n"
+                                   + "║ 5. Display count of OPEN Opportunities by Sales Representative " + colorHeadline + "- type: - 'report open by salesrep'" + colorMain + "               ║\n"
+                                   + "║ 6. To return to the Report menu " + colorHeadline + "- type: 'back'" + colorMain + "                                                                   ║\n"
+                                   + "║ 7. To return to the Main menu " + colorHeadline + "- type: 'main menu'" + colorMain + "                                                                ║\n"
+                                   + "║ 8. To quit " + colorHeadline + "- type: 'quit'" + colorMain + "                                                                                        ║\n"
                                    + "╚══════════════════════════════════════════════════════════════════════════════════════════════════════════════════╝\n" + reset);
 
         try {
@@ -71,50 +62,55 @@ public class SalesRepReportMenu implements Variables {
                     case REPORT_LEAD_BY_SALESREP:
                         var leadByRep = leadRepository.findCountLeadByRepName();
                         if(leadByRep.isEmpty()){
-                            System.out.println("\nThere are no entries matching reporting criteria");
+                            System.out.println(colorTable + "\nThere are no entries matching reporting criteria" + reset);
                         } else {
+                            System.out.println(printCountReport("Lead"));
                             for (int i = 0; i < leadByRep.size(); i++) {
-                                System.out.println(leadByRep.get(i)[0] + ": " + leadByRep.get(i)[1]);
+                                printTableRow(leadByRep, i);
                             }
                         }
                         break;
                     case REPORT_OPP_BY_SALESREP:
                         var oppByRep = opportunityRepository.findCountOpportunityByRepName();
                         if(oppByRep.isEmpty()){
-                            System.out.println("\nThere are no entries matching reporting criteria");
+                            System.out.println(colorTable + "\nThere are no entries matching reporting criteria" + reset);
                         } else {
+                            System.out.println(printCountReport("Opportunity"));
                             for (int i = 0; i < oppByRep.size(); i++) {
-                                System.out.println(oppByRep.get(i)[0] + ": " + oppByRep.get(i)[1]);
+                                printTableRow(oppByRep, i);
                             }
                         }
                         break;
                     case REPORT_CLOSE_W_BY_SALESREP:
                         var oppCloseW = opportunityRepository.findCountOpportunityByRepNameForStatus(Status.CLOSED_WON.toString());
                         if(oppCloseW.isEmpty()){
-                            System.out.println("\nThere are no entries matching reporting criteria");
+                            System.out.println(colorTable + "\nThere are no entries matching reporting criteria" + reset);
                         } else {
+                            System.out.println(printCountReport("Opportunity"));
                             for (int i = 0; i < oppCloseW.size(); i++) {
-                                System.out.println(oppCloseW.get(i)[0] + ": " + oppCloseW.get(i)[1]);
+                                printTableRow(oppCloseW, i);
                             }
                         }
                         break;
                     case REPORT_CLOSE_L_BY_SALESREP:
                         var oppCloseL = opportunityRepository.findCountOpportunityByRepNameForStatus(Status.CLOSED_LOST.toString());
                         if(oppCloseL.isEmpty()){
-                            System.out.println("\nThere are no entries matching reporting criteria");
+                            System.out.println(colorTable + "\nThere are no entries matching reporting criteria" + reset);
                         } else {
+                            System.out.println(printCountReport("Opportunity"));
                             for (int i = 0; i < oppCloseL.size(); i++) {
-                                System.out.println(oppCloseL.get(i)[0] + ": " + oppCloseL.get(i)[1]);
+                                printTableRow(oppCloseL, i);
                             }
                         }
                         break;
                     case REPORT_OPEN_BY_SALESREP:
                         var oppOpen = opportunityRepository.findCountOpportunityByRepNameForStatus(Status.OPEN.toString());
                         if(oppOpen.isEmpty()){
-                            System.out.println("\nThere are no entries matching reporting criteria");
+                            System.out.println(colorTable + "\nThere are no entries matching reporting criteria" + reset);
                         } else {
+                            System.out.println(printCountReport("Opportunity"));
                             for (int i = 0; i < oppOpen.size(); i++) {
-                                System.out.println(oppOpen.get(i)[0] + ": " + oppOpen.get(i)[1]);
+                                printTableRow(oppOpen, i);
                             }
                         }
                         break;
