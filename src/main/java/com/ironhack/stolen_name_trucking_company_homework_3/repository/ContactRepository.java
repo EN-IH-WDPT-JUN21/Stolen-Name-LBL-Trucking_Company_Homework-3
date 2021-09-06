@@ -15,5 +15,7 @@ public interface ContactRepository extends JpaRepository<Contact,String> {
     @Query("SELECT c.id, c.name, c.companyName FROM Contact c")
     List<Object[]> findAllContacts();
 
+    Optional<Contact> findById(Long id);
+
 
 }

@@ -22,6 +22,8 @@ public class ReportMainMenu implements Variables {
     @Autowired
     CityReportMenu cityReportMenu;
     @Autowired
+    IndustryReportMenu industryReportMenu;
+    @Autowired
     EmployeeCountReportMenu employeeCountReportMenu;
     @Autowired
     QuantityReportMenu quantityReportMenu;
@@ -51,7 +53,7 @@ public class ReportMainMenu implements Variables {
                                    + "║ 6.  Display all reports for Employee Count States" + colorHeadline + "- type: 'employee'" + colorMain + "                                              ║\n"
                                    + "║ 7.  Display all reports for Quantity States " + colorHeadline + "- type: 'quantity'" + colorMain + "                                                   ║\n"
                                    + "║ 8.  Display all reports for Opportunity states " + colorHeadline + "- type: 'opportunity'" + colorMain + "                                             ║\n"
-                                   + "║ 9.  To return to the main menu " + colorHeadline + "- type: 'main menu'" + colorMain + "                                                                ║\n"
+                                   + "║ 9.  To return to the main menu " + colorHeadline + "- type: 'main menu'" + colorMain + "                                                               ║\n"
                                    + "║ 10. To quit " + colorHeadline + "- type: 'quit'" + colorMain + "                                                                                       ║\n"
                                    + "╚══════════════════════════════════════════════════════════════════════════════════════════════════════════════════╝\n" + reset);
 
@@ -73,7 +75,7 @@ public class ReportMainMenu implements Variables {
                     case CITY:
                         cityReportMenu.cityReportMenu();
                     case INDUSTRY:
-                        cityReportMenu.cityReportMenu();
+                        industryReportMenu.industryReportMenu();
                     case EMPLOYEE:
                         employeeCountReportMenu.employeeCountReportMenu();
                     case QUANTITY:

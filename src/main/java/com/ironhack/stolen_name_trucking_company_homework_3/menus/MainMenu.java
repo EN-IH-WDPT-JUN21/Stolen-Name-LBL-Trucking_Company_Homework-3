@@ -13,14 +13,22 @@ import java.util.*;
 @Component
 public class MainMenu implements Variables {
 
-    LeadRepository leadRepository;
-    AccountRepository accountRepository;
-    ContactRepository contactRepository;
-    OpportunityRepository opportunityRepository;
-    SalesRepRepository salesRepRepository;
+    @Autowired
+    private LeadRepository leadRepository;
+    @Autowired
+    private AccountRepository accountRepository;
+    @Autowired
+    private ContactRepository contactRepository;
+    @Autowired
+    private OpportunityRepository opportunityRepository;
+    @Autowired
+    private SalesRepRepository salesRepRepository;
 
     @Autowired
     ReportMainMenu reportMainMenu;
+
+    @Autowired
+    SalesRepReportMenu salesRepReportMenu;
 
     public MainMenu() {
     }
@@ -28,14 +36,6 @@ public class MainMenu implements Variables {
     private static boolean wasRun = false;
     private static boolean valid;
 
-    @Autowired
-    public MainMenu(LeadRepository leadRepository, AccountRepository accountRepository, ContactRepository contactRepository, OpportunityRepository opportunityRepository, SalesRepRepository salesRepRepository) {
-        this.leadRepository = leadRepository;
-        this.accountRepository = accountRepository;
-        this.contactRepository = contactRepository;
-        this.opportunityRepository = opportunityRepository;
-        this.salesRepRepository = salesRepRepository;
-    }
 
     public void OS() throws RuntimeException, AWTException, NoSuchValueException {
 
@@ -52,7 +52,7 @@ public class MainMenu implements Variables {
                 colorHeadline + colorMain + "╔═══════════════════════════════════════════════════════════════════════════════════════════════════╗\n"
                 + "║                                " + colorTable + "WELCOME TO LBL CRM SYSTEM" + colorMain + "                                          ║\n"
                 + "╠═══════════════════════════════════════════════════════════════════════════════════════════════════╣\n"
-                + "║     " + colorTable + "WHAT WOULD YOU LIKE TO DO " + Login.getUsername().toUpperCase() + "?" + colorMain + insertLine() + "║\n"
+                + String.format("%-1s %-104s %-1s","║", colorTable + "WHAT WOULD YOU LIKE TO DO " + Login.getUsername().toUpperCase() + "?", colorMain + /*insertLine(68) +*/ "║\n")
                 + "╠═══════════════════════════════════════════════════════════════════════════════════════════════════╣\n"
                 + "║ 1.  To create new Lead " + colorHeadline + "- type: 'new lead'" + colorMain + "                                                         ║\n"
                 + "║ 2.  To create new Sales Representative " + colorHeadline + "- type: 'new salesrep'" + colorMain + "                                     ║\n"
@@ -87,7 +87,16 @@ public class MainMenu implements Variables {
                 PopulateDatabase.populateDatabase(leadRepository, salesRepRepository, contactRepository, opportunityRepository, accountRepository);
             } else if (input[0].equals("clear")){
                 PopulateDatabase.clearDatabase(leadRepository, salesRepRepository, contactRepository, opportunityRepository, accountRepository);
-
+            /*}else if(input[0].equals("rep")) {
+                var leadByRep = leadRepository.findCountLeadByRepName();
+                if(leadByRep.isEmpty()){
+                    System.out.println("\nThere are no entries matching reporting criteria");
+                } else {
+                    System.out.println(printCountReport("Lead"));
+                    for (int i = 0; i < leadByRep.size(); i++) {
+                        printTableRow(leadByRep, i);
+                    }
+                }*/
             } else if (input.length < 2) {
                 throw new IllegalArgumentException();
             }
@@ -95,13 +104,11 @@ public class MainMenu implements Variables {
                 if(!leadRepository.existsById(Long.parseLong(input[2]))){
                     throw new NoSuchValueException("There is no Lead that matches that id.");
                 }
-                //System.out.println(lookUpLeadId(input[2]));
                 lookUpLeadId(Long.parseLong(input[2]));
             } else if (input[0].equals("lookup") && input[1].equals("opportunity") && input.length>2) {
                 if(!opportunityRepository.existsById(Long.parseLong(input[2]))){
                     throw new NoSuchValueException("There is no Opportunity that matches that id.");
                 }
-                //System.out.println(lookUpOppId(input[2]));
                 lookUpOppId(input[2]);
             } else if (input[0].equals("convert")) { // throws null point exception if number not in array
                 if(!leadRepository.existsById(Long.parseLong(input[1]))){
@@ -210,6 +217,19 @@ public class MainMenu implements Variables {
                         }
                     }
 
+                    /*valid = false;
+
+                    //checks if restrictions for Company name are met
+                    while (!valid) {
+                        System.out.println(colorInput + "\nPlease input Sales Representative id: " + reset);
+                        try {
+                            newLead.setSalesRep(salesRepRepository.getById(Long.parseLong(scanner.nextLine().trim())));
+                            valid = true;
+                        }catch(EmptyStringException | ExceedsMaxLength e){
+                            System.out.println(colorError + e.getMessage());
+                        }
+                    }*/
+
                     //theLeads.put(newLead.getId(), newLead);
                     System.out.println(colorMain + "\n╔════════════╦═════ " + colorMainBold + "New Lead created" + colorMain + " ══════════════════════╦══════════════════════╦══════════════════════════════════════════╦═════════════════════════════════════════════╗" + reset);
                     System.out.println(newLead.toString());
@@ -285,6 +305,7 @@ public class MainMenu implements Variables {
                     //theOpportunities.put(newOpp.getId(), newOpp); // Adds Opportunity to opportunities map
                     //theLeads.remove(lead.getId()); // Removes converted lead from Leads map ("Database")
                     newOpp.setSalesRep(lead.getSalesRep());
+                    leadRepository.delete(lead);
                     opportunityRepository.save(newOpp);
                     System.out.println(colorMain + "\n╔════════════╦═════ " + colorMainBold + "New Opportunity created" + colorMain + " ════════════╦═══════════════════╗" + reset);
                     System.out.printf("%-1s %-17s %-1s %-27s %-1s %-24s %-1s %-24s %-1s\n",
@@ -318,8 +339,6 @@ public class MainMenu implements Variables {
                     System.out.println(newContact);
                     System.out.println(colorInput + "Press Enter to continue..." + reset);
                     scanner.nextLine();
-                    leadRepository.delete(lead);// Removes lead from repo?
-                    opportunityRepository.save(newOpp);
 
                     return newOpp;
                 }
@@ -671,15 +690,6 @@ public class MainMenu implements Variables {
         }
     }
 
-    // Adjusts number of characters printed for different usernames
-    public static StringBuilder insertLine() {
-        StringBuilder line = new StringBuilder();
-        for (int i = 1; i < (68 /*- Login.getUsername().length()*/); i++) {
-            line.append(" ");
-        }
-        return line;
-    }
-
     public SalesRep newSalesRep() {
 
         valid = false;
@@ -765,7 +775,7 @@ public class MainMenu implements Variables {
                                    colorHeadline + colorMain + "╔═══════════════════════════════════════════════════════════════════════════════════════════════════╗\n"
                                    + "║                                " + colorTable + "WELCOME TO LBL CRM SYSTEM" + colorMain + "                                          ║\n"
                                    + "╠═══════════════════════════════════════════════════════════════════════════════════════════════════╣\n"
-                                   + "║     " + colorTable + "WHAT WOULD YOU LIKE TO DO " + Login.getUsername().toUpperCase() + "?" + colorMain + insertLine() + "║\n"
+                                   + String.format("%-1s %-73s %-1s", colorTable + "WHAT WOULD YOU LIKE TO DO " + Login.getUsername().toUpperCase() + "?", colorMain + /*insertLine(68) +*/ "║\n")
                                    + "╠═══════════════════════════════════════════════════════════════════════════════════════════════════╣\n"
                                    + "║ 1.  To check Leads list " + colorHeadline + "- type: 'show leads'" + colorMain + "                                                      ║\n"
                                    + "║ 2.  To check individual Lead's details " + colorHeadline + "- type: 'lookup lead ' + Lead Id" + colorMain + "                           ║\n"

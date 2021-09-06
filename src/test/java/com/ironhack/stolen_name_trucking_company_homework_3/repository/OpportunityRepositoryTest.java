@@ -1,6 +1,7 @@
 package com.ironhack.stolen_name_trucking_company_homework_3.repository;
 
 
+import com.ironhack.stolen_name_trucking_company_homework_3.StolenNameTruckingCompanyHomework3Application;
 import com.ironhack.stolen_name_trucking_company_homework_3.dao.Account;
 import com.ironhack.stolen_name_trucking_company_homework_3.dao.Contact;
 import com.ironhack.stolen_name_trucking_company_homework_3.dao.Opportunity;
@@ -12,8 +13,10 @@ import com.ironhack.stolen_name_trucking_company_homework_3.exceptions.*;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.mockito.Mock;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.test.mock.mockito.MockBean;
 
 import java.util.List;
 
@@ -21,6 +24,9 @@ import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest
 class OpportunityRepositoryTest {
+
+    @MockBean
+    private StolenNameTruckingCompanyHomework3Application stolenNameTruckingCompanyHomework3Application;
 
     @Autowired
     private OpportunityRepository opportunityRepository;
@@ -87,10 +93,11 @@ class OpportunityRepositoryTest {
 
     @AfterEach
     void tearDown() {
+
         opportunityRepository.deleteAll();
-        accountRepository.deleteAll();
         contactRepository.deleteAll();
         salesRepRepository.deleteAll();
+        accountRepository.deleteAll();;
 
     }
 
