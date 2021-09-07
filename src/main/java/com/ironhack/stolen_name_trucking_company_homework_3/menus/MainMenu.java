@@ -616,7 +616,7 @@ public class MainMenu implements Variables {
                                   colorMain + "╠════════════╬══════════════════════╬═══════════════════╬═══════════════════╣");
         System.out.println(opp);
         System.out.println(colorInput + "Would you like to change the status of this opportunity to " + colorTable + "LOST?   y / n" + reset);
-
+        Scanner scanner = new Scanner(System.in);
         try {
             switch (scanner.nextLine().trim().toLowerCase(Locale.ROOT)) {
                 case "y" -> {
@@ -696,6 +696,7 @@ public class MainMenu implements Variables {
         valid = false;
 
         System.out.println(colorInput + "\nWould you like to create a new sales representative?" + colorTable +"   y / n " + reset);
+        Scanner scanner = new Scanner(System.in);
         try {
             switch (scanner.nextLine().trim().toLowerCase(Locale.ROOT)) {
                 case "y" -> {
