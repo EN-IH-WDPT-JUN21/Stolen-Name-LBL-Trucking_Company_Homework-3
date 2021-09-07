@@ -203,6 +203,31 @@ class MainMenuTest {
         assertEquals("Lee Dawson", leadRepository.findById(leads.get(1).getId()).get().getName());
     }
 
+
+    @Test
+    void showSalesReps(){
+        ByteArrayOutputStream outContent = new ByteArrayOutputStream();
+        System.setOut(new PrintStream(outContent));
+
+        test.showSalesReps();
+        if (os.contains("win")) {
+            expectedOutput = colorMain + "\n╔════════════╦═══ " + colorMainBold + "Total Number Of Sales Representatives: 2" + colorMain + " ╗" +
+                    reset + "\r\n" + colorMain + "║ " + colorHeadlineBold + "ID         " + colorMain + "║ " + colorHeadlineBold + "Name                                        " + colorMain + "║" +
+                    "\n" + colorMain + "╠════════════╬═════════════════════════════════════════════╣" +
+                    reset + "\n" + colorMain + "║ " + colorTable + salesReps.get(0).getId()+"          " + colorMain + "║ " + colorTable + "DAVID LYNCH                                 " + colorMain + "║" +
+                    reset + "\n" + colorMain + "║ " + colorTable + salesReps.get(1).getId()+"         " + colorMain + "║ " + colorTable + "MARTHA STEWART                              " + colorMain + "║" + reset + "\n";
+        } else {
+            expectedOutput = colorMain + "\n╔════════════╦═══ " + colorMainBold + "Total Number Of Sales Representatives: 2" + colorMain + " ╗" +
+                    reset + "\n" + colorMain + "║ " + colorHeadlineBold + "ID         " + colorMain + "║ " + colorHeadlineBold + "Name                                        " + colorMain + "║" +
+                    "\n" + colorMain + "╠════════════╬═════════════════════════════════════════════╣" +
+                    reset + "\n" + colorMain + "║ " + colorTable + salesReps.get(0).getId()+"          " + colorMain + "║ " + colorTable + "DAVID LYNCH                                 " + colorMain + "║" +
+                    reset + "\n" + colorMain + "║ " + colorTable + salesReps.get(1).getId()+"         " + colorMain + "║ " + colorTable + "MARTHA STEWART                              " + colorMain + "║" + reset + "\n";
+        }
+
+        assertEquals(expectedOutput, outContent.toString());
+    }
+
+
     @Test
     void showLeads() {
 
@@ -218,16 +243,16 @@ class MainMenuTest {
             expectedOutput = colorMain + "\n╔════════════╦═══ " + colorMainBold + "Total Number Of Leads: 3" + colorMain + " ════════════════╗" +
                     reset + "\r\n" + colorMain + "║ " + colorHeadlineBold + "ID         " + colorMain + "║ " + colorHeadlineBold + "Name                                        " + colorMain + "║" +
                     "\n" + colorMain + "╠════════════╬═════════════════════════════════════════════╣" +
-                    reset + "\n" + colorMain + "║ " + colorTable + "1          " + colorMain + "║ " + colorTable + "SEBASTIAN MAREK LABEDZ                      " + colorMain + "║" +
-                    reset + "\n" + colorMain + "║ " + colorTable + "2          " + colorMain + "║ " + colorTable + "LEE DAWSON                                  " + colorMain + "║" +
-                    reset + "\n" + colorMain + "║ " + colorTable + "3          " + colorMain + "║ " + colorTable + "NATALIA SHILYAEVA                           " + colorMain + "║" + reset + "\n";
+                    reset + "\n" + colorMain + "║ " + colorTable + leads.get(0).getId()+"          " + colorMain + "║ " + colorTable + "SEBASTIAN MAREK LABEDZ                      " + colorMain + "║" +
+                    reset + "\n" + colorMain + "║ " + colorTable + leads.get(1).getId()+"          " + colorMain + "║ " + colorTable + "LEE DAWSON                                  " + colorMain + "║" +
+                    reset + "\n" + colorMain + "║ " + colorTable + leads.get(2).getId()+"          " + colorMain + "║ " + colorTable + "NATALIA SHILYAEVA                           " + colorMain + "║" + reset + "\n";
         } else {
             expectedOutput = colorMain + "\n╔════════════╦═══ " + colorMainBold + "Total Number Of Leads: 3" + colorMain + " ════════════════╗" +
                     reset + "\n" + colorMain + "║ " + colorHeadlineBold + "ID         " + colorMain + "║ " + colorHeadlineBold + "Name                                        " + colorMain + "║" +
                     "\n" + colorMain + "╠════════════╬═════════════════════════════════════════════╣" +
-                    reset + "\n" + colorMain + "║ " + colorTable + "1          " + colorMain + "║ " + colorTable + "SEBASTIAN MAREK LABEDZ                      " + colorMain + "║" +
-                    reset + "\n" + colorMain + "║ " + colorTable + "2          " + colorMain + "║ " + colorTable + "LEE DAWSON                                  " + colorMain + "║" +
-                    reset + "\n" + colorMain + "║ " + colorTable + "3          " + colorMain + "║ " + colorTable + "NATALIA SHILYAEVA                           " + colorMain + "║" + reset + "\n";
+                    reset + "\n" + colorMain + "║ " + colorTable + leads.get(0).getId()+"          " + colorMain + "║ " + colorTable + "SEBASTIAN MAREK LABEDZ                      " + colorMain + "║" +
+                    reset + "\n" + colorMain + "║ " + colorTable + leads.get(1).getId()+"          " + colorMain + "║ " + colorTable + "LEE DAWSON                                  " + colorMain + "║" +
+                    reset + "\n" + colorMain + "║ " + colorTable + leads.get(2).getId()+"          " + colorMain + "║ " + colorTable + "NATALIA SHILYAEVA                           " + colorMain + "║" + reset + "\n";
         }
 
         assertEquals(expectedOutput, outContent.toString());
@@ -247,16 +272,16 @@ class MainMenuTest {
             expectedOutput = colorMain + "\n╔════════════╦════════ " + colorMainBold + "Total Number Of Contacts: 3" + colorMain + " ════════╦══════════════════════════════════════════╗" +
                     reset + "\r\n" + colorMain + "║ " + colorHeadlineBold + "ID         " + colorMain + "║ " + colorHeadlineBold + "Name                                        " + colorMain + "║ " + colorHeadlineBold + "Company name                             " + colorMain + "║" +
                     "\n" + colorMain + "╠════════════╬═════════════════════════════════════════════╬══════════════════════════════════════════╣" +
-                    reset + "\n" + colorMain + "║ " + colorTable + "4          " + colorMain + "║ " + colorTable + "JOHN DOE                                    " + colorMain + "║ " + colorTable + "KAŁASZNIKOW                              " + colorMain + "║" +
-                    reset + "\n" + colorMain + "║ " + colorTable + "5          " + colorMain + "║ " + colorTable + "MARTHA STEWARD                              " + colorMain + "║ " + colorTable + "MY OWN COMPANY                           " + colorMain + "║" +
-                    reset + "\n" + colorMain + "║ " + colorTable + "6          " + colorMain + "║ " + colorTable + "GEORGE TRUMAN                               " + colorMain + "║ " + colorTable + "TRUMAN SHOW                              " + colorMain + "║" + reset + "\n";
+                    reset + "\n" + colorMain + "║ " + colorTable + contacts.get(0).getId()+"          " + colorMain + "║ " + colorTable + "JOHN DOE                                    " + colorMain + "║ " + colorTable + "KAŁASZNIKOW                              " + colorMain + "║" +
+                    reset + "\n" + colorMain + "║ " + colorTable + contacts.get(1).getId()+"          " + colorMain + "║ " + colorTable + "MARTHA STEWARD                              " + colorMain + "║ " + colorTable + "MY OWN COMPANY                           " + colorMain + "║" +
+                    reset + "\n" + colorMain + "║ " + colorTable + contacts.get(2).getId()+"          " + colorMain + "║ " + colorTable + "GEORGE TRUMAN                               " + colorMain + "║ " + colorTable + "TRUMAN SHOW                              " + colorMain + "║" + reset + "\n";
         } else {
             expectedOutput = colorMain + "\n╔════════════╦════════ " + colorMainBold + "Total Number Of Contacts: 3" + colorMain + " ════════╦══════════════════════════════════════════╗" +
                     reset + "\n" + colorMain + "║ " + colorHeadlineBold + "ID         " + colorMain + "║ " + colorHeadlineBold + "Name                                        " + colorMain + "║ " + colorHeadlineBold + "Company name                             " + colorMain + "║" +
                     "\n" + colorMain + "╠════════════╬═════════════════════════════════════════════╬══════════════════════════════════════════╣" +
-                    reset + "\n" + colorMain + "║ " + colorTable + "4          " + colorMain + "║ " + colorTable + "JOHN DOE                                    " + colorMain + "║ " + colorTable + "KAŁASZNIKOW                              " + colorMain + "║" +
-                    reset + "\n" + colorMain + "║ " + colorTable + "5          " + colorMain + "║ " + colorTable + "MARTHA STEWARD                              " + colorMain + "║ " + colorTable + "MY OWN COMPANY                           " + colorMain + "║" +
-                    reset + "\n" + colorMain + "║ " + colorTable + "6          " + colorMain + "║ " + colorTable + "GEORGE TRUMAN                               " + colorMain + "║ " + colorTable + "TRUMAN SHOW                              " + colorMain + "║" + reset + "\n";
+                    reset + "\n" + colorMain + "║ " + colorTable + contacts.get(0).getId()+"          " + colorMain + "║ " + colorTable + "JOHN DOE                                    " + colorMain + "║ " + colorTable + "KAŁASZNIKOW                              " + colorMain + "║" +
+                    reset + "\n" + colorMain + "║ " + colorTable + contacts.get(1).getId()+"          " + colorMain + "║ " + colorTable + "MARTHA STEWARD                              " + colorMain + "║ " + colorTable + "MY OWN COMPANY                           " + colorMain + "║" +
+                    reset + "\n" + colorMain + "║ " + colorTable + contacts.get(2).getId()+"          " + colorMain + "║ " + colorTable + "GEORGE TRUMAN                               " + colorMain + "║ " + colorTable + "TRUMAN SHOW                              " + colorMain + "║" + reset + "\n";
         }
 
         assertEquals(expectedOutput, outContent.toString());
@@ -273,7 +298,8 @@ class MainMenuTest {
 
         Contact contact = new Contact("TESTCONTACT", "1234567", "EMAIL@EMAIL.COM", "TESTCOMPANY");
         contactRepository.save(contact);
-        opportunityRepository.save(new Opportunity(Truck.HYBRID, 30, contact));
+        Opportunity newOpp = new Opportunity(Truck.HYBRID, 30, contact);
+        opportunityRepository.save(newOpp);
 
         // After this all System.out.println() statements will come to outContent stream.
         ByteArrayOutputStream outContent = new ByteArrayOutputStream();
@@ -285,12 +311,12 @@ class MainMenuTest {
             expectedOutput = colorMain + "\n╔════════════╦═════ " + colorMainBold + "Total Number Of Opportunities: 1" + colorMain + " ══════╦══════════════════════════════════════════╗" +
                     reset + "\r\n" + colorMain + "║ " + colorHeadlineBold + "ID         " + colorMain + "║ " + colorHeadlineBold + "Contract status   " + colorMain + "║ " + colorHeadlineBold + "Product    " + colorMain + "║ " + colorHeadlineBold + "Quantity   " + colorMain + "║ " + colorHeadlineBold + "Decision maker                           " + colorMain + "║" +
                     "\n" + colorMain + "╠════════════╬═══════════════════╬════════════╬════════════╬══════════════════════════════════════════╣" +
-                    reset + "\n" + colorMain + "║ " + colorTable + "20         " + colorMain + "║ " + colorTable + "OPEN              " + colorMain + "║ " + colorTable + "HYBRID     " + colorMain + "║ " + colorTable + "30         " + colorMain + "║ " + colorTable + "TESTCONTACT                              " + colorMain + "║" + reset + "\n";
+                    reset + "\n" + colorMain + "║ " + colorTable + newOpp.getId()+"         " + colorMain + "║ " + colorTable + "OPEN              " + colorMain + "║ " + colorTable + "HYBRID     " + colorMain + "║ " + colorTable + "30         " + colorMain + "║ " + colorTable + "TESTCONTACT                              " + colorMain + "║" + reset + "\n";
         } else {
             expectedOutput = colorMain + "\n╔════════════╦═════ " + colorMainBold + "Total Number Of Opportunities: 1" + colorMain + " ══════╦══════════════════════════════════════════╗" +
                     reset + "\n" + colorMain + "║ " + colorHeadlineBold + "ID         " + colorMain + "║ " + colorHeadlineBold + "Contract status   " + colorMain + "║ " + colorHeadlineBold + "Product    " + colorMain + "║ " + colorHeadlineBold + "Quantity   " + colorMain + "║ " + colorHeadlineBold + "Decision maker                           " + colorMain + "║" +
                     "\n" + colorMain + "╠════════════╬═══════════════════╬════════════╬════════════╬══════════════════════════════════════════╣" +
-                    reset + "\n" + colorMain + "║ " + colorTable + "20         " + colorMain + "║ " + colorTable + "OPEN              " + colorMain + "║ " + colorTable + "HYBRID     " + colorMain + "║ " + colorTable + "30         " + colorMain + "║ " + colorTable + "TESTCONTACT                              " + colorMain + "║" + reset + "\n";
+                    reset + "\n" + colorMain + "║ " + colorTable + newOpp.getId()+"         " + colorMain + "║ " + colorTable + "OPEN              " + colorMain + "║ " + colorTable + "HYBRID     " + colorMain + "║ " + colorTable + "30         " + colorMain + "║ " + colorTable + "TESTCONTACT                              " + colorMain + "║" + reset + "\n";
         }
 
         assertEquals(expectedOutput, outContent.toString());
@@ -328,12 +354,12 @@ class MainMenuTest {
             expectedOutput  = colorMain + "\n╔════════════╦═══ " + colorMainBold + "Total Number Of Accounts: 1" + colorMain+ " ═════════════╗"  +
                     reset + "\r\n" + colorMain + "║ " + colorHeadlineBold + "ID         " + colorMain + "║ " + colorHeadlineBold+"Company name                                " + colorMain +"║" +
                     "\n" + colorMain + "╠════════════╬═════════════════════════════════════════════╣" +
-                    reset + "\n" + colorMain + "║ " + colorTable + "32         " + colorMain+ "║ " + colorTable + "TESTCOMPANY                                 "+ colorMain + "║" + reset + "\n";
+                    reset + "\n" + colorMain + "║ " + colorTable + testAcc.getId()+"         " + colorMain+ "║ " + colorTable + "TESTCOMPANY                                 "+ colorMain + "║" + reset + "\n";
         } else {
             expectedOutput  = colorMain + "\n╔════════════╦═══ " + colorMainBold + "Total Number Of Accounts: 1" + colorMain+ " ═════════════╗"  +
                     reset + "\n" + colorMain + "║ " + colorHeadlineBold + "ID         " + colorMain + "║ " + colorHeadlineBold+"Company name                                " + colorMain +"║" +
                     "\n" + colorMain + "╠════════════╬═════════════════════════════════════════════╣" +
-                    reset + "\n" + colorMain + "║ " + colorTable + "32         " + colorMain+ "║ " + colorTable + "TESTCOMPANY                                 "+ colorMain + "║" + reset + "\n";
+                    reset + "\n" + colorMain + "║ " + colorTable + testAcc.getId()+"         " + colorMain+ "║ " + colorTable + "TESTCOMPANY                                 "+ colorMain + "║" + reset + "\n";
         }
 
         assertEquals(expectedOutput, outContent.toString());
@@ -362,10 +388,10 @@ class MainMenuTest {
         String data = "y";
         InputStream stdin = System.in;
         try {
-            assertEquals(Status.OPEN, opportunityRepository.findById(opportunities.get(0).getId()).get().getStatus());
+            assertEquals(Status.OPEN, opportunityRepository.findById(opportunities.get(1).getId()).get().getStatus());
             System.setIn(new ByteArrayInputStream(data.getBytes()));
-            test.closeWon(opportunities.get(0).getId().toString());
-            assertEquals(Status.CLOSED_WON, opportunityRepository.findById(opportunities.get(0).getId()).get().getStatus());
+            test.closeWon(opportunities.get(1).getId().toString());
+            assertEquals(Status.CLOSED_WON, opportunityRepository.findById(opportunities.get(1).getId()).get().getStatus());
 
         } finally {
             System.setIn(stdin);
