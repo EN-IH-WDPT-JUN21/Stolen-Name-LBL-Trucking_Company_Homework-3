@@ -8,6 +8,7 @@ import com.ironhack.stolen_name_trucking_company_homework_3.exceptions.*;
 import com.ironhack.stolen_name_trucking_company_homework_3.menus.MainMenu;
 import com.ironhack.stolen_name_trucking_company_homework_3.repository.*;
 import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
@@ -63,9 +64,9 @@ class MainMenuTest {
                 new SalesRep("Martha Stewart")
         ));
 
-        leadRepository.saveAll(List.of(
+        List<Lead> leads = leadRepository.saveAll(List.of(
                 new Lead("Sebastian Marek Labedz", "123456789", "labedzsebastian@gmail.co", "Wings of Freedom", salesReps.get(0)),
-                new Lead("Lee Dawson", "980651164", "ld@gmail.com", "LeeD", salesReps.get(0)),
+                new Lead("Lee Dawson", "980651164", "ld@gmail.com", "LeeD", salesReps.get(1)),
                 new Lead("Natalia Shilyaeva", "563782789", "nattyshil@yahoo.com", "Nathy From Wonderland", salesReps.get(1))
         ));
 
@@ -106,10 +107,11 @@ class MainMenuTest {
 
     @AfterEach
     void tearDown() {
-        leadRepository.deleteAll();
-        opportunityRepository.deleteAll();
-        contactRepository.deleteAll();
-        salesRepRepository.deleteAll();
+        leadRepository.flush();
+        opportunityRepository.flush();
+        contactRepository.flush();
+        salesRepRepository.flush();
+        accountRepository.flush();
     }
 
     @Test
@@ -342,12 +344,13 @@ class MainMenuTest {
 
         String data = "y";
         InputStream stdin = System.in;
-
+        var object = opportunityRepository.findById(1L);
         try {
-            assertEquals(Status.OPEN, opportunityRepository.findById(1L).get().getStatus());
+
             System.setIn(new ByteArrayInputStream(data.getBytes()));
+            assertEquals(Status.OPEN, object.get().getStatus());
             test.closeLost("1");
-            assertEquals(Status.CLOSED_LOST, opportunityRepository.findById(1L).get().getStatus());
+            assertEquals(Status.CLOSED_LOST, object.get().getStatus());
         } finally {
             System.setIn(stdin);
         }

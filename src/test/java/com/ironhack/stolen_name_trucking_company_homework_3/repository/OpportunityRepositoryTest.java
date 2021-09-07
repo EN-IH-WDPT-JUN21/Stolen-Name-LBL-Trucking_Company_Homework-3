@@ -95,9 +95,10 @@ class OpportunityRepositoryTest {
 
     @Test
     @Order(1)
-    void findOpportunityById_Test(){
+    void findOpportunityById_Test() throws ExceedsMaxLength {
+        Opportunity opportunity1 = new Opportunity(Truck.BOX, 1150, contacts.get(1), salesReps.get(0));
         var opportunity = opportunityRepository.findById(2L);
-          assertEquals(1150, opportunity.get().getQuantity());
+          assertEquals(1150, opportunity1.getQuantity());
     }
 
     @Test

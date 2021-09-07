@@ -621,7 +621,7 @@ public class MainMenu implements Variables {
             switch (scanner.nextLine().trim().toLowerCase(Locale.ROOT)) {
                 case "y" -> {
                     opp.setStatus(Status.CLOSED_LOST);
-                    opportunityRepository.save(opp); //does it override or creates a new instance?
+                    //opportunityRepository.save(opp); //does it override or creates a new instance?
                     System.out.println(colorMain + "\n═════════════ " + colorMainBold + "Status Changed!" + colorMain + " ═════════════" + reset);
                 }
                 case "n" ->
