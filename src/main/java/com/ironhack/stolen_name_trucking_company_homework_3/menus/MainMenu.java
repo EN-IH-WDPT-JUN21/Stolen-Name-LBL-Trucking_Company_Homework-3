@@ -143,7 +143,7 @@ public class MainMenu implements Variables {
         } catch (IllegalArgumentException | NullPointerException  e) {
             System.out.println(colorError + "\nInvalid input" + reset);
         }
-        catch (NameContainsNumbersException | EmptyStringException | InvalidCountryException | EmailNotValidException | ExceedsMaxLength | PhoneNumberContainsLettersException | NoSuchValueException e){
+        catch (NameContainsNumbersException | EmptyStringException | InvalidCountryException | EmailNotValidException | ExceedsMaxLength | PhoneNumberContainsLettersException | NoSuchValueException | IdContainsLettersException e){
             System.out.println(colorError + e.getMessage() + reset);
         }
 
@@ -218,6 +218,8 @@ public class MainMenu implements Variables {
                         }
                     }
 
+                    newLead.setSalesRep(salesRepRepository.getById(Long.parseLong(scanner.nextLine().trim())));
+
                     /*valid = false;
 
                     //checks if restrictions for Company name are met
@@ -232,7 +234,7 @@ public class MainMenu implements Variables {
                     }*/
 
                     //theLeads.put(newLead.getId(), newLead);
-                    System.out.println(colorMain + "\n╔════════════╦═════ " + colorMainBold + "New Lead created" + colorMain + " ══════════════════════╦══════════════════════╦══════════════════════════════════════════╦═════════════════════════════════════════════╗" + reset);
+                    System.out.println(colorMain + "\n╔════════════╦═════ " + colorMainBold + "New Lead created" + colorMain + " ══════════════════════╦══════════════════════╦══════════════════════════════════════════╦═════════════════════════════════════════════╦════════════╦" + reset);
                     System.out.println(newLead.toString());
                     leadRepository.save(newLead);
                     return newLead;
@@ -246,6 +248,12 @@ public class MainMenu implements Variables {
 
             System.out.println(colorError + "\nInvalid input - please start again\n" + reset);
             newLead();
+        } catch (EmptyStringException e) {
+            e.printStackTrace();
+        } catch (ExceedsMaxLength exceedsMaxLength) {
+            exceedsMaxLength.printStackTrace();
+        } catch (IdContainsLettersException e) {
+            e.printStackTrace();
         }
         return null;
     }
@@ -616,7 +624,7 @@ public class MainMenu implements Variables {
                                   colorMain + "╠════════════╬══════════════════════╬═══════════════════╬═══════════════════╣");
         System.out.println(opp);
         System.out.println(colorInput + "Would you like to change the status of this opportunity to " + colorTable + "LOST?   y / n" + reset);
-
+        Scanner scanner = new Scanner(System.in);
         try {
             switch (scanner.nextLine().trim().toLowerCase(Locale.ROOT)) {
                 case "y" -> {
@@ -696,6 +704,7 @@ public class MainMenu implements Variables {
         valid = false;
 
         System.out.println(colorInput + "\nWould you like to create a new sales representative?" + colorTable +"   y / n " + reset);
+        Scanner scanner = new Scanner(System.in);
         try {
             switch (scanner.nextLine().trim().toLowerCase(Locale.ROOT)) {
                 case "y" -> {

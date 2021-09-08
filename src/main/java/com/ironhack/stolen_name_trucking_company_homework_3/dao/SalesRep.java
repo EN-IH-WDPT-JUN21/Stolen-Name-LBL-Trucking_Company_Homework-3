@@ -2,6 +2,7 @@ package com.ironhack.stolen_name_trucking_company_homework_3.dao;
 
 import com.ironhack.stolen_name_trucking_company_homework_3.exceptions.EmptyStringException;
 import com.ironhack.stolen_name_trucking_company_homework_3.exceptions.ExceedsMaxLength;
+import com.ironhack.stolen_name_trucking_company_homework_3.exceptions.IdContainsLettersException;
 import com.ironhack.stolen_name_trucking_company_homework_3.exceptions.NameContainsNumbersException;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -40,13 +41,13 @@ public class SalesRep {
         this.repName = repName;
     }
 
-    public SalesRep addLead(Lead lead) {
+    public SalesRep addLead(Lead lead) throws EmptyStringException, ExceedsMaxLength, IdContainsLettersException {
         leadList.add(lead);
         lead.setSalesRep(this);
         return this;
     }
 
-    public SalesRep removeLead(Lead lead) {
+    public SalesRep removeLead(Lead lead) throws EmptyStringException, ExceedsMaxLength, IdContainsLettersException {
         leadList.remove(lead);
         lead.setSalesRep(null);
         return this;

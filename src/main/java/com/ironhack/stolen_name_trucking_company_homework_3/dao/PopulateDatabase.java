@@ -20,7 +20,7 @@ public class PopulateDatabase{
                             ContactRepository contactRepository,
                             OpportunityRepository opportunityRepository,
                             AccountRepository accountRepository)
-            throws NameContainsNumbersException, EmptyStringException, EmailNotValidException, ExceedsMaxLength, PhoneNumberContainsLettersException, InvalidCountryException {
+            throws NameContainsNumbersException, EmptyStringException, EmailNotValidException, ExceedsMaxLength, PhoneNumberContainsLettersException, InvalidCountryException, IdContainsLettersException {
 
         List<SalesRep> salesReps = salesRepRepository.saveAll(List.of(
                 new SalesRep("David Lynch"),
