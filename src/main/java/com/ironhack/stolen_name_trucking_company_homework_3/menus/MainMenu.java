@@ -737,7 +737,7 @@ public class MainMenu implements Variables {
     }
 
     public void showSalesReps() {
-        var allReps = salesRepRepository.findAllSalesreps();
+        var allReps = salesRepRepository.findAllSalesReps();
         System.out.println(colorMain + "\n╔════════════╦═══ " + colorMainBold + "Total Number Of Sales Representatives: " + allReps.size() + colorMain + " ╗" + reset);
         System.out.printf("%-1s %-17s %-1s %-50s %-1s\n",
                 colorMain + "║",
