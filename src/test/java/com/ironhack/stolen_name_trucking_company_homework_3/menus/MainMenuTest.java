@@ -146,7 +146,7 @@ class MainMenuTest {
     @Test
     void testConvertLeadPositive() throws NameContainsNumbersException, EmptyStringException, EmailNotValidException, ExceedsMaxLength, PhoneNumberContainsLettersException {
 
-        String data = "y \n box \n 20 \n \n \n";
+        String data = "y \n box \n 20 \n \n \n y \n \n \n \n";
         InputStream stdin = System.in; // Used to store default System.in
 
         try {

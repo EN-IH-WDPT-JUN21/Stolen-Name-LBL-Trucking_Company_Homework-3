@@ -34,15 +34,15 @@ public class QuantityReportMenu implements Variables {
                                    "             ####################.###### ############ ###################### ############         \n" +
                                    "             ################ ####### # ############ #####################  ############          \n" + reset +
                                    colorMain + "╔══════════════════════════════════════════════════════════════════════════════════════════════════════════════════╗\n"
-                                   + "║                                                 " + colorTable + "QUANTITY REPORTING MENU" + colorMain + "                                        ║\n"
+                                   + "║                                                 " + colorTable + "QUANTITY REPORTING MENU" + colorMain + "                                          ║\n"
                                    + "╠══════════════════════════════════════════════════════════════════════════════════════════════════════════════════╣\n"
-                                   + "║ 1. Display MEAN quantity of products for Opportunities" + colorHeadline + "- type: 'mean quantity'" + colorMain + "                                   ║\n"
-                                   + "║ 2. Display MEDIAN quantity of products for Opportunities" + colorHeadline + "- type: 'median quantity'" + colorMain + "                               ║\n"
-                                   + "║ 3. Display MAXIMUM quantity of products for Opportunities" + colorHeadline + "- type: 'max quantity'" + colorMain + "                                 ║\n"
-                                   + "║ 4. Display MINIMUM quantity of products for Opportunities" + colorHeadline + "- type: 'min quantity'" + colorMain + "                                 ║\n"
-                                   + "║ 5. To return to the Report menu " + colorHeadline + "- type: 'back'" + colorMain + "                                                                  ║\n"
-                                   + "║ 6. To return to the Main menu " + colorHeadline + "- type: 'main menu'" + colorMain + "                                                               ║\n"
-                                   + "║ 7. To quit " + colorHeadline + "- type: 'quit'" + colorMain + "                                                                                       ║\n"
+                                   + "║ 1. Display MEAN quantity of products for Opportunities" + colorHeadline + "- type: 'mean quantity'" + colorMain + "                                    ║\n"
+                                   + "║ 2. Display MEDIAN quantity of products for Opportunities" + colorHeadline + "- type: 'median quantity'" + colorMain + "                                ║\n"
+                                   + "║ 3. Display MAXIMUM quantity of products for Opportunities" + colorHeadline + "- type: 'max quantity'" + colorMain + "                                  ║\n"
+                                   + "║ 4. Display MINIMUM quantity of products for Opportunities" + colorHeadline + "- type: 'min quantity'" + colorMain + "                                  ║\n"
+                                   + "║ 5. To return to the Report menu " + colorHeadline + "- type: 'back'" + colorMain + "                                                                   ║\n"
+                                   + "║ 6. To return to the Main menu " + colorHeadline + "- type: 'main menu'" + colorMain + "                                                                ║\n"
+                                   + "║ 7. To quit " + colorHeadline + "- type: 'quit'" + colorMain + "                                                                                        ║\n"
                                    + "╚══════════════════════════════════════════════════════════════════════════════════════════════════════════════════╝\n" + reset);
 
         try {
