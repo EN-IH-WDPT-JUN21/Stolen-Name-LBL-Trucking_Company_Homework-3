@@ -57,9 +57,7 @@ What's more, we don't let users go wild and put all sorts of things in our beaut
 Reports Navigation
 ==========================
 
-<img alt="https://github.com/EN-IH-WDPT-JUN21/Stolen-Name-LBL-Trucking_Company_Homework-3/blob/main/images/report%20menu.png">
-
-Our Reporting section is split into various submenus grouped by reporting category. We thought it would make it easier to read and navigate through.
+Our Reporting section is split into various submenus grouped by reporting category. We thought it would make it easier to read and navigate through. The menu will guide through various options available.
 
 How to
 ==========================
