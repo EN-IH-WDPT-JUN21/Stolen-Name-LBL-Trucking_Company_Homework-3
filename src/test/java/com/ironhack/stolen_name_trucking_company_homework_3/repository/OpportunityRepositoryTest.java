@@ -72,6 +72,13 @@ class OpportunityRepositoryTest {
                 new Account(Industry.MANUFACTURING, 20, "Paris", "FRANCE",contacts.get(2), opportunities.get(2))
         ));
 
+        contacts.get(0).setAccount(accounts.get(0));
+        contactRepository.save(contacts.get(0));
+        contacts.get(1).setAccount(accounts.get(1));
+        contactRepository.save(contacts.get(1));
+        contacts.get(2).setAccount(accounts.get(2));
+        contactRepository.save(contacts.get(2));
+
 
         opportunities.get(0).setAccount(accounts.get(0));
         opportunityRepository.save(opportunities.get(0));
@@ -329,11 +336,12 @@ class OpportunityRepositoryTest {
     @Test
     void findMinProductQuantity() {
         var minProductQuantity = opportunityRepository.findMinProductQuantity();
-        assertEquals(1, minProductQuantity.get().intValue());
+        assertEquals(1L, minProductQuantity.get().intValue());
     }
 
     @Test
     void findMeanOpportunitiesPerAccount() throws NameContainsNumbersException, EmptyStringException, InvalidCountryException, ExceedsMaxLength {
+
         var testOpp1 = new Opportunity(Truck.FLATBED, 10, contacts.get(0), salesReps.get(0));
         opportunityRepository.save(testOpp1);
         var testOpp2 = new Opportunity(Truck.BOX, 1150, contacts.get(1), salesReps.get(0));
@@ -352,6 +360,7 @@ class OpportunityRepositoryTest {
         opportunityRepository.save(testOpp1);
         opportunityRepository.save(testOpp2);
         opportunityRepository.save(testOpp3);
+
         var meanOppsPerAccount = opportunityRepository.findMeanOpportunitiesPerAccount();
         assertEquals(1.5, meanOppsPerAccount.get().doubleValue());
     }

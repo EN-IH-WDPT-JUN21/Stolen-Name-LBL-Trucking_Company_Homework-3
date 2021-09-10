@@ -114,7 +114,7 @@ public class MainMenu implements Variables {
                 if(!leadRepository.existsById(Long.parseLong(input[1]))){
                     throw new NoSuchValueException("There is no Lead that matches that id.");
                 }
-                createAccount(convertLead(input[1]));
+                convertLead(input[1]);
             } else if (input[0].equals("close-lost")) {
                 if(!opportunityRepository.existsById(Long.parseLong(input[1]))){
                     throw new NoSuchValueException("There is no Opportunity that matches that id.");
@@ -272,11 +272,11 @@ public class MainMenu implements Variables {
                     // checks if restrictions for Product are met
                     while (!valid) {
                         System.out.println(colorInput + "\nPlease input the product that " + colorTable + lead.getCompanyName().toUpperCase() + colorInput + " is interested in: \n " +
-                                                   colorTable + "HYBRID, FLATBED OR BOX" + reset);
+                                colorTable + "HYBRID, FLATBED OR BOX" + reset);
                         try {
                             newOpp.setTruck(Truck.getTruck(scanner.nextLine().trim().toUpperCase(Locale.ROOT)));
                             valid = true;
-                        }catch (EmptyStringException | InvalidEnumException e) {
+                        } catch (EmptyStringException | InvalidEnumException e) {
                             System.out.println(colorError + e.getMessage());
                         }
                     }
@@ -290,9 +290,9 @@ public class MainMenu implements Variables {
                         try {
                             newOpp.setQuantity(Integer.parseInt(scanner.nextLine().trim()));
                             valid = true;
-                        }catch (NumberFormatException  e) {
+                        } catch (NumberFormatException e) {
                             System.out.println(colorError + "You need to input a reasonable number. Please, try again.");
-                        }catch (IllegalArgumentException e) {
+                        } catch (IllegalArgumentException e) {
                             System.out.println(colorError + e.getMessage());
                         }
                     }
@@ -310,37 +310,67 @@ public class MainMenu implements Variables {
                     opportunityRepository.save(newOpp);
                     System.out.println(colorMain + "\n╔════════════╦═════ " + colorMainBold + "New Opportunity created" + colorMain + " ════════════╦═══════════════════╗" + reset);
                     System.out.printf("%-1s %-17s %-1s %-27s %-1s %-24s %-1s %-24s %-1s\n",
-                                      colorMain + "║",
-                                      colorHeadlineBold + "ID",
-                                      colorMain + "║",
-                                      colorHeadlineBold + "Status",
-                                      colorMain + "║",
-                                      colorHeadlineBold + "Product",
-                                      colorMain + "║",
-                                      colorHeadlineBold + "Quantity",
-                                      colorMain + "║\n" +
-                                      colorMain + "╠════════════╬══════════════════════╬═══════════════════╬═══════════════════╣");
+                            colorMain + "║",
+                            colorHeadlineBold + "ID",
+                            colorMain + "║",
+                            colorHeadlineBold + "Status",
+                            colorMain + "║",
+                            colorHeadlineBold + "Product",
+                            colorMain + "║",
+                            colorHeadlineBold + "Quantity",
+                            colorMain + "║\n" +
+                                    colorMain + "╠════════════╬══════════════════════╬═══════════════════╬═══════════════════╣");
                     System.out.println(newOpp);
                     System.out.println(colorInput + "Press Enter to continue..." + reset);
                     scanner.nextLine();
                     System.out.println(colorMain + "╔════════════╦═════ " + colorMainBold + "New Contact created" + colorMain + " ═══════════════════╦══════════════════════╦══════════════════════════════════════════╦═════════════════════════════════════════════╗" + reset);
                     System.out.printf(String.format("%-1s %-17s %-1s %-50s %-1s %-27s %-1s %-47s %-1s %-50s %-1s\n",
-                                                    colorMain + "║",
-                                                    colorHeadlineBold + "ID",
-                                                    colorMain + "║",
-                                                    colorHeadlineBold + "Name",
-                                                    colorMain + "║",
-                                                    colorHeadlineBold + "Phone Number",
-                                                    colorMain + "║",
-                                                    colorHeadlineBold + "Email Address",
-                                                    colorMain + "║",
-                                                    colorHeadlineBold + "Company name",
-                                                    colorMain + "║\n" +
-                                                    colorMain + "╠════════════╬═════════════════════════════════════════════╬══════════════════════╬══════════════════════════════════════════╬═════════════════════════════════════════════╣" + reset));
+                            colorMain + "║",
+                            colorHeadlineBold + "ID",
+                            colorMain + "║",
+                            colorHeadlineBold + "Name",
+                            colorMain + "║",
+                            colorHeadlineBold + "Phone Number",
+                            colorMain + "║",
+                            colorHeadlineBold + "Email Address",
+                            colorMain + "║",
+                            colorHeadlineBold + "Company name",
+                            colorMain + "║\n" +
+                                    colorMain + "╠════════════╬═════════════════════════════════════════════╬══════════════════════╬══════════════════════════════════════════╬═════════════════════════════════════════════╣" + reset));
                     System.out.println(newContact);
                     System.out.println(colorInput + "Press Enter to continue..." + reset);
                     scanner.nextLine();
+                    System.out.println(colorInput + "Would you like to create a new Account?" + colorTable + " y / n" + reset);
+                    switch (scanner.nextLine().trim().toLowerCase(Locale.ROOT)) {
+                        case "y" -> {
+                            createAccount(newOpp);
+                        }
+                        case "n" -> {
 
+                            while (!valid) {
+                                System.out.println(colorInput + "Please, input the account number you wish to link the " + colorTable + "Opportunity " + newOpp.getId() + colorInput + " to: " + reset);
+                                //Account account = accountRepository.findById(Long.parseLong(scanner.nextLine().trim())).get();
+                                try {
+                                   // account.addContact(newContact);
+                                   // account.addOpportunity(newOpp);
+                                    Account account = accountRepository.findById(Long.parseLong(scanner.nextLine().trim())).get();
+                                    newOpp.setAccount(account);
+                                    valid = true;
+                                } catch (IllegalArgumentException e) {
+                                    System.out.println(colorError + "There is no account with this number. Please, try again" + reset);
+                                }
+                            }
+                            valid = false;
+
+                            newOpp.getDecisionMaker().setAccount(newOpp.getAccount());
+                            contactRepository.save(newOpp.getDecisionMaker());
+                            opportunityRepository.save(newOpp);
+                            accountRepository.findById(newOpp.getAccount().getId()).get().addOpportunity(newOpp);
+                            accountRepository.findById(newOpp.getAccount().getId()).get().addContact(newOpp.getDecisionMaker());
+                            System.out.println(colorInput + "The Opportunity has been linked to " + colorInput + newOpp.getAccount().getCompanyName() + reset);
+                            System.out.println(colorInput + "Press Enter to continue..." + reset);
+                        }
+                    }
                     return newOpp;
                 }
                 case "n" ->
@@ -599,6 +629,7 @@ public class MainMenu implements Variables {
                               opportunityRepository.findById(Long.parseLong(id)).get().getDecisionMaker().toString()));
     }
 
+
     //Change opportunity status to LOST
     public void closeLost(String id) {
         Opportunity opp = opportunityRepository.findById(Long.parseLong(id)).get();
@@ -616,7 +647,7 @@ public class MainMenu implements Variables {
                                   colorMain + "╠════════════╬══════════════════════╬═══════════════════╬═══════════════════╣");
         System.out.println(opp);
         System.out.println(colorInput + "Would you like to change the status of this opportunity to " + colorTable + "LOST?   y / n" + reset);
-
+        Scanner scanner = new Scanner(System.in);
         try {
             switch (scanner.nextLine().trim().toLowerCase(Locale.ROOT)) {
                 case "y" -> {
@@ -696,6 +727,7 @@ public class MainMenu implements Variables {
         valid = false;
 
         System.out.println(colorInput + "\nWould you like to create a new sales representative?" + colorTable +"   y / n " + reset);
+        Scanner scanner = new Scanner(System.in);
         try {
             switch (scanner.nextLine().trim().toLowerCase(Locale.ROOT)) {
                 case "y" -> {
