@@ -35,15 +35,15 @@ public class ProductReportMenu implements Variables {
                                    "             ####################.###### ############ ###################### ############         \n" +
                                    "             ################ ####### # ############ #####################  ############          \n" + reset +
                                    colorMain + "╔══════════════════════════════════════════════════════════════════════════════════════════════════════════════════╗\n"
-                                   + "║                                " + colorTable + "PRODUCT REPORTING MENU" + colorMain + "                                                          ║\n"
+                                   + "║                                " + colorTable + "PRODUCT REPORTING MENU" + colorMain + "                                                            ║\n"
                                    + "╠══════════════════════════════════════════════════════════════════════════════════════════════════════════════════╣\n"
-                                   + "║ 1. Display count of all Opportunities by the Product " + colorHeadline + "- type: 'report opportunity by product'" + colorMain + "                    ║\n"
-                                   + "║ 2. Display count of CLOSED-WON Opportunities by the Product " + colorHeadline + "- type: 'report closed-won by product'" + colorMain + "              ║\n"
-                                   + "║ 3. Display count of CLOSED-LOST Opportunities by the Product" + colorHeadline + "- type: 'report closed-lost by product'" + colorMain + "             ║\n"
-                                   + "║ 4. Display count of OPEN Opportunities by the Product" + colorHeadline + "- type: 'report open by product'" + colorMain + "                           ║\n"
-                                   + "║ 5. To return to the Report menu " + colorHeadline + "- type: 'back'" + colorMain + "                                                                  ║\n"
-                                   + "║ 6. To return to the Main menu " + colorHeadline + "- type: 'main menu'" + colorMain + "                                                               ║\n"
-                                   + "║ 7. To quit " + colorHeadline + "- type: 'quit'" + colorMain + "                                                                                       ║\n"
+                                   + "║ 1. Display count of all Opportunities by the Product " + colorHeadline + "- type: 'report opportunity by product'" + colorMain + "                     ║\n"
+                                   + "║ 2. Display count of CLOSED-WON Opportunities by the Product " + colorHeadline + "- type: 'report closed-won by product'" + colorMain + "               ║\n"
+                                   + "║ 3. Display count of CLOSED-LOST Opportunities by the Product" + colorHeadline + "- type: 'report closed-lost by product'" + colorMain + "              ║\n"
+                                   + "║ 4. Display count of OPEN Opportunities by the Product" + colorHeadline + "- type: 'report open by product'" + colorMain + "                            ║\n"
+                                   + "║ 5. To return to the Report menu " + colorHeadline + "- type: 'back'" + colorMain + "                                                                   ║\n"
+                                   + "║ 6. To return to the Main menu " + colorHeadline + "- type: 'main menu'" + colorMain + "                                                                ║\n"
+                                   + "║ 7. To quit " + colorHeadline + "- type: 'quit'" + colorMain + "                                                                                        ║\n"
                                    + "╚══════════════════════════════════════════════════════════════════════════════════════════════════════════════════╝\n" + reset);
 
         try {

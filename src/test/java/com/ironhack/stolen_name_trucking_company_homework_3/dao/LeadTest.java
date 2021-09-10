@@ -10,10 +10,8 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 class LeadTest {
 
-    Integer counterStatus;
-    Lead lead1;
-    Lead lead2;
-    Lead lead3;
+    private Lead lead1;
+
 
     @BeforeEach
     void setUp() throws NameContainsNumbersException, EmptyStringException, ExceedsMaxLength, EmailNotValidException, PhoneNumberContainsLettersException {

@@ -6,22 +6,16 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class ReportCommandsTest {
 
- /*   @Test
+
+    @Test
     void getCommandType_validOption() {
-      assertEquals("MEAN OPPS PER ACCOUNT", ReportCommands.valueOf("MEAN_OPPS_PERR_ACC"));
+      assertEquals(ReportCommands.MEAN_OPPS_PERR_ACC, ReportCommands.getCommandType("MEAN OPPS PER ACCOUNT"));
     }
 
     @Test
     void getCommandType_invalidOption() {
-        assertEquals(ReportCommands.valueOf("RANDOM STRING"), ReportCommands.NONE);
-    }*/
-
-
-    @Test
-    void values() {
+        assertEquals(ReportCommands.NONE, ReportCommands.getCommandType("RANDOM STRING"));
     }
 
-    @Test
-    void valueOf() {
-    }
+
 }
