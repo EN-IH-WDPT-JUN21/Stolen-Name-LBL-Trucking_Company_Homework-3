@@ -131,6 +131,7 @@ public class MainMenu implements Variables {
                     case "new" + "lead" -> {
                         if (salesRepRepository.findAll().size() == 0){
                             System.out.println(colorError + "\nPlease create a Sales Representative before proceeding\n" + reset);
+                            throw new NoSuchValueException("There are currently no Sales Representatives in the database");
                         }
                         newLead();
                     }
