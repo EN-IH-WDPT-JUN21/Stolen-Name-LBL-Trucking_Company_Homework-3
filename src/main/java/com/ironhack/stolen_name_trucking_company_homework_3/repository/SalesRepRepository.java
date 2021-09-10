@@ -10,5 +10,5 @@ import java.util.List;
 @Repository
 public interface SalesRepRepository extends JpaRepository<SalesRep, Long> {
     @Query("SELECT r.id, r.repName FROM SalesRep r")
-    List<Object[]> findAllSalesreps();
+    List<Object[]> findAllSalesReps();
 }

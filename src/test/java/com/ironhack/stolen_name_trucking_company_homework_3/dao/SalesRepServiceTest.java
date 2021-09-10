@@ -11,9 +11,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
+
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -29,26 +28,33 @@ class SalesRepServiceTest {
     @Autowired
     private LeadRepository leadRepository;
 
-   /* private List<SalesRep> salesReps;
-    private List<Lead> leads;*/
+   private List<SalesRep> salesReps;
+   private List<Lead> leads;
 
-    private SalesRepService salesRepService;
+    SalesRepService srs;
+    Lead lead;
+    SalesRep salesRep;
+
 
     @BeforeEach
     void setUp() throws NameContainsNumbersException, EmptyStringException, EmailNotValidException, ExceedsMaxLength, PhoneNumberContainsLettersException {
-        salesRepService = new SalesRepService();
-     /*   salesReps = salesRepRepository.saveAll(List.of(
+
+        srs = new SalesRepService();
+        salesRep = new SalesRep("Jhon Bro");
+        lead = new Lead("TestOne", "123546", "test1@test.gmail.com", "TestCompany1", salesRep);
+
+
+        salesReps = salesRepRepository.saveAll(List.of(
                 new SalesRep("David Lynch"),
                 new SalesRep("Martha Stewart")
         ));
 
-        leads = leadRepository.saveAll(List.of(
+       leads = leadRepository.saveAll(List.of(
                 new Lead("John Doe", "123475357", "alfa@beta.uk", "Kałasznikow"),
                 new Lead("Martha Steward", "123475357", "ms@wp.pl", "My own company"),
                 new Lead("George Truman", "123475357", "thisisverylongemail@gmail.com", "Truman Show"))
 
-        );*/
-
+        );
     }
 
     @AfterEach
@@ -57,16 +63,27 @@ class SalesRepServiceTest {
         leadRepository.deleteAll();
     }
 
-   /* @Test
-    void addLeadToDb_shouldWork()  {
-        assertEquals(0,salesRepRepository.count());
-        salesRepService.addLeadToDb(new Lead()); //doesn't work
-        assertEquals(1,salesRepRepository.count());
-    }*/
+    @Test
+    void addLeadToDb_shouldWork() {
+        assertEquals(3,leadRepository.findAllLeads().size());
+        salesRepRepository.save(salesRep);
+        srs.addLeadToDb(lead);
+        assertEquals(4,leadRepository.findAllLeads().size());
+}
 
+   @Test
+    void removeLeadFromDb_shouldWork() {
+        assertEquals(3,leadRepository.findAllLeads().size());
+       srs.removeLeadFromDb(leads.get(0));
+        assertEquals(2,leadRepository.findAllLeads().size());
+    }
 
-
-
+    @Test
+    void addSalesRep_shouldWork() {
+        assertEquals(2,salesRepRepository.findAllSalesReps().size());
+        srs.addSalesRep(salesRep);
+        assertEquals(3,salesRepRepository.findAllSalesReps().size());
+    }
 
 
 }
