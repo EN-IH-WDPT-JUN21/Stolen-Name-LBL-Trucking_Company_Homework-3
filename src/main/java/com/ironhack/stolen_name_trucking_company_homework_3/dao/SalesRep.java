@@ -30,11 +30,11 @@ public class SalesRep {
     private String repName;
 
     @LazyCollection(LazyCollectionOption.FALSE)
-    @OneToMany(mappedBy = "salesRep", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<Lead> leadList = new ArrayList<>();
+    @OneToMany(mappedBy = "salesRep")
+    private List<Lead> leadList;
 
     @OneToMany(mappedBy = "salesRep")
-    private List<Opportunity> opportunityList = new ArrayList<>();
+    private List<Opportunity> opportunityList;
 
     public SalesRep(String repName) {
         this.repName = repName;

@@ -42,11 +42,11 @@ class PopulateDatabaseTest {
 
     @AfterEach
     void tearDown() {
+        leadRepository.deleteAll();
         opportunityRepository.deleteAll();
         contactRepository.deleteAll();
-        salesRepRepository.deleteAll();
         accountRepository.deleteAll();
-        leadRepository.deleteAll();
+        salesRepRepository.deleteAll();
     }
 
 
