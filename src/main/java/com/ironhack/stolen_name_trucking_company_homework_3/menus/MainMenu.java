@@ -437,16 +437,13 @@ public class MainMenu implements Variables {
                     valid = false;
                     while (!valid) {
                         System.out.println(colorInput + "Please, input the account number you wish to link the " + colorTable + "Opportunity " + opportunity.getId() + colorInput + " to: " + reset);
-                        //Account account = accountRepository.findById(Long.parseLong(scanner.nextLine().trim())).get();
                         try {
-                            // account.addContact(newContact);
-                            // account.addOpportunity(newOpp);
                             opportunity.setAccount(accountRepository.findById(Long.parseLong(scanner.nextLine().trim())).get());
                             opportunityRepository.save(opportunity);
                             opportunity.getDecisionMaker().setAccount(opportunity.getAccount());
                             contactRepository.save(opportunity.getDecisionMaker());
                             valid = true;
-                            System.out.println(colorInput + "The Opportunity has been linked to " + colorInput + opportunity.getAccount().getCompanyName() + reset);
+                            System.out.println(colorInput + "The Opportunity has been linked to " + colorTable + opportunity.getAccount().getCompanyName() + reset);
                             return opportunity.getAccount();
                         } catch (Exception e) {
                             System.out.println(colorError + "There is no account with this number. Please, try again" + reset);
