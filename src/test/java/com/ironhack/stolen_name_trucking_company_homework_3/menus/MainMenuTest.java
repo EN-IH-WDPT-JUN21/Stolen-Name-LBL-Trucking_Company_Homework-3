@@ -119,7 +119,7 @@ class MainMenuTest {
 
     @Test
     void testNewLeadPositive() {
-        String data = "y\n Nathan \n 0028263 \n 122@gmail.com \n Santander "; // Used to simulate user input
+        String data = "y \n Nathan \n 0028263 \n 122@gmail.com \n Santander \n " + salesReps.get(0).getId() + "\n"; // Used to simulate user input
         InputStream stdin = System.in; // Used to store default System.in
         try {
             System.setIn(new ByteArrayInputStream(data.getBytes())); // Sets System.In to test

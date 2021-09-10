@@ -128,7 +128,12 @@ public class MainMenu implements Variables {
             } else {
 
                 switch (input[0] + input[1]) {
-                    case "new" + "lead" -> newLead();
+                    case "new" + "lead" -> {
+                        if (salesRepRepository.findAll().size() == 0){
+                            System.out.println(colorError + "\nPlease create a Sales Representative before proceeding\n" + reset);
+                        }
+                        newLead();
+                    }
                     case "new" + "salesrep" -> newSalesRep();
                     case "show" + "leads" -> showLeads();
                     case "show" + "opportunities" -> showOpportunities();
@@ -217,18 +222,23 @@ public class MainMenu implements Variables {
                         }
                     }
 
-                    /*valid = false;
+                    valid = false;
 
-                    //checks if restrictions for Company name are met
+                    //
                     while (!valid) {
                         System.out.println(colorInput + "\nPlease input Sales Representative id: " + reset);
                         try {
-                            newLead.setSalesRep(salesRepRepository.getById(Long.parseLong(scanner.nextLine().trim())));
-                            valid = true;
-                        }catch(EmptyStringException | ExceedsMaxLength e){
+                            Optional<SalesRep> salesRep = salesRepRepository.findById(Long.parseLong(scanner.nextLine().trim()));
+                            if(salesRep.isEmpty()){
+                                System.out.println(colorError + "\nInvalid Sales Representative id - please start again\n" + reset);
+                            } else {
+                                newLead.setSalesRep(salesRep.get());
+                                valid = true;
+                            }
+                        }catch(Exception e){
                             System.out.println(colorError + e.getMessage());
                         }
-                    }*/
+                    }
 
                     //theLeads.put(newLead.getId(), newLead);
                     System.out.println(colorMain + "\n╔════════════╦═════ " + colorMainBold + "New Lead created" + colorMain + " ══════════════════════╦══════════════════════╦══════════════════════════════════════════╦═════════════════════════════════════════════╗" + reset);

@@ -115,18 +115,9 @@ public class Lead {
 
         this.companyName = companyName;
     }
-    /*public void setSalesRep(SalesRep salesRep) throws EmptyStringException {
-
-        if (salesRep != null) {
-            throw new EmptyStringException("No Phone Number input. Please try again.");
-        }
-        else if(!salesRep.matches("[0-9]+")) {
-            throw new PhoneNumberContainsLettersException("The phone number must only contain numbers. Please try again.");
-        } else if(phoneNumber.length()>20) {
-            throw new ExceedsMaxLength("Exceeds maximum value of 20 characters. Please try again.");
-        }
+    public void setSalesRep(SalesRep salesRep){
         this.salesRep = salesRep;
-    }*/
+    }
 
     public String toString() {
         System.out.printf(String.format("%-1s %-17s %-1s %-50s %-1s %-27s %-1s %-47s %-1s %-50s %-1s \n",
