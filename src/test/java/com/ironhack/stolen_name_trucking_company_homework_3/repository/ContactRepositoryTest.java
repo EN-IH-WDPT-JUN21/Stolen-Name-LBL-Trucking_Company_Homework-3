@@ -49,6 +49,7 @@ class ContactRepositoryTest {
     @AfterEach
     void tearDown() {
         contactRepository.deleteAll();
+
     }
 
     @Test

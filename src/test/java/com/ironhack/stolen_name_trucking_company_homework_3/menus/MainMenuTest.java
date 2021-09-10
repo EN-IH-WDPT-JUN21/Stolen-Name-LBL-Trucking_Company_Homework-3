@@ -6,7 +6,6 @@ import com.ironhack.stolen_name_trucking_company_homework_3.enums.Industry;
 import com.ironhack.stolen_name_trucking_company_homework_3.enums.Status;
 import com.ironhack.stolen_name_trucking_company_homework_3.enums.Truck;
 import com.ironhack.stolen_name_trucking_company_homework_3.exceptions.*;
-import com.ironhack.stolen_name_trucking_company_homework_3.menus.MainMenu;
 import com.ironhack.stolen_name_trucking_company_homework_3.repository.*;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
@@ -14,7 +13,6 @@ import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.boot.test.context.TestComponent;
 import org.springframework.boot.test.mock.mockito.MockBean;
 
 
@@ -24,7 +22,6 @@ import java.io.InputStream;
 import java.io.PrintStream;
 import java.util.List;
 import java.util.NoSuchElementException;
-import java.util.Optional;
 
 @SpringBootTest
 class MainMenuTest {
@@ -117,6 +114,7 @@ class MainMenuTest {
         contactRepository.deleteAll();
         salesRepRepository.deleteAll();
         accountRepository.deleteAll();
+
     }
 
     @Test
@@ -169,7 +167,7 @@ class MainMenuTest {
 
     @Test
     void TestCreateAccountPositive() throws NameContainsNumbersException, EmptyStringException, EmailNotValidException, PhoneNumberContainsLettersException, ExceedsMaxLength {
-        String data = "Produce\n 200 \n Stourbridge \n SPAIN\n \n \n \n"; // Used to simulate user input
+        String data = "y \n Produce\n 200 \n Stourbridge \n SPAIN\n \n \n \n"; // Used to simulate user input
         InputStream stdin = System.in; // Used to store default System.in
 
         try {
@@ -183,21 +181,33 @@ class MainMenuTest {
         }
     }
 
-    //
-//
-//    @Test
-//    void TestQuitWorksInOS() {
-//        String data = "\n quit"; // Used to simulate user input
-//        InputStream stdin = System.in; // Used to store default System.in
-//        try {
-//            System.setIn(new ByteArrayInputStream(data.getBytes())); // Sets System.In to test1
-//
-//            assertThrows(RuntimeException.class, test::OS);
-//        }finally {
-//            System.setIn(stdin); /// Resets System.in to default state
-//        }
-//    }
-//
+    @Test
+    void TestCreateAccountMethod_AddToExistingAccount() throws NameContainsNumbersException, EmptyStringException, EmailNotValidException, PhoneNumberContainsLettersException, ExceedsMaxLength {
+        String data = "n \n" + accounts.get(0).getId() +"\n"; // Used to simulate user input
+        InputStream stdin = System.in; // Used to store default System.in
+        SalesRep testRep = new SalesRep("Test Rep");
+        salesRepRepository.save(testRep);
+        Contact testContact = new Contact("Test Contact", "98765432", "test@contact.co.uk", "Test Company", testRep);
+        contactRepository.save(testContact);
+        Opportunity testOpp = new Opportunity(Truck.HYBRID, 50, contactRepository.findById(testContact.getId()).get(),
+                salesRepRepository.findById(testRep.getId()).get());
+        opportunityRepository.save(testOpp);
+
+        try {
+            System.setIn(new ByteArrayInputStream(data.getBytes())); // Sets System.In to test1
+            var oppSizeBefore = accountRepository.findById(accounts.get(0).getId()).get().getOpportunityList().size();
+
+            Account existingAccount = test.createAccount(testOpp);
+
+            var oppSizeAfter = accountRepository.findById(accounts.get(0).getId()).get().getOpportunityList().size();
+
+            assertEquals(existingAccount, testOpp.getAccount());
+            assertEquals(oppSizeAfter, oppSizeBefore + 1);
+        } finally {
+            System.setIn(stdin); /// Resets System.in to default state
+        }
+    }
+
     @Test
     void lookUpLeadId_FindLead() {
         assertEquals("Lee Dawson", leadRepository.findById(leads.get(1).getId()).get().getName());

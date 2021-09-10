@@ -115,7 +115,6 @@ public class Lead {
 
         this.companyName = companyName;
     }
-
     /*public void setSalesRep(SalesRep salesRep) throws EmptyStringException {
 
         if (salesRep != null) {

@@ -114,7 +114,7 @@ public class MainMenu implements Variables {
                 if(!leadRepository.existsById(Long.parseLong(input[1]))){
                     throw new NoSuchValueException("There is no Lead that matches that id.");
                 }
-                convertLead(input[1]);
+                createAccount(convertLead(input[1]));
             } else if (input[0].equals("close-lost")) {
                 if(!opportunityRepository.existsById(Long.parseLong(input[1]))){
                     throw new NoSuchValueException("There is no Opportunity that matches that id.");
@@ -340,37 +340,7 @@ public class MainMenu implements Variables {
                     System.out.println(newContact);
                     System.out.println(colorInput + "Press Enter to continue..." + reset);
                     scanner.nextLine();
-                    System.out.println(colorInput + "Would you like to create a new Account?" + colorTable + " y / n" + reset);
-                    switch (scanner.nextLine().trim().toLowerCase(Locale.ROOT)) {
-                        case "y" -> {
-                            createAccount(newOpp);
-                        }
-                        case "n" -> {
-
-                            while (!valid) {
-                                System.out.println(colorInput + "Please, input the account number you wish to link the " + colorTable + "Opportunity " + newOpp.getId() + colorInput + " to: " + reset);
-                                //Account account = accountRepository.findById(Long.parseLong(scanner.nextLine().trim())).get();
-                                try {
-                                   // account.addContact(newContact);
-                                   // account.addOpportunity(newOpp);
-                                    Account account = accountRepository.findById(Long.parseLong(scanner.nextLine().trim())).get();
-                                    newOpp.setAccount(account);
-                                    valid = true;
-                                } catch (IllegalArgumentException e) {
-                                    System.out.println(colorError + "There is no account with this number. Please, try again" + reset);
-                                }
-                            }
-                            valid = false;
-
-                            newOpp.getDecisionMaker().setAccount(newOpp.getAccount());
-                            contactRepository.save(newOpp.getDecisionMaker());
-                            opportunityRepository.save(newOpp);
-                            accountRepository.findById(newOpp.getAccount().getId()).get().addOpportunity(newOpp);
-                            accountRepository.findById(newOpp.getAccount().getId()).get().addContact(newOpp.getDecisionMaker());
-                            System.out.println(colorInput + "The Opportunity has been linked to " + colorInput + newOpp.getAccount().getCompanyName() + reset);
-                            System.out.println(colorInput + "Press Enter to continue..." + reset);
-                        }
-                    }
+                    leadRepository.delete(lead);
                     return newOpp;
                 }
                 case "n" ->
@@ -380,90 +350,116 @@ public class MainMenu implements Variables {
         } catch (Exception e) {
 
             System.out.println(colorError + "\nInvalid input - please start again\n" + reset);
-            //convertLead(id); // Catches errors and returns to start of method - Is there a simple alternative?
+            convertLead(id); // Catches errors and returns to start of method - Is there a simple alternative?
         }
         return null;
     }
 
     // Method called to create a new account
     public Account createAccount(Opportunity opportunity) {
-        System.out.println(colorMain + "\n═════════════ " + colorMainBold + "Creating new Account" + colorMain + " ═════════════");
+        System.out.println(colorInput + "Would you like to create a new Account?" + colorTable + " y / n" + reset);
         Scanner scanner = new Scanner(System.in);
-        try {
-            Account newAccount = new Account(opportunity.getDecisionMaker(), opportunity);
-            accountRepository.save(newAccount);
-            valid = false;
-
-            // checks if restrictions for Industry are met
-            while (!valid) {
-
-                System.out.println(colorInput + "\nPlease input the company industry: \n" +
-                                           colorTable + "PRODUCE, ECOMMERCE, MANUFACTURING, MEDICAL OR OTHER" + reset);
-
+        try{
+            switch (scanner.nextLine().trim().toLowerCase(Locale.ROOT)){
+            case "y" -> {
                 try {
-                    newAccount.setIndustry(Industry.getIndustry(scanner.nextLine().trim().toUpperCase(Locale.ROOT))); // ENUM Selection
-                    valid = true;
-                } catch (EmptyStringException | InvalidEnumException e) {
-                    System.out.println(colorError + e.getMessage());
-                }
+                    Account newAccount = new Account(opportunity.getDecisionMaker(), opportunity);
+                    accountRepository.save(newAccount);
+                    valid = false;
+
+                    // checks if restrictions for Industry are met
+                    while (!valid) {
+                        System.out.println(colorInput + "\nPlease input the company industry: \n" +
+                                                   colorTable + "PRODUCE, ECOMMERCE, MANUFACTURING, MEDICAL OR OTHER" + reset);
+                        try {
+                            newAccount.setIndustry(Industry.getIndustry(scanner.nextLine().trim().toUpperCase(Locale.ROOT))); // ENUM Selection
+                            valid = true;
+                        } catch (EmptyStringException | InvalidEnumException e) {
+                            System.out.println(colorError + e.getMessage());
+                        }
+                    }
+
+                    valid = false;
+
+                    // checks if restrictions for Employee count are met
+                    while (!valid) {
+                        System.out.println(colorInput + "\nPlease input the employee count for " + colorTable + newAccount.getCompanyName() + colorInput + ":  " + reset); //**Needs amending to display name in contact list
+                        try {
+                            newAccount.setEmployeeCount(Integer.parseInt(scanner.nextLine().trim()));
+                            valid = true;
+                        }catch (NumberFormatException  e) {
+                            System.out.println(colorError + "You need to input a reasonable number. Please, try again.");
+                        } catch (IllegalArgumentException e) {
+                            System.out.println(colorError + e.getMessage());
+                        }
+                    }
+
+                    valid = false;
+
+                    // checks if restrictions for City name are met
+                    while (!valid) {
+                        System.out.println(colorInput + "\nPlease input the city for " + colorTable + newAccount.getCompanyName() + colorInput + ":  " + reset);
+                        try {
+                            newAccount.setCity(scanner.nextLine().trim().toUpperCase(Locale.ROOT));
+                            valid = true;
+                        }catch (EmptyStringException | NameContainsNumbersException | ExceedsMaxLength e) {
+                            System.out.println(colorError + e.getMessage());
+                        }
+                    }
+
+                    valid = false;
+
+                    // checks if Country is in country array
+                    while (!valid) {
+                        System.out.println(colorInput + "\nPlease input the Country for " + colorTable + newAccount.getCompanyName() + ":  " + reset);
+                        try {
+                            newAccount.setCountry(scanner.nextLine().trim().toUpperCase());
+                            valid = true;
+                        } catch (EmptyStringException | ExceedsMaxLength | InvalidCountryException e) {
+                            System.out.println(colorError + e.getMessage());
+                        }
+                    }
+
+                    valid = false;
+
+                    // Assigns the Account to the contact(decision maker) of the opportunity
+                    opportunity.getDecisionMaker().setAccount(newAccount);
+                    contactRepository.save(opportunity.getDecisionMaker());
+                    accountRepository.save(newAccount);
+                    System.out.println(newAccount);
+
+                    return newAccount;
+                } catch (Exception e) {
+
+                    System.out.println(colorError + "\nInvalid input - please start again\n" + reset);
+                    //createAccount(opportunity); // Catches errors and returns to start of method - Is there a better way??
+                }}
+                case "n" -> {
+                    valid = false;
+                    while (!valid) {
+                        System.out.println(colorInput + "Please, input the account number you wish to link the " + colorTable + "Opportunity " + opportunity.getId() + colorInput + " to: " + reset);
+                        //Account account = accountRepository.findById(Long.parseLong(scanner.nextLine().trim())).get();
+                        try {
+                            // account.addContact(newContact);
+                            // account.addOpportunity(newOpp);
+                            opportunity.setAccount(accountRepository.findById(Long.parseLong(scanner.nextLine().trim())).get());
+                            opportunityRepository.save(opportunity);
+                            opportunity.getDecisionMaker().setAccount(opportunity.getAccount());
+                            contactRepository.save(opportunity.getDecisionMaker());
+                            valid = true;
+                            System.out.println(colorInput + "The Opportunity has been linked to " + colorInput + opportunity.getAccount().getCompanyName() + reset);
+                            return opportunity.getAccount();
+                        } catch (Exception e) {
+                            System.out.println(colorError + "There is no account with this number. Please, try again" + reset);
+                        }
+                    }
+                } default -> throw new IllegalArgumentException(colorError + "Invalid input - please start again" + reset);
             }
-
-            valid = false;
-
-            // checks if restrictions for Employee count are met
-            while (!valid) {
-                System.out.println(colorInput + "\nPlease input the employee count for " + colorTable + newAccount.getCompanyName() + colorInput + ":  " + reset); //**Needs amending to display name in contact list
-                try {
-                    newAccount.setEmployeeCount(Integer.parseInt(scanner.nextLine().trim()));
-                    valid = true;
-                }catch (NumberFormatException  e) {
-                    System.out.println(colorError + "You need to input a reasonable number. Please, try again.");
-                } catch (IllegalArgumentException e) {
-                    System.out.println(colorError + e.getMessage());
-                }
-            }
-
-            valid = false;
-
-            // checks if restrictions for City name are met
-            while (!valid) {
-                System.out.println(colorInput + "\nPlease input the city for " + colorTable + newAccount.getCompanyName() + colorInput + ":  " + reset);
-                try {
-                    newAccount.setCity(scanner.nextLine().trim().toUpperCase(Locale.ROOT));
-                    valid = true;
-                }catch (EmptyStringException | NameContainsNumbersException | ExceedsMaxLength e) {
-                    System.out.println(colorError + e.getMessage());
-                }
-            }
-
-            valid = false;
-
-            // checks if Country is in country array
-            while (!valid) {
-                System.out.println(colorInput + "\nPlease input the Country for " + colorTable + newAccount.getCompanyName() + ":  " + reset);
-                try {
-                    newAccount.setCountry(scanner.nextLine().trim().toUpperCase());
-                    valid = true;
-                } catch (EmptyStringException | ExceedsMaxLength | InvalidCountryException e) {
-                    System.out.println(colorError + e.getMessage());
-                }
-            }
-
-            valid = false;
-
-            // Assigns the Account to the contact(decision maker) of the opportunity
-            opportunity.getDecisionMaker().setAccount(newAccount);
-            contactRepository.save(opportunity.getDecisionMaker());
-            accountRepository.save(newAccount);
-            System.out.println(newAccount);
-
-            return newAccount;
-        } catch (Exception e) {
-
+        }catch (Exception e){
             System.out.println(colorError + "\nInvalid input - please start again\n" + reset);
-            //createAccount(opportunity); // Catches errors and returns to start of method - Is there a better way??
+            createAccount(opportunity);
         }
-        return null;
+            return null;
     }
 
     // showing all leads

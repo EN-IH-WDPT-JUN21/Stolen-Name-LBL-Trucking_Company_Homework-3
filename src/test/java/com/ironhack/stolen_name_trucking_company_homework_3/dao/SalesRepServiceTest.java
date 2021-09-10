@@ -28,12 +28,12 @@ class SalesRepServiceTest {
     @Autowired
     private LeadRepository leadRepository;
 
-   private List<SalesRep> salesReps;
-   private List<Lead> leads;
+    private List<SalesRep> salesReps;
+    private List<Lead> leads;
 
-    SalesRepService srs;
-    Lead lead;
-    SalesRep salesRep;
+    private SalesRepService srs;
+    private Lead lead;
+    private SalesRep salesRep;
 
 
     @BeforeEach
@@ -49,18 +49,17 @@ class SalesRepServiceTest {
                 new SalesRep("Martha Stewart")
         ));
 
-       leads = leadRepository.saveAll(List.of(
+        leads = leadRepository.saveAll(List.of(
                 new Lead("John Doe", "123475357", "alfa@beta.uk", "Kałasznikow"),
                 new Lead("Martha Steward", "123475357", "ms@wp.pl", "My own company"),
                 new Lead("George Truman", "123475357", "thisisverylongemail@gmail.com", "Truman Show"))
-
         );
     }
 
     @AfterEach
     void tearDown() {
-        salesRepRepository.deleteAll();
         leadRepository.deleteAll();
+        salesRepRepository.deleteAll();
     }
 
     @Test
@@ -69,12 +68,12 @@ class SalesRepServiceTest {
         salesRepRepository.save(salesRep);
         srs.addLeadToDb(lead);
         assertEquals(4,leadRepository.findAllLeads().size());
-}
+    }
 
-   @Test
+    @Test
     void removeLeadFromDb_shouldWork() {
         assertEquals(3,leadRepository.findAllLeads().size());
-       srs.removeLeadFromDb(leads.get(0));
+        srs.removeLeadFromDb(leads.get(0));
         assertEquals(2,leadRepository.findAllLeads().size());
     }
 
