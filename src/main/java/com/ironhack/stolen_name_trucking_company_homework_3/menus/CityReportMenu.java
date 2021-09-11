@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.awt.*;
+import java.util.Scanner;
 
 @Component
 public class CityReportMenu implements Variables {
@@ -21,6 +22,8 @@ public class CityReportMenu implements Variables {
 
     @Autowired
     MainMenu mainMenu;
+
+
 
     public void cityReportMenu() throws NoSuchValueException, AWTException {
 
@@ -45,6 +48,8 @@ public class CityReportMenu implements Variables {
                                    + "║ 6. To return to the Main menu " + colorHeadline + "- type: 'main menu'" + colorMain + "                                                                ║\n"
                                    + "║ 7. To quit " + colorHeadline + "- type: 'quit'" + colorMain + "                                                                                        ║\n"
                                    + "╚══════════════════════════════════════════════════════════════════════════════════════════════════════════════════╝\n" + reset);
+
+        Scanner scanner = new Scanner(System.in);
 
         try {
 
