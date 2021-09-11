@@ -3,6 +3,7 @@ package com.ironhack.stolen_name_trucking_company_homework_3.menus;
 import com.ironhack.stolen_name_trucking_company_homework_3.StolenNameTruckingCompanyHomework3Application;
 import com.ironhack.stolen_name_trucking_company_homework_3.dao.*;
 import com.ironhack.stolen_name_trucking_company_homework_3.enums.Industry;
+import com.ironhack.stolen_name_trucking_company_homework_3.enums.Status;
 import com.ironhack.stolen_name_trucking_company_homework_3.enums.Truck;
 import com.ironhack.stolen_name_trucking_company_homework_3.exceptions.*;
 import com.ironhack.stolen_name_trucking_company_homework_3.repository.*;
@@ -125,11 +126,71 @@ class CityReportMenuTest {
             ByteArrayOutputStream outContent = new ByteArrayOutputStream();
             System.setOut(new PrintStream(outContent));
             test.cityReportMenu();
+            assertTrue(outContent.toString().contains("London"));
+
+        } finally {
+            System.setIn(stdin);
+        }
+    }
+
+    @Test
+    public void CityReportMenu_ReportOppByCityOpen() throws NoSuchValueException, AWTException {
+        String data = "report open by city \n\n";
+        InputStream stdin = System.in;
+
+        try {
+            System.setIn(new ByteArrayInputStream(data.getBytes()));
+            ByteArrayOutputStream outContent = new ByteArrayOutputStream();
+            System.setOut(new PrintStream(outContent));
+            test.cityReportMenu();
+            assertTrue(outContent.toString().contains("London"));
+            assertTrue(outContent.toString().contains("Madrid"));
+            assertTrue(outContent.toString().contains("Paris"));
             assertTrue(outContent.toString().contains("Report"));
 
         } finally {
             System.setIn(stdin);
         }
+    }
+
+    @Test
+    public void CityReportMenu_ReportOppByCityWon() throws NoSuchValueException, AWTException {
+        opportunities.get(0).setStatus(Status.CLOSED_WON);
+        opportunityRepository.save(opportunities.get(0));
+        String data = "report closed-won by city \n\n";
+        InputStream stdin = System.in;
+
+        try {
+            System.setIn(new ByteArrayInputStream(data.getBytes()));
+            ByteArrayOutputStream outContent = new ByteArrayOutputStream();
+            System.setOut(new PrintStream(outContent));
+            test.cityReportMenu();
+            assertTrue(outContent.toString().contains("London"));
+            assertTrue(outContent.toString().contains("Report"));
+
+        } finally {
+            System.setIn(stdin);
+        }
+    }
+
+        @Test
+        public void CityReportMenu_ReportOppByCityLost() throws NoSuchValueException, AWTException {
+            opportunities.get(1).setStatus(Status.CLOSED_LOST);
+            opportunityRepository.save(opportunities.get(1));
+            String data = "report closed-lost by city \n\n";
+            InputStream stdin = System.in;
+
+            try {
+                System.setIn(new ByteArrayInputStream(data.getBytes()));
+                ByteArrayOutputStream outContent = new ByteArrayOutputStream();
+                System.setOut(new PrintStream(outContent));
+                test.cityReportMenu();
+                assertTrue(outContent.toString().contains("Madrid"));
+                assertTrue(outContent.toString().contains("Report"));
+
+            } finally {
+                System.setIn(stdin);
+            }
     }
 
 
