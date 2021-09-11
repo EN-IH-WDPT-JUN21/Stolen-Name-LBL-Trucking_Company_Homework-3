@@ -7,7 +7,6 @@ import com.ironhack.stolen_name_trucking_company_homework_3.enums.Status;
 import com.ironhack.stolen_name_trucking_company_homework_3.enums.Truck;
 import com.ironhack.stolen_name_trucking_company_homework_3.exceptions.*;
 import com.ironhack.stolen_name_trucking_company_homework_3.repository.*;
-import org.junit.Assert;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -25,7 +24,7 @@ import java.util.List;
 import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest
-class CityReportMenuTest {
+class ProductReportMenuTest {
 
     @MockBean
     private StolenNameTruckingCompanyHomework3Application stolenNameTruckingCompanyHomework3Application;
@@ -42,15 +41,7 @@ class CityReportMenuTest {
     private AccountRepository accountRepository;
 
     @Autowired
-    private CityReportMenu test;
-
-    String colorMain = "\033[0;33m";
-    String colorMainBold = "\033[1;37m";
-    String colorHeadline = "\033[0;34m";
-    String colorHeadlineBold = "\033[1;34m";
-    String colorTable = "\033[1;32m";
-    String reset = "\u001B[0m";
-    String os = System.getProperty("os.name").toLowerCase();
+    private ProductReportMenu test;
 
     List<SalesRep> salesReps;
     List<Lead> leads;
@@ -117,35 +108,16 @@ class CityReportMenuTest {
     }
 
     @Test
-    public void CityReportMenu_ReportOppByCity() throws NoSuchValueException, AWTException {
-        String data = "report opportunity by city \n\n";
+    void productReportMenu_OppByProduct() throws NoSuchValueException, AWTException {
+        String data = "report opportunity by product \n\n";
         InputStream stdin = System.in;
 
         try {
             System.setIn(new ByteArrayInputStream(data.getBytes()));
             ByteArrayOutputStream outContent = new ByteArrayOutputStream();
             System.setOut(new PrintStream(outContent));
-            test.cityReportMenu();
-            assertTrue(outContent.toString().contains("London"));
-
-        } finally {
-            System.setIn(stdin);
-        }
-    }
-
-    @Test
-    public void CityReportMenu_ReportOppByCityOpen() throws NoSuchValueException, AWTException {
-        String data = "report open by city \n\n";
-        InputStream stdin = System.in;
-
-        try {
-            System.setIn(new ByteArrayInputStream(data.getBytes()));
-            ByteArrayOutputStream outContent = new ByteArrayOutputStream();
-            System.setOut(new PrintStream(outContent));
-            test.cityReportMenu();
-            assertTrue(outContent.toString().contains("London"));
-            assertTrue(outContent.toString().contains("Madrid"));
-            assertTrue(outContent.toString().contains("Paris"));
+            test.productReportMenu();
+            assertTrue(outContent.toString().contains("BOX"));
             assertTrue(outContent.toString().contains("Report"));
 
         } finally {
@@ -154,18 +126,38 @@ class CityReportMenuTest {
     }
 
     @Test
-    public void CityReportMenu_ReportOppByCityWon() throws NoSuchValueException, AWTException {
+    void productReportMenu_OppByProductOpen() throws NoSuchValueException, AWTException {
+        String data = "report open by product \n\n";
+        InputStream stdin = System.in;
+
+        try {
+            System.setIn(new ByteArrayInputStream(data.getBytes()));
+            ByteArrayOutputStream outContent = new ByteArrayOutputStream();
+            System.setOut(new PrintStream(outContent));
+            test.productReportMenu();
+            assertTrue(outContent.toString().contains("BOX"));
+            assertTrue(outContent.toString().contains("FLATBED"));
+            assertTrue(outContent.toString().contains("HYBRID"));
+            assertTrue(outContent.toString().contains("Report"));
+
+        } finally {
+            System.setIn(stdin);
+        }
+    }
+
+    @Test
+    void productReportMenu_OppByProductWon() throws NoSuchValueException, AWTException {
         opportunities.get(0).setStatus(Status.CLOSED_WON);
         opportunityRepository.save(opportunities.get(0));
-        String data = "report closed-won by city \n\n";
+        String data = "report closed-won by product \n\n";
         InputStream stdin = System.in;
 
         try {
             System.setIn(new ByteArrayInputStream(data.getBytes()));
             ByteArrayOutputStream outContent = new ByteArrayOutputStream();
             System.setOut(new PrintStream(outContent));
-            test.cityReportMenu();
-            assertTrue(outContent.toString().contains("London"));
+            test.productReportMenu();
+            assertTrue(outContent.toString().contains("FLATBED"));
             assertTrue(outContent.toString().contains("Report"));
 
         } finally {
@@ -173,25 +165,23 @@ class CityReportMenuTest {
         }
     }
 
-        @Test
-        public void CityReportMenu_ReportOppByCityLost() throws NoSuchValueException, AWTException {
-            opportunities.get(1).setStatus(Status.CLOSED_LOST);
-            opportunityRepository.save(opportunities.get(1));
-            String data = "report closed-lost by city \n\n";
-            InputStream stdin = System.in;
+    @Test
+    void productReportMenu_OppByProductLost() throws NoSuchValueException, AWTException {
+        opportunities.get(1).setStatus(Status.CLOSED_LOST);
+        opportunityRepository.save(opportunities.get(1));
+        String data = "report closed-lost by product \n\n";
+        InputStream stdin = System.in;
 
-            try {
-                System.setIn(new ByteArrayInputStream(data.getBytes()));
-                ByteArrayOutputStream outContent = new ByteArrayOutputStream();
-                System.setOut(new PrintStream(outContent));
-                test.cityReportMenu();
-                assertTrue(outContent.toString().contains("Madrid"));
-                assertTrue(outContent.toString().contains("Report"));
+        try {
+            System.setIn(new ByteArrayInputStream(data.getBytes()));
+            ByteArrayOutputStream outContent = new ByteArrayOutputStream();
+            System.setOut(new PrintStream(outContent));
+            test.productReportMenu();
+            assertTrue(outContent.toString().contains("BOX"));
+            assertTrue(outContent.toString().contains("Report"));
 
-            } finally {
-                System.setIn(stdin);
-            }
+        } finally {
+            System.setIn(stdin);
+        }
     }
-
-
 }
