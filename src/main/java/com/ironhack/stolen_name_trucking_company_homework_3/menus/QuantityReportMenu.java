@@ -83,7 +83,7 @@ public class QuantityReportMenu implements Variables {
 
         System.out.println(colorInput + "\nPress Enter to continue..." + reset);
         scanner.nextLine();
-        quantityReportMenu();
+//        quantityReportMenu();
     }
 
     public int getMedian(int[] intArray){

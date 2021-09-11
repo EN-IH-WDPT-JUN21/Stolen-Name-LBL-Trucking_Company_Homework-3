@@ -116,6 +116,6 @@ public class ProductReportMenu implements Variables {
 
         System.out.println(colorInput + "\nPress Enter to continue..." + reset);
         scanner.nextLine();
-        productReportMenu();
+//        productReportMenu();
     }
 }

@@ -116,6 +116,6 @@ public class IndustryReportMenu implements Variables {
 
         System.out.println(colorInput + "\nPress Enter to continue..." + reset);
         scanner.nextLine();
-        industryReportMenu();
+//        industryReportMenu();
     }
 }

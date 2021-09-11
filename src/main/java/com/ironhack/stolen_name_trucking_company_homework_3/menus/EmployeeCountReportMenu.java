@@ -85,7 +85,7 @@ public class EmployeeCountReportMenu implements Variables {
 
         System.out.println(colorInput + "\nPress Enter to continue..." + reset);
         scanner.nextLine();
-        employeeCountReportMenu();
+//        employeeCountReportMenu();
     }
 
     public int getMedian(int[] intArray){

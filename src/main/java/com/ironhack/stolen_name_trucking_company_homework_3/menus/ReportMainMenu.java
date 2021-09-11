@@ -67,21 +67,37 @@ public class ReportMainMenu implements Variables {
             } else {
                 switch (ReportCommands.getCommandType(input)){
                     case SALESREP:
-                        salesRepReportMenu.salesRepReportMenu();
+                        while(true) {
+                            salesRepReportMenu.salesRepReportMenu();
+                        }
                     case PRODUCT:
-                        productReportMenu.productReportMenu();
+                        while(true) {
+                            productReportMenu.productReportMenu();
+                        }
                     case COUNTRY:
-                        countryReportMenu.countryReportMenu();
+                        while(true) {
+                            countryReportMenu.countryReportMenu();
+                        }
                     case CITY:
-                        cityReportMenu.cityReportMenu();
+                        while(true) {
+                            cityReportMenu.cityReportMenu();
+                        }
                     case INDUSTRY:
-                        industryReportMenu.industryReportMenu();
+                        while(true) {
+                            industryReportMenu.industryReportMenu();
+                        }
                     case EMPLOYEE:
-                        employeeCountReportMenu.employeeCountReportMenu();
+                        while(true) {
+                            employeeCountReportMenu.employeeCountReportMenu();
+                        }
                     case QUANTITY:
-                        quantityReportMenu.quantityReportMenu();
+                        while(true) {
+                            quantityReportMenu.quantityReportMenu();
+                        }
                     case OPPORTUNITY:
-                        opportunityReportMenu.opportunityReportMenu();
+                        while(true) {
+                            opportunityReportMenu.opportunityReportMenu();
+                        }
                     case MAIN_MENU: mainMenu.OS();
                         break;
                     case QUIT:
