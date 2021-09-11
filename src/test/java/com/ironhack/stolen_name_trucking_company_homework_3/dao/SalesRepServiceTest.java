@@ -28,10 +28,12 @@ class SalesRepServiceTest {
     @Autowired
     private LeadRepository leadRepository;
 
+    @Autowired
+    private SalesRepService salesRepService;
+
     private List<SalesRep> salesReps;
     private List<Lead> leads;
 
-    private SalesRepService srs;
     private Lead lead;
     private SalesRep salesRep;
 
@@ -39,7 +41,6 @@ class SalesRepServiceTest {
     @BeforeEach
     void setUp() throws NameContainsNumbersException, EmptyStringException, EmailNotValidException, ExceedsMaxLength, PhoneNumberContainsLettersException {
 
-        srs = new SalesRepService();
         salesRep = new SalesRep("Jhon Bro");
         lead = new Lead("TestOne", "123546", "test1@test.gmail.com", "TestCompany1", salesRep);
 
@@ -66,21 +67,21 @@ class SalesRepServiceTest {
     void addLeadToDb_shouldWork() {
         assertEquals(3,leadRepository.findAllLeads().size());
         salesRepRepository.save(salesRep);
-        srs.addLeadToDb(lead);
+        salesRepService.addLeadToDb(lead);
         assertEquals(4,leadRepository.findAllLeads().size());
     }
 
     @Test
     void removeLeadFromDb_shouldWork() {
         assertEquals(3,leadRepository.findAllLeads().size());
-        srs.removeLeadFromDb(leads.get(0));
+        salesRepService.removeLeadFromDb(leads.get(0));
         assertEquals(2,leadRepository.findAllLeads().size());
     }
 
     @Test
     void addSalesRep_shouldWork() {
         assertEquals(2,salesRepRepository.findAllSalesReps().size());
-        srs.addSalesRep(salesRep);
+        salesRepService.addSalesRep(salesRep);
         assertEquals(3,salesRepRepository.findAllSalesReps().size());
     }
 
