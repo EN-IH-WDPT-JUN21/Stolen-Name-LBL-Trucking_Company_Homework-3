@@ -131,7 +131,7 @@ public class SalesRepReportMenu implements Variables {
 
         System.out.println(colorInput + "\nPress Enter to continue..." + reset);
         scanner.nextLine();
-        salesRepReportMenu();
+//        salesRepReportMenu();
     }
 
 }
