@@ -169,7 +169,7 @@ class MainMenuTest {
 
 
     @Test
-    void TestCreateAccountPositive() throws NameContainsNumbersException, EmptyStringException, EmailNotValidException, PhoneNumberContainsLettersException, ExceedsMaxLength {
+    void createAccount_PositiveTest() throws NameContainsNumbersException, EmptyStringException, EmailNotValidException, PhoneNumberContainsLettersException, ExceedsMaxLength {
         String data = "y \n Produce\n 200 \n Stourbridge \n SPAIN\n \n \n \n"; // Used to simulate user input
         InputStream stdin = System.in; // Used to store default System.in
 
@@ -185,7 +185,7 @@ class MainMenuTest {
     }
 
     @Test
-    void TestCreateAccountMethod_AddToExistingAccount() throws NameContainsNumbersException, EmptyStringException, EmailNotValidException, PhoneNumberContainsLettersException, ExceedsMaxLength {
+    void createAccount_AddToExistingAccountTest() throws NameContainsNumbersException, EmptyStringException, EmailNotValidException, PhoneNumberContainsLettersException, ExceedsMaxLength {
         String data = "n \n" + accounts.get(0).getId() +"\n"; // Used to simulate user input
         InputStream stdin = System.in; // Used to store default System.in
         SalesRep testRep = new SalesRep("Test Rep");
@@ -211,15 +211,6 @@ class MainMenuTest {
         }
     }
 
-    @Test
-    void lookUpLeadId_FindLead() {
-        assertEquals("Lee Dawson", leadRepository.findById(leads.get(1).getId()).get().getName());
-    }
-
-    @Test
-    void lookUpOppId_FindOpp(){
-        assertEquals(Truck.FLATBED, opportunityRepository.findById(opportunities.get(0).getId()).get().getProduct());
-    }
 
 
     @Test
@@ -317,6 +308,43 @@ class MainMenuTest {
         assertTrue(outContent.toString().contains("Total Number Of Accounts"));
     }
 
+    @Test
+    void lookUpLeadId_FindLead() throws NameContainsNumbersException, EmptyStringException, EmailNotValidException, ExceedsMaxLength, PhoneNumberContainsLettersException {
+        SalesRep testRep = new SalesRep("Test Rep");
+        salesRepRepository.save(testRep);
+        Lead testLead = new Lead("Test Lead","123456789", "test@testlead.com", "Test Company", testRep);
+        leadRepository.save(testLead);
+
+        ByteArrayOutputStream outContent = new ByteArrayOutputStream();
+        System.setOut(new PrintStream(outContent));
+
+        test.lookUpLeadId(testLead.getId());
+
+        assertTrue(outContent.toString().contains("TEST LEAD"));
+        assertTrue(outContent.toString().contains("Lead details"));
+    }
+
+    @Test
+    void lookUpOppId_FindOpp() throws ExceedsMaxLength {
+        Contact testContact = new Contact("TESTCONTACT", "1234567", "EMAIL@EMAIL.COM", "TESTCOMPANY");
+        contactRepository.save(testContact);
+        Opportunity testOpp = new Opportunity(Truck.HYBRID, 30, testContact);
+        opportunityRepository.save(testOpp);
+        Account testAcc = new Account(testContact, testOpp);
+        accountRepository.save(testAcc);
+        testOpp.getDecisionMaker().setAccount(testAcc);
+        contactRepository.save(testOpp.getDecisionMaker());
+        accountRepository.save(testAcc);
+
+        ByteArrayOutputStream outContent = new ByteArrayOutputStream();
+        System.setOut(new PrintStream(outContent));
+
+        test.lookUpOppId(String.valueOf(testOpp.getId()));
+
+        assertTrue(outContent.toString().contains("HYBRID"));
+        assertTrue(outContent.toString().contains("Contract details"));
+        assertTrue(outContent.toString().contains("Decision maker details"));
+    }
 
 
     @Test
