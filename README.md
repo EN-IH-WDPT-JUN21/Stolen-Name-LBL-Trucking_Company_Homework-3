@@ -13,8 +13,6 @@ The functionality of the system is presented in the diagram below.
 
 <img alt="class diagram" src="https://github.com/EN-IH-WDPT-JUN21/Stolen-Name-LBL-Trucking_Company_Homework-3/blob/Natalia/images/Class_diagram_LBL-Page-1.png">
 
-EER diagram is presented below:
-=======
 
 Based on the use and class diagrams, an updatable database has been created with the following schema:
 
@@ -77,7 +75,9 @@ MySQL setup
 ==========================
 
 create database ironhackhomework3;
+
 use ironhackhomework3;
+
 CREATE USER 'ironhacker'@'localhost' IDENTIFIED BY '1r0nH@ck3r';
 
 GRANT ALL PRIVILEGES ON *.* TO 'ironhacker'@'localhost';
