@@ -435,6 +435,10 @@ public class MainMenu implements Variables {
                 }
                 case "n" -> {
                     valid = false;
+                    if(accountRepository.findAll().isEmpty()){
+                        System.out.println(colorError + "There are no Accounts. Please create a new Account");
+                        createAccount(opportunity);
+                    }
                     while (!valid) {
                         System.out.println(colorInput + "Please, input the account number you wish to link the " + colorTable + "Opportunity " + opportunity.getId() + colorInput + " to: " + reset);
                         try {
