@@ -16,6 +16,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 
 
+import java.awt.*;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.InputStream;
@@ -211,6 +212,11 @@ class MainMenuTest {
     @Test
     void lookUpLeadId_FindLead() {
         assertEquals("Lee Dawson", leadRepository.findById(leads.get(1).getId()).get().getName());
+    }
+
+    @Test
+    void lookUpOppId_FindOpp(){
+        assertEquals(Truck.FLATBED, opportunityRepository.findById(opportunities.get(0).getId()).get().getProduct());
     }
 
 
@@ -423,4 +429,5 @@ class MainMenuTest {
             System.setIn(stdin); /// Resets System.in to default state
         }
     }
+
 }
