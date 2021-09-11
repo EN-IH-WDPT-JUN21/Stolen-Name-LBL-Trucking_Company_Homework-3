@@ -59,6 +59,8 @@ Our Reporting section is split into various submenus grouped by reporting catego
 How to
 ==========================
 
+You will need to run the CRM from ***Main***.
+
 Firstly, you will need to log on. If you want to have full functionality, use ***1*** as username and ***1*** as password.
 Alternatively, if you just want to have a little nosey, you can use username ***2*** and password ***2***. 
 The *guest* access will allow you to view the information stored but won't allow you to change anything. We don't want random curiosity mess up our CRM :P
