@@ -67,8 +67,23 @@ The *guest* access will allow you to view the information stored but won't allow
 
 Please, pay attention dual screen users! The login window tends to pop up in the second screen...
 
+Once you're in, the system is a blank canvas! You're welcome to start adding entries to the database. However, if you don't want to start from scratch, use the command ***populate***. 
+
 **The code** is split in various sections. In addition, we addressed the feedback for the previous homework and split the code into smaller chunks, so it's easier to review. 
 
 Exceptions are handled in each class as well as in the MainMenu. A number of tests has been created to test inputs, validations and methods.
+
+MySQL setup
+==========================
+
+create database ironhackhomework3;
+use ironhackhomework3;
+CREATE USER 'ironhacker'@'localhost' IDENTIFIED BY '1r0nH@ck3r';
+
+GRANT ALL PRIVILEGES ON *.* TO 'ironhacker'@'localhost';
+
+FLUSH PRIVILEGES;
+
+==========================
 
 ***Enjoy!***
