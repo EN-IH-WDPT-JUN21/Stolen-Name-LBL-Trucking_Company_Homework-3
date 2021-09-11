@@ -3,10 +3,10 @@ package com.ironhack.stolen_name_trucking_company_homework_3.menus;
 import com.ironhack.stolen_name_trucking_company_homework_3.StolenNameTruckingCompanyHomework3Application;
 import com.ironhack.stolen_name_trucking_company_homework_3.dao.*;
 import com.ironhack.stolen_name_trucking_company_homework_3.enums.Industry;
+import com.ironhack.stolen_name_trucking_company_homework_3.enums.Status;
 import com.ironhack.stolen_name_trucking_company_homework_3.enums.Truck;
 import com.ironhack.stolen_name_trucking_company_homework_3.exceptions.*;
 import com.ironhack.stolen_name_trucking_company_homework_3.repository.*;
-import org.junit.Assert;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -24,7 +24,7 @@ import java.util.List;
 import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest
-class CityReportMenuTest {
+class IndustryReportMenuTest {
 
     @MockBean
     private StolenNameTruckingCompanyHomework3Application stolenNameTruckingCompanyHomework3Application;
@@ -41,15 +41,7 @@ class CityReportMenuTest {
     private AccountRepository accountRepository;
 
     @Autowired
-    private CityReportMenu test;
-
-    String colorMain = "\033[0;33m";
-    String colorMainBold = "\033[1;37m";
-    String colorHeadline = "\033[0;34m";
-    String colorHeadlineBold = "\033[1;34m";
-    String colorTable = "\033[1;32m";
-    String reset = "\u001B[0m";
-    String os = System.getProperty("os.name").toLowerCase();
+    private IndustryReportMenu test;
 
     List<SalesRep> salesReps;
     List<Lead> leads;
@@ -116,15 +108,16 @@ class CityReportMenuTest {
     }
 
     @Test
-    public void CityReportMenu_ReportOppByCity() throws NoSuchValueException, AWTException {
-        String data = "report opportunity by city \n\n";
+    void industryReportMenu_ReportOppByInd() throws NoSuchValueException, AWTException {
+        String data = "report opportunity by industry \n\n";
         InputStream stdin = System.in;
 
         try {
             System.setIn(new ByteArrayInputStream(data.getBytes()));
             ByteArrayOutputStream outContent = new ByteArrayOutputStream();
             System.setOut(new PrintStream(outContent));
-            test.cityReportMenu();
+            test.industryReportMenu();
+            assertTrue(outContent.toString().contains("PRODUCE"));
             assertTrue(outContent.toString().contains("Report"));
 
         } finally {
@@ -132,5 +125,63 @@ class CityReportMenuTest {
         }
     }
 
+    @Test
+    void industryReportMenu_ReportOppByIndOpen() throws NoSuchValueException, AWTException {
+        String data = "report open by industry \n\n";
+        InputStream stdin = System.in;
 
+        try {
+            System.setIn(new ByteArrayInputStream(data.getBytes()));
+            ByteArrayOutputStream outContent = new ByteArrayOutputStream();
+            System.setOut(new PrintStream(outContent));
+            test.industryReportMenu();
+            assertTrue(outContent.toString().contains("PRODUCE"));
+            assertTrue(outContent.toString().contains("ECOMMERCE"));
+            assertTrue(outContent.toString().contains("MANUFACTURING"));
+            assertTrue(outContent.toString().contains("Report"));
+
+        } finally {
+            System.setIn(stdin);
+        }
+    }
+
+    @Test
+    void industryReportMenu_ReportOppByIndClsedWon() throws NoSuchValueException, AWTException {
+        opportunities.get(0).setStatus(Status.CLOSED_WON);
+        opportunityRepository.save(opportunities.get(0));
+        String data = "report closed-won by industry \n\n";
+        InputStream stdin = System.in;
+
+        try {
+            System.setIn(new ByteArrayInputStream(data.getBytes()));
+            ByteArrayOutputStream outContent = new ByteArrayOutputStream();
+            System.setOut(new PrintStream(outContent));
+            test.industryReportMenu();
+            assertTrue(outContent.toString().contains("PRODUCE"));
+            assertTrue(outContent.toString().contains("Report"));
+
+        } finally {
+            System.setIn(stdin);
+        }
+    }
+
+    @Test
+    void industryReportMenu_ReportOppByIndClsedLost() throws NoSuchValueException, AWTException {
+        opportunities.get(1).setStatus(Status.CLOSED_LOST);
+        opportunityRepository.save(opportunities.get(1));
+        String data = "report closed-lost by industry \n\n";
+        InputStream stdin = System.in;
+
+        try {
+            System.setIn(new ByteArrayInputStream(data.getBytes()));
+            ByteArrayOutputStream outContent = new ByteArrayOutputStream();
+            System.setOut(new PrintStream(outContent));
+            test.industryReportMenu();
+            assertTrue(outContent.toString().contains("ECOMMERCE"));
+            assertTrue(outContent.toString().contains("Report"));
+
+        } finally {
+            System.setIn(stdin);
+        }
+    }
 }

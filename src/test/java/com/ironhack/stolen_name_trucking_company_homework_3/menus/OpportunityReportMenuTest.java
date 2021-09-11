@@ -6,7 +6,6 @@ import com.ironhack.stolen_name_trucking_company_homework_3.enums.Industry;
 import com.ironhack.stolen_name_trucking_company_homework_3.enums.Truck;
 import com.ironhack.stolen_name_trucking_company_homework_3.exceptions.*;
 import com.ironhack.stolen_name_trucking_company_homework_3.repository.*;
-import org.junit.Assert;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -24,7 +23,7 @@ import java.util.List;
 import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest
-class CityReportMenuTest {
+class OpportunityReportMenuTest {
 
     @MockBean
     private StolenNameTruckingCompanyHomework3Application stolenNameTruckingCompanyHomework3Application;
@@ -41,15 +40,8 @@ class CityReportMenuTest {
     private AccountRepository accountRepository;
 
     @Autowired
-    private CityReportMenu test;
+    private OpportunityReportMenu test;
 
-    String colorMain = "\033[0;33m";
-    String colorMainBold = "\033[1;37m";
-    String colorHeadline = "\033[0;34m";
-    String colorHeadlineBold = "\033[1;34m";
-    String colorTable = "\033[1;32m";
-    String reset = "\u001B[0m";
-    String os = System.getProperty("os.name").toLowerCase();
 
     List<SalesRep> salesReps;
     List<Lead> leads;
@@ -116,21 +108,71 @@ class CityReportMenuTest {
     }
 
     @Test
-    public void CityReportMenu_ReportOppByCity() throws NoSuchValueException, AWTException {
-        String data = "report opportunity by city \n\n";
+    void opportunityReportMenu_GetAverage() throws NoSuchValueException, AWTException {
+        String data = "mean opps per account \n\n";
         InputStream stdin = System.in;
 
         try {
             System.setIn(new ByteArrayInputStream(data.getBytes()));
             ByteArrayOutputStream outContent = new ByteArrayOutputStream();
             System.setOut(new PrintStream(outContent));
-            test.cityReportMenu();
-            assertTrue(outContent.toString().contains("Report"));
+            test.opportunityReportMenu();
+            assertTrue(outContent.toString().contains("Average number of opportunities per account is: 1"));
 
         } finally {
             System.setIn(stdin);
         }
     }
 
+    @Test
+    void opportunityReportMenu_GetMedian() throws NoSuchValueException, AWTException {
+        String data = "median opps per account \n\n";
+        InputStream stdin = System.in;
+
+        try {
+            System.setIn(new ByteArrayInputStream(data.getBytes()));
+            ByteArrayOutputStream outContent = new ByteArrayOutputStream();
+            System.setOut(new PrintStream(outContent));
+            test.opportunityReportMenu();
+            assertTrue(outContent.toString().contains("Median number of opportunities per account is: 1"));
+
+        } finally {
+            System.setIn(stdin);
+        }
+    }
+
+    @Test
+    void opportunityReportMenu_GetMax() throws NoSuchValueException, AWTException {
+        String data = "max opps per account \n\n";
+        InputStream stdin = System.in;
+
+        try {
+            System.setIn(new ByteArrayInputStream(data.getBytes()));
+            ByteArrayOutputStream outContent = new ByteArrayOutputStream();
+            System.setOut(new PrintStream(outContent));
+            test.opportunityReportMenu();
+            assertTrue(outContent.toString().contains("Maximum number of opportunities per account is: 1"));
+
+        } finally {
+            System.setIn(stdin);
+        }
+    }
+
+    @Test
+    void opportunityReportMenu_GetMin() throws NoSuchValueException, AWTException {
+        String data = "min opps per account \n\n";
+        InputStream stdin = System.in;
+
+        try {
+            System.setIn(new ByteArrayInputStream(data.getBytes()));
+            ByteArrayOutputStream outContent = new ByteArrayOutputStream();
+            System.setOut(new PrintStream(outContent));
+            test.opportunityReportMenu();
+            assertTrue(outContent.toString().contains("Minimum number of opportunities per account is: 1"));
+
+        } finally {
+            System.setIn(stdin);
+        }
+    }
 
 }
