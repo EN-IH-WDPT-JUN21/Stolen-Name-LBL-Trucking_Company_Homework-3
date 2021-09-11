@@ -82,7 +82,7 @@ use ironhackhomework3;
 
 CREATE USER 'ironhacker'@'localhost' IDENTIFIED BY '1r0nH@ck3r';
 
-GRANT ALL PRIVILEGES ON *.* TO 'ironhacker'@'localhost';
+GRANT ALL PRIVILEGES ON '*.*' TO 'ironhacker'@'localhost';
 
 FLUSH PRIVILEGES;
 
