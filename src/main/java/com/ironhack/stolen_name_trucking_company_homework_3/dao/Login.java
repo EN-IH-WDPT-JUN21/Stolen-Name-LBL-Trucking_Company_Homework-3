@@ -101,22 +101,14 @@ public class Login implements ActionListener {
     public static int getIsLoggedIn() {
         return isLoggedIn;
     }
+
     @Override
     public void actionPerformed(ActionEvent e) {
         char[] password = passwordText.getPassword();
         String pass = String.valueOf(password);
 
         // Checks if username and password input equals to any of registered users and runs OS or OSGuest menu
-        if (getUsername().equals("Lee") && pass.equals("lee")
-        || getUsername().equals("Sebastian") && pass.equals("sebastian")
-        || getUsername().equals("Mariana") && pass.equals("mariana")
-        || getUsername().equals("NataliaS") && pass.equals("natalias")
-        || getUsername().equals("Nathan") && pass.equals("nathan")
-        || getUsername().equals("NataliaN") && pass.equals("natalian")
-        || getUsername().equals("Katarzyna") && pass.equals("katarzyna")
-        || getUsername().equals("Urszula") && pass.equals("urszula")
-        || getUsername().equals("Anna") && pass.equals("anna")
-        || getUsername().equals("Admin") && pass.equals("admin")
+        if (getUsername().equals("Admin") && pass.equals("admin")
         || getUsername().equals("1") && pass.equals("1")) {
 
 

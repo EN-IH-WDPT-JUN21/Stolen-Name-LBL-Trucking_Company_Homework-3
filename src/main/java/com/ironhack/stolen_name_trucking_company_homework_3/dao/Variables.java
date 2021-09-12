@@ -1,6 +1,7 @@
 package com.ironhack.stolen_name_trucking_company_homework_3.dao;
 
 import com.ironhack.stolen_name_trucking_company_homework_3.enums.ConsoleTextColors;
+import com.ironhack.stolen_name_trucking_company_homework_3.enums.ReportCommands;
 
 import java.util.List;
 import java.util.Scanner;
@@ -45,12 +46,6 @@ public interface Variables {
                                          colorMain + "║",
                                          colorTable + list.get(i)[1],
                                          colorMain + "║"));
-        //return printTableRow(list, i);
-    }
-
-    default void printLine(int noOfSigns) {
-
-        System.out.println();
     }
 
     // Adjusts number of characters printed for different usernames
@@ -61,4 +56,5 @@ public interface Variables {
         }
         return line;
     }
+
 }

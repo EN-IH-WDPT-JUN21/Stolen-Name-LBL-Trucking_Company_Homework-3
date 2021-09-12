@@ -37,6 +37,7 @@ public class Account {
     private String city;
     private String country;
 
+    @LazyCollection(LazyCollectionOption.FALSE)
     @OneToMany(mappedBy = "account")
     private List<Contact> contactList = new ArrayList<>();
 
@@ -91,19 +92,6 @@ public class Account {
 
     public void setCountry(String country) throws InvalidCountryException, EmptyStringException, ExceedsMaxLength {
 
-        /*List<String> countries = new ArrayList<>();
-
-        // retrieve the list of countries and populate country names
-        String[] isoCountries = Locale.getISOCountries();
-        for (String code : isoCountries) {
-            Locale locale = new Locale("en", code);
-            String name = locale.getDisplayCountry().toUpperCase(Locale.ROOT);
-
-            if (!"".equals(name)) {
-                countries.add(name);
-            }
-        }*/ //found that this is OS language specific and we want it to be uniform, hence a different method created
-
         if (country.isEmpty()) {
             throw new EmptyStringException("No country input. Please try again.");
         }
@@ -118,7 +106,7 @@ public class Account {
         this.country = country;
     }
 
-    public String getContactList() {
+    public String printContactList() {
         return String.format("%-1s %-15s %-1s %-48s %-1s %-25s %-1s %-45s %-1s %-48s %-1s\n",
                              colorMain + "║",
                              colorTable + contactList.get(0).getId(),
@@ -141,7 +129,7 @@ public class Account {
         contactList.add(contact);
     }
 
-    public String getOpportunityList() {
+    public String printOpportunityList() {
         System.out.println(colorMain + "\n╔════════════╦═════ " + colorMainBold + "New Opportunity created" + colorMain + " ════════════════╦═══════════════════════════╦═══════════════════════════╗" + reset);
         System.out.printf("%-1s %-17s %-1s %-24s %-1s %-24s %-1s %-24s %-1s %-50s %-1s\n",
                           colorMain + "║",

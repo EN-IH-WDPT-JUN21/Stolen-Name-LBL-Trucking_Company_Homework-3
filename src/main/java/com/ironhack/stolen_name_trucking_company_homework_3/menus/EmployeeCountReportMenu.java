@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.awt.*;
+import java.util.Scanner;
 
 @Component
 public class EmployeeCountReportMenu implements Variables {
@@ -45,6 +46,7 @@ public class EmployeeCountReportMenu implements Variables {
        + "║ 7. To quit " + colorHeadline + "- type: 'quit'" + colorMain + "                                                                                        ║\n"
        + "╚══════════════════════════════════════════════════════════════════════════════════════════════════════════════════╝\n" + reset);
 
+        Scanner scanner = new Scanner(System.in);
         try {
 
             // Creates String from scanner input
@@ -85,7 +87,7 @@ public class EmployeeCountReportMenu implements Variables {
 
         System.out.println(colorInput + "\nPress Enter to continue..." + reset);
         scanner.nextLine();
-        employeeCountReportMenu();
+//        employeeCountReportMenu();
     }
 
     public int getMedian(int[] intArray){

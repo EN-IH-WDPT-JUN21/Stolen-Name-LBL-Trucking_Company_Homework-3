@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.awt.*;
+import java.util.Scanner;
 
 @Component
 public class OpportunityReportMenu implements Variables {
@@ -34,17 +35,18 @@ public class OpportunityReportMenu implements Variables {
                                    "             ####################.###### ############ ###################### ############         \n" +
                                    "             ################ ####### # ############ #####################  ############          \n" + reset +
                                    colorMain + "╔══════════════════════════════════════════════════════════════════════════════════════════════════════════════════╗\n"
-                                   + "║                                                 " + colorTable + "OPPORTUNITY REPORTING MENU" + colorMain + "                                   ║\n"
+                                   + "║                                                 " + colorTable + "OPPORTUNITY REPORTING MENU" + colorMain + "                                       ║\n"
                                    + "╠══════════════════════════════════════════════════════════════════════════════════════════════════════════════════╣\n"
-                                   + "║ 1. Display MEAN number of Opportunities per Account" + colorHeadline + "- type: 'mean opps per account'" + colorMain + "                              ║\n"
-                                   + "║ 2. Display MEDIAN number of Opportunities per Account" + colorHeadline + "- type: 'median opps per account'" + colorMain + "                          ║\n"
-                                   + "║ 3. Display MAXIMUM number of Opportunities per Account" + colorHeadline + "- type: 'max opps per account'" + colorMain + "                            ║\n"
-                                   + "║ 4. Display MINIMUM number of Opportunities per Account" + colorHeadline + "- type: 'min opps per account'" + colorMain + "                            ║\n"
-                                   + "║ 5. To return to the Report menu " + colorHeadline + "- type: 'back'" + colorMain + "                                                                  ║\n"
-                                   + "║ 6. To return to the Main menu " + colorHeadline + "- type: 'main menu'" + colorMain + "                                                               ║\n"
-                                   + "║ 7. To quit " + colorHeadline + "- type: 'quit'" + colorMain + "                                                                                       ║\n"
+                                   + "║ 1. Display MEAN number of Opportunities per Account" + colorHeadline + "- type: 'mean opps per account'" + colorMain + "                               ║\n"
+                                   + "║ 2. Display MEDIAN number of Opportunities per Account" + colorHeadline + "- type: 'median opps per account'" + colorMain + "                           ║\n"
+                                   + "║ 3. Display MAXIMUM number of Opportunities per Account" + colorHeadline + "- type: 'max opps per account'" + colorMain + "                             ║\n"
+                                   + "║ 4. Display MINIMUM number of Opportunities per Account" + colorHeadline + "- type: 'min opps per account'" + colorMain + "                             ║\n"
+                                   + "║ 5. To return to the Report menu " + colorHeadline + "- type: 'back'" + colorMain + "                                                                   ║\n"
+                                   + "║ 6. To return to the Main menu " + colorHeadline + "- type: 'main menu'" + colorMain + "                                                                ║\n"
+                                   + "║ 7. To quit " + colorHeadline + "- type: 'quit'" + colorMain + "                                                                                        ║\n"
                                    + "╚══════════════════════════════════════════════════════════════════════════════════════════════════════════════════╝\n" + reset);
 
+        Scanner scanner = new Scanner(System.in);
         try {
 
             // Creates String from scanner input
@@ -83,7 +85,7 @@ public class OpportunityReportMenu implements Variables {
 
         System.out.println(colorInput + "\nPress Enter to continue..." + reset);
         scanner.nextLine();
-        opportunityReportMenu();
+//        opportunityReportMenu();
     }
 
     public int getMedian(int[] intArray){

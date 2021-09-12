@@ -1,6 +1,6 @@
 package com.ironhack.stolen_name_trucking_company_homework_3;
 
-import com.ironhack.stolen_name_trucking_company_homework_3.exceptions.NoSuchValueException;
+import com.ironhack.stolen_name_trucking_company_homework_3.exceptions.*;
 import com.ironhack.stolen_name_trucking_company_homework_3.menus.MainMenu;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
@@ -24,7 +24,7 @@ public class StolenNameTruckingCompanyHomework3Application implements CommandLin
 	}
 
 	@Override
-	public void run (String...args) throws NoSuchValueException, AWTException {
+	public void run (String...args) throws NoSuchValueException, AWTException, NameContainsNumbersException, EmptyStringException, InvalidCountryException, EmailNotValidException, ExceedsMaxLength, PhoneNumberContainsLettersException {
 		if (getIsLoggedIn() == 1) {
 			menu.OS();
 		} else if (getIsLoggedIn() == 2) {

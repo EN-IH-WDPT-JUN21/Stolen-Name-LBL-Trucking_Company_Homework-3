@@ -6,7 +6,6 @@ import com.ironhack.stolen_name_trucking_company_homework_3.enums.Industry;
 import com.ironhack.stolen_name_trucking_company_homework_3.enums.Status;
 import com.ironhack.stolen_name_trucking_company_homework_3.enums.Truck;
 import com.ironhack.stolen_name_trucking_company_homework_3.exceptions.*;
-import com.ironhack.stolen_name_trucking_company_homework_3.menus.MainMenu;
 import com.ironhack.stolen_name_trucking_company_homework_3.repository.*;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeAll;
@@ -15,17 +14,18 @@ import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.boot.test.context.TestComponent;
 import org.springframework.boot.test.mock.mockito.MockBean;
 
 
+import java.awt.*;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.InputStream;
 import java.io.PrintStream;
+import java.nio.charset.StandardCharsets;
+import java.util.Arrays;
 import java.util.List;
 import java.util.NoSuchElementException;
-import java.util.Optional;
 
 @SpringBootTest
 class MainMenuTest {
@@ -118,11 +118,12 @@ class MainMenuTest {
         contactRepository.deleteAll();
         salesRepRepository.deleteAll();
         accountRepository.deleteAll();
+
     }
 
     @Test
     void testNewLeadPositive() {
-        String data = "y\n Nathan \n 0028263 \n 122@gmail.com \n Santander "; // Used to simulate user input
+        String data = "y \n Nathan \n 0028263 \n 122@gmail.com \n Santander \n " + salesReps.get(0).getId() + "\n"; // Used to simulate user input
         InputStream stdin = System.in; // Used to store default System.in
         try {
             System.setIn(new ByteArrayInputStream(data.getBytes())); // Sets System.In to test
@@ -147,7 +148,7 @@ class MainMenuTest {
     @Test
     void testConvertLeadPositive() throws NameContainsNumbersException, EmptyStringException, EmailNotValidException, ExceedsMaxLength, PhoneNumberContainsLettersException {
 
-        String data = "y \n box \n 20 \n \n \n";
+        String data = "y \n box \n 20 \n \n \n y \n \n \n \n";
         InputStream stdin = System.in; // Used to store default System.in
 
         try {
@@ -169,8 +170,8 @@ class MainMenuTest {
 
 
     @Test
-    void TestCreateAccountPositive() throws NameContainsNumbersException, EmptyStringException, EmailNotValidException, PhoneNumberContainsLettersException, ExceedsMaxLength {
-        String data = "Produce\n 200 \n Stourbridge \n SPAIN\n \n \n \n"; // Used to simulate user input
+    void createAccount_PositiveTest() throws NameContainsNumbersException, EmptyStringException, EmailNotValidException, PhoneNumberContainsLettersException, ExceedsMaxLength {
+        String data = "y \n Produce\n 200 \n Stourbridge \n SPAIN\n \n \n \n"; // Used to simulate user input
         InputStream stdin = System.in; // Used to store default System.in
 
         try {
@@ -184,25 +185,33 @@ class MainMenuTest {
         }
     }
 
-    //
-//
-//    @Test
-//    void TestQuitWorksInOS() {
-//        String data = "\n quit"; // Used to simulate user input
-//        InputStream stdin = System.in; // Used to store default System.in
-//        try {
-//            System.setIn(new ByteArrayInputStream(data.getBytes())); // Sets System.In to test1
-//
-//            assertThrows(RuntimeException.class, test::OS);
-//        }finally {
-//            System.setIn(stdin); /// Resets System.in to default state
-//        }
-//    }
-//
     @Test
-    void lookUpLeadId_FindLead() {
-        assertEquals("Lee Dawson", leadRepository.findById(leads.get(1).getId()).get().getName());
+    void createAccount_AddToExistingAccountTest() throws NameContainsNumbersException, EmptyStringException, EmailNotValidException, PhoneNumberContainsLettersException, ExceedsMaxLength {
+        String data = "n \n" + accounts.get(0).getId() +"\n"; // Used to simulate user input
+        InputStream stdin = System.in; // Used to store default System.in
+        SalesRep testRep = new SalesRep("Test Rep");
+        salesRepRepository.save(testRep);
+        Contact testContact = new Contact("Test Contact", "98765432", "test@contact.co.uk", "Test Company", testRep);
+        contactRepository.save(testContact);
+        Opportunity testOpp = new Opportunity(Truck.HYBRID, 50, contactRepository.findById(testContact.getId()).get(),
+                salesRepRepository.findById(testRep.getId()).get());
+        opportunityRepository.save(testOpp);
+
+        try {
+            System.setIn(new ByteArrayInputStream(data.getBytes())); // Sets System.In to test1
+            var oppSizeBefore = accountRepository.findById(accounts.get(0).getId()).get().getOpportunityList().size();
+
+            Account existingAccount = test.createAccount(testOpp);
+
+            var oppSizeAfter = accountRepository.findById(accounts.get(0).getId()).get().getOpportunityList().size();
+
+            assertEquals(existingAccount, testOpp.getAccount());
+            assertEquals(oppSizeAfter, oppSizeBefore + 1);
+        } finally {
+            System.setIn(stdin); /// Resets System.in to default state
+        }
     }
+
 
 
     @Test
@@ -211,21 +220,9 @@ class MainMenuTest {
         System.setOut(new PrintStream(outContent));
 
         test.showSalesReps();
-        if (os.contains("win")) {
-            expectedOutput = colorMain + "\n╔════════════╦═══ " + colorMainBold + "Total Number Of Sales Representatives: 2" + colorMain + " ╗" +
-                    reset + "\r\n" + colorMain + "║ " + colorHeadlineBold + "ID         " + colorMain + "║ " + colorHeadlineBold + "Name                                        " + colorMain + "║" +
-                    "\n" + colorMain + "╠════════════╬═════════════════════════════════════════════╣" +
-                    reset + "\n" + colorMain + "║ " + colorTable + salesReps.get(0).getId()+"          " + colorMain + "║ " + colorTable + "DAVID LYNCH                                 " + colorMain + "║" +
-                    reset + "\n" + colorMain + "║ " + colorTable + salesReps.get(1).getId()+"         " + colorMain + "║ " + colorTable + "MARTHA STEWART                              " + colorMain + "║" + reset + "\n";
-        } else {
-            expectedOutput = colorMain + "\n╔════════════╦═══ " + colorMainBold + "Total Number Of Sales Representatives: 2" + colorMain + " ╗" +
-                    reset + "\n" + colorMain + "║ " + colorHeadlineBold + "ID         " + colorMain + "║ " + colorHeadlineBold + "Name                                        " + colorMain + "║" +
-                    "\n" + colorMain + "╠════════════╬═════════════════════════════════════════════╣" +
-                    reset + "\n" + colorMain + "║ " + colorTable + salesReps.get(0).getId()+"          " + colorMain + "║ " + colorTable + "DAVID LYNCH                                 " + colorMain + "║" +
-                    reset + "\n" + colorMain + "║ " + colorTable + salesReps.get(1).getId()+"         " + colorMain + "║ " + colorTable + "MARTHA STEWART                              " + colorMain + "║" + reset + "\n";
-        }
 
-        assertEquals(expectedOutput, outContent.toString());
+        assertTrue(outContent.toString().contains("DAVID LYNCH"));
+        assertTrue(outContent.toString().contains("Total Number Of Sales Representatives:"));
     }
 
 
@@ -239,24 +236,8 @@ class MainMenuTest {
         test.showLeads();
 
         //Now we have to validate the output. It has to exactly mimic the output we created.
-        //We also noticed it works slightly differently for Windows compared to other operating systems
-        if (os.contains("win")) {
-            expectedOutput = colorMain + "\n╔════════════╦═══ " + colorMainBold + "Total Number Of Leads: 3" + colorMain + " ════════════════╗" +
-                    reset + "\r\n" + colorMain + "║ " + colorHeadlineBold + "ID         " + colorMain + "║ " + colorHeadlineBold + "Name                                        " + colorMain + "║" +
-                    "\n" + colorMain + "╠════════════╬═════════════════════════════════════════════╣" +
-                    reset + "\n" + colorMain + "║ " + colorTable + leads.get(0).getId()+"          " + colorMain + "║ " + colorTable + "SEBASTIAN MAREK LABEDZ                      " + colorMain + "║" +
-                    reset + "\n" + colorMain + "║ " + colorTable + leads.get(1).getId()+"          " + colorMain + "║ " + colorTable + "LEE DAWSON                                  " + colorMain + "║" +
-                    reset + "\n" + colorMain + "║ " + colorTable + leads.get(2).getId()+"          " + colorMain + "║ " + colorTable + "NATALIA SHILYAEVA                           " + colorMain + "║" + reset + "\n";
-        } else {
-            expectedOutput = colorMain + "\n╔════════════╦═══ " + colorMainBold + "Total Number Of Leads: 3" + colorMain + " ════════════════╗" +
-                    reset + "\n" + colorMain + "║ " + colorHeadlineBold + "ID         " + colorMain + "║ " + colorHeadlineBold + "Name                                        " + colorMain + "║" +
-                    "\n" + colorMain + "╠════════════╬═════════════════════════════════════════════╣" +
-                    reset + "\n" + colorMain + "║ " + colorTable + leads.get(0).getId()+"          " + colorMain + "║ " + colorTable + "SEBASTIAN MAREK LABEDZ                      " + colorMain + "║" +
-                    reset + "\n" + colorMain + "║ " + colorTable + leads.get(1).getId()+"          " + colorMain + "║ " + colorTable + "LEE DAWSON                                  " + colorMain + "║" +
-                    reset + "\n" + colorMain + "║ " + colorTable + leads.get(2).getId()+"          " + colorMain + "║ " + colorTable + "NATALIA SHILYAEVA                           " + colorMain + "║" + reset + "\n";
-        }
-
-        assertEquals(expectedOutput, outContent.toString());
+        assertTrue(outContent.toString().contains("LEE DAWSON"));
+        assertTrue(outContent.toString().contains("Total Number Of Leads"));
     }
 
 
@@ -269,23 +250,8 @@ class MainMenuTest {
         test.showContacts();
 
         //Now we have to validate the output. It has to exactly mimic the output we created.
-        if (os.contains("win")) {
-            expectedOutput = colorMain + "\n╔════════════╦════════ " + colorMainBold + "Total Number Of Contacts: 3" + colorMain + " ════════╦══════════════════════════════════════════╗" +
-                    reset + "\r\n" + colorMain + "║ " + colorHeadlineBold + "ID         " + colorMain + "║ " + colorHeadlineBold + "Name                                        " + colorMain + "║ " + colorHeadlineBold + "Company name                             " + colorMain + "║" +
-                    "\n" + colorMain + "╠════════════╬═════════════════════════════════════════════╬══════════════════════════════════════════╣" +
-                    reset + "\n" + colorMain + "║ " + colorTable + contacts.get(0).getId()+"          " + colorMain + "║ " + colorTable + "JOHN DOE                                    " + colorMain + "║ " + colorTable + "KAŁASZNIKOW                              " + colorMain + "║" +
-                    reset + "\n" + colorMain + "║ " + colorTable + contacts.get(1).getId()+"          " + colorMain + "║ " + colorTable + "MARTHA STEWARD                              " + colorMain + "║ " + colorTable + "MY OWN COMPANY                           " + colorMain + "║" +
-                    reset + "\n" + colorMain + "║ " + colorTable + contacts.get(2).getId()+"          " + colorMain + "║ " + colorTable + "GEORGE TRUMAN                               " + colorMain + "║ " + colorTable + "TRUMAN SHOW                              " + colorMain + "║" + reset + "\n";
-        } else {
-            expectedOutput = colorMain + "\n╔════════════╦════════ " + colorMainBold + "Total Number Of Contacts: 3" + colorMain + " ════════╦══════════════════════════════════════════╗" +
-                    reset + "\n" + colorMain + "║ " + colorHeadlineBold + "ID         " + colorMain + "║ " + colorHeadlineBold + "Name                                        " + colorMain + "║ " + colorHeadlineBold + "Company name                             " + colorMain + "║" +
-                    "\n" + colorMain + "╠════════════╬═════════════════════════════════════════════╬══════════════════════════════════════════╣" +
-                    reset + "\n" + colorMain + "║ " + colorTable + contacts.get(0).getId()+"          " + colorMain + "║ " + colorTable + "JOHN DOE                                    " + colorMain + "║ " + colorTable + "KAŁASZNIKOW                              " + colorMain + "║" +
-                    reset + "\n" + colorMain + "║ " + colorTable + contacts.get(1).getId()+"          " + colorMain + "║ " + colorTable + "MARTHA STEWARD                              " + colorMain + "║ " + colorTable + "MY OWN COMPANY                           " + colorMain + "║" +
-                    reset + "\n" + colorMain + "║ " + colorTable + contacts.get(2).getId()+"          " + colorMain + "║ " + colorTable + "GEORGE TRUMAN                               " + colorMain + "║ " + colorTable + "TRUMAN SHOW                              " + colorMain + "║" + reset + "\n";
-        }
-
-        assertEquals(expectedOutput, outContent.toString());
+        assertTrue(outContent.toString().contains("JOHN DOE"));
+        assertTrue(outContent.toString().contains("Total Number Of Contacts"));
     }
 
     //
@@ -308,20 +274,8 @@ class MainMenuTest {
         test.showOpportunities();
 
         //Now we have to validate the output. It has to exactly mimic the output we created.
-        if (os.contains("win")) {
-            expectedOutput = colorMain + "\n╔════════════╦═════ " + colorMainBold + "Total Number Of Opportunities: 1" + colorMain + " ══════╦══════════════════════════════════════════╗" +
-                    reset + "\r\n" + colorMain + "║ " + colorHeadlineBold + "ID         " + colorMain + "║ " + colorHeadlineBold + "Contract status   " + colorMain + "║ " + colorHeadlineBold + "Product    " + colorMain + "║ " + colorHeadlineBold + "Quantity   " + colorMain + "║ " + colorHeadlineBold + "Decision maker                           " + colorMain + "║" +
-                    "\n" + colorMain + "╠════════════╬═══════════════════╬════════════╬════════════╬══════════════════════════════════════════╣" +
-                    reset + "\n" + colorMain + "║ " + colorTable + newOpp.getId()+"         " + colorMain + "║ " + colorTable + "OPEN              " + colorMain + "║ " + colorTable + "HYBRID     " + colorMain + "║ " + colorTable + "30         " + colorMain + "║ " + colorTable + "TESTCONTACT                              " + colorMain + "║" + reset + "\n";
-        } else {
-            expectedOutput = colorMain + "\n╔════════════╦═════ " + colorMainBold + "Total Number Of Opportunities: 1" + colorMain + " ══════╦══════════════════════════════════════════╗" +
-                    reset + "\n" + colorMain + "║ " + colorHeadlineBold + "ID         " + colorMain + "║ " + colorHeadlineBold + "Contract status   " + colorMain + "║ " + colorHeadlineBold + "Product    " + colorMain + "║ " + colorHeadlineBold + "Quantity   " + colorMain + "║ " + colorHeadlineBold + "Decision maker                           " + colorMain + "║" +
-                    "\n" + colorMain + "╠════════════╬═══════════════════╬════════════╬════════════╬══════════════════════════════════════════╣" +
-                    reset + "\n" + colorMain + "║ " + colorTable + newOpp.getId()+"         " + colorMain + "║ " + colorTable + "OPEN              " + colorMain + "║ " + colorTable + "HYBRID     " + colorMain + "║ " + colorTable + "30         " + colorMain + "║ " + colorTable + "TESTCONTACT                              " + colorMain + "║" + reset + "\n";
-        }
-
-        assertEquals(expectedOutput, outContent.toString());
-
+        assertTrue(outContent.toString().contains("HYBRID"));
+        assertTrue(outContent.toString().contains("Total Number Of Opportunities"));
     }
 
     @Test
@@ -351,21 +305,47 @@ class MainMenuTest {
         test.showAccounts();
 
         //Now we have to validate the output. It has to exactly mimic the output we created.
-        if(os.contains("win")){
-            expectedOutput  = colorMain + "\n╔════════════╦═══ " + colorMainBold + "Total Number Of Accounts: 1" + colorMain+ " ═════════════╗"  +
-                    reset + "\r\n" + colorMain + "║ " + colorHeadlineBold + "ID         " + colorMain + "║ " + colorHeadlineBold+"Company name                                " + colorMain +"║" +
-                    "\n" + colorMain + "╠════════════╬═════════════════════════════════════════════╣" +
-                    reset + "\n" + colorMain + "║ " + colorTable + testAcc.getId()+"         " + colorMain+ "║ " + colorTable + "TESTCOMPANY                                 "+ colorMain + "║" + reset + "\n";
-        } else {
-            expectedOutput  = colorMain + "\n╔════════════╦═══ " + colorMainBold + "Total Number Of Accounts: 1" + colorMain+ " ═════════════╗"  +
-                    reset + "\n" + colorMain + "║ " + colorHeadlineBold + "ID         " + colorMain + "║ " + colorHeadlineBold+"Company name                                " + colorMain +"║" +
-                    "\n" + colorMain + "╠════════════╬═════════════════════════════════════════════╣" +
-                    reset + "\n" + colorMain + "║ " + colorTable + testAcc.getId()+"         " + colorMain+ "║ " + colorTable + "TESTCOMPANY                                 "+ colorMain + "║" + reset + "\n";
-        }
-
-        assertEquals(expectedOutput, outContent.toString());
+        assertTrue(outContent.toString().contains("TESTCOMPANY"));
+        assertTrue(outContent.toString().contains("Total Number Of Accounts"));
     }
 
+    @Test
+    void lookUpLeadId_FindLead() throws NameContainsNumbersException, EmptyStringException, EmailNotValidException, ExceedsMaxLength, PhoneNumberContainsLettersException {
+        SalesRep testRep = new SalesRep("Test Rep");
+        salesRepRepository.save(testRep);
+        Lead testLead = new Lead("Test Lead","123456789", "test@testlead.com", "Test Company", testRep);
+        leadRepository.save(testLead);
+
+        ByteArrayOutputStream outContent = new ByteArrayOutputStream();
+        System.setOut(new PrintStream(outContent));
+
+        test.lookUpLeadId(testLead.getId());
+
+        assertTrue(outContent.toString().contains("TEST LEAD"));
+        assertTrue(outContent.toString().contains("Lead details"));
+    }
+
+    @Test
+    void lookUpOppId_FindOpp() throws ExceedsMaxLength {
+        Contact testContact = new Contact("TESTCONTACT", "1234567", "EMAIL@EMAIL.COM", "TESTCOMPANY");
+        contactRepository.save(testContact);
+        Opportunity testOpp = new Opportunity(Truck.HYBRID, 30, testContact);
+        opportunityRepository.save(testOpp);
+        Account testAcc = new Account(testContact, testOpp);
+        accountRepository.save(testAcc);
+        testOpp.getDecisionMaker().setAccount(testAcc);
+        contactRepository.save(testOpp.getDecisionMaker());
+        accountRepository.save(testAcc);
+
+        ByteArrayOutputStream outContent = new ByteArrayOutputStream();
+        System.setOut(new PrintStream(outContent));
+
+        test.lookUpOppId(String.valueOf(testOpp.getId()));
+
+        assertTrue(outContent.toString().contains("HYBRID"));
+        assertTrue(outContent.toString().contains("Contract details"));
+        assertTrue(outContent.toString().contains("Decision maker details"));
+    }
 
 
     @Test
@@ -414,4 +394,5 @@ class MainMenuTest {
             System.setIn(stdin); /// Resets System.in to default state
         }
     }
+
 }

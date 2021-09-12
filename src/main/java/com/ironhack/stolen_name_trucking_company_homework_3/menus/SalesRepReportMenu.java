@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.awt.*;
+import java.util.Scanner;
 
 @Component
 public class SalesRepReportMenu implements Variables {
@@ -24,6 +25,8 @@ public class SalesRepReportMenu implements Variables {
 
     @Autowired
     MainMenu mainMenu;
+
+    Scanner scanner = new Scanner(System.in);
 
     public void salesRepReportMenu() throws NoSuchValueException, AWTException {
 
@@ -49,7 +52,7 @@ public class SalesRepReportMenu implements Variables {
                                    + "║ 7. To return to the Main menu " + colorHeadline + "- type: 'main menu'" + colorMain + "                                                                ║\n"
                                    + "║ 8. To quit " + colorHeadline + "- type: 'quit'" + colorMain + "                                                                                        ║\n"
                                    + "╚══════════════════════════════════════════════════════════════════════════════════════════════════════════════════╝\n" + reset);
-
+        Scanner scanner = new Scanner(System.in);
         try {
 
             // Creates String from scanner input
@@ -131,7 +134,7 @@ public class SalesRepReportMenu implements Variables {
 
         System.out.println(colorInput + "\nPress Enter to continue..." + reset);
         scanner.nextLine();
-        salesRepReportMenu();
+//        salesRepReportMenu();
     }
 
 }

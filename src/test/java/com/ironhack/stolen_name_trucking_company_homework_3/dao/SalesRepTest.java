@@ -12,8 +12,8 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class SalesRepTest {
 
-    SalesRep sr1;
-    Lead lead1;
+    private SalesRep sr1;
+    private Lead lead1;
 
     @BeforeEach
     void setUp() throws NameContainsNumbersException, EmptyStringException, EmailNotValidException, ExceedsMaxLength, PhoneNumberContainsLettersException, IdContainsLettersException {

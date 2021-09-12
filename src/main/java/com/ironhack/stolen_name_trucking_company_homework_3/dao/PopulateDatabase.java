@@ -4,23 +4,17 @@ import com.ironhack.stolen_name_trucking_company_homework_3.enums.Industry;
 import com.ironhack.stolen_name_trucking_company_homework_3.enums.Truck;
 import com.ironhack.stolen_name_trucking_company_homework_3.exceptions.*;
 import com.ironhack.stolen_name_trucking_company_homework_3.repository.*;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.CommandLineRunner;
-import org.springframework.boot.SpringApplication;
-import org.springframework.context.annotation.Bean;
-import org.springframework.stereotype.Component;
-import org.springframework.stereotype.Service;
 
 import java.util.List;
 
 public class PopulateDatabase{
 
     public static void populateDatabase(LeadRepository leadRepository,
-                            SalesRepRepository salesRepRepository,
-                            ContactRepository contactRepository,
-                            OpportunityRepository opportunityRepository,
-                            AccountRepository accountRepository)
-            throws NameContainsNumbersException, EmptyStringException, EmailNotValidException, ExceedsMaxLength, PhoneNumberContainsLettersException, InvalidCountryException, IdContainsLettersException {
+                                        SalesRepRepository salesRepRepository,
+                                        ContactRepository contactRepository,
+                                        OpportunityRepository opportunityRepository,
+                                        AccountRepository accountRepository)
+            throws NameContainsNumbersException, EmptyStringException, EmailNotValidException, ExceedsMaxLength, PhoneNumberContainsLettersException, InvalidCountryException {
 
         List<SalesRep> salesReps = salesRepRepository.saveAll(List.of(
                 new SalesRep("David Lynch"),
@@ -69,10 +63,10 @@ public class PopulateDatabase{
     }
 
     public static void clearDatabase(LeadRepository leadRepository,
-                              SalesRepRepository salesRepRepository,
-                              ContactRepository contactRepository,
-                              OpportunityRepository opportunityRepository,
-                              AccountRepository accountRepository) {
+                                     SalesRepRepository salesRepRepository,
+                                     ContactRepository contactRepository,
+                                     OpportunityRepository opportunityRepository,
+                                     AccountRepository accountRepository) {
         leadRepository.deleteAll();
         opportunityRepository.deleteAll();
         contactRepository.deleteAll();

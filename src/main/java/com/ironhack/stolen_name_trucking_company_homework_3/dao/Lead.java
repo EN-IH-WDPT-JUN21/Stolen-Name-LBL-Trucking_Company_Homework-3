@@ -49,7 +49,7 @@ public class Lead {
     }
 
     //New Reporting constructor for testing purposes, to replace existing constructor above later
-    public Lead(String name, String phoneNumber, String email, String companyName, SalesRep salesRep) throws NameContainsNumbersException, EmptyStringException, PhoneNumberContainsLettersException, EmailNotValidException, ExceedsMaxLength, IdContainsLettersException {
+    public Lead(String name, String phoneNumber, String email, String companyName, SalesRep salesRep) throws NameContainsNumbersException, EmptyStringException, PhoneNumberContainsLettersException, EmailNotValidException, ExceedsMaxLength {
         setName(name);
         setPhoneNumber(phoneNumber);
         setEmail(email);
@@ -115,22 +115,12 @@ public class Lead {
 
         this.companyName = companyName;
     }
-
-    public void setSalesRep(SalesRep salesRep) throws EmptyStringException, IdContainsLettersException, ExceedsMaxLength {
-
-        if (salesRep != null) {
-            throw new EmptyStringException("No Sales Representative input. Please try again.");
-        }
-        else if(!salesRep.getId().toString().matches("[0-9]+")) {
-            throw new IdContainsLettersException("Please put a valid id. Please try again.");
-        } else if(phoneNumber.length()>10) {
-            throw new ExceedsMaxLength("Exceeds maximum value of 10 characters. Please try again.");
-        }
+    public void setSalesRep(SalesRep salesRep){
         this.salesRep = salesRep;
     }
 
     public String toString() {
-        System.out.printf(String.format("%-1s %-17s %-1s %-50s %-1s %-27s %-1s %-47s %-1s %-50s %-1s %-17s %-1s\n",
+        System.out.printf(String.format("%-1s %-17s %-1s %-50s %-1s %-27s %-1s %-47s %-1s %-50s %-1s \n",
                                         colorMain + "║",
                                         colorHeadlineBold + "ID",
                                         colorMain + "║",
@@ -141,12 +131,10 @@ public class Lead {
                                         colorHeadlineBold + "Email Address",
                                         colorMain + "║",
                                         colorHeadlineBold + "Company Name",
-                                        colorMain + "║" +
-                                        colorHeadlineBold + "SalesRep ID",
-                                        colorMain + "║\n",
-                                        colorMain + "╠════════════╬═════════════════════════════════════════════╬══════════════════════╬══════════════════════════════════════════╬═════════════════════════════════════════════╬════════════╬"
+                                        colorMain + "║\n" +
+                                        colorMain + "╠════════════╬═════════════════════════════════════════════╬══════════════════════╬══════════════════════════════════════════╬═════════════════════════════════════════════╣"
                                         + reset));
-        return  String.format("%-1s %-15s %-1s %-48s %-1s %-25s %-1s %-45s %-1s %-48s %-1s %-15s %-1s\n",
+        return  String.format("%-1s %-15s %-1s %-48s %-1s %-25s %-1s %-45s %-1s %-48s %-1s\n",
                               colorMain + "║",
                               colorTable + getId(),
                               colorMain + "║",
