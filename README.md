@@ -61,8 +61,8 @@ How to
 
 You will need to run the CRM from ***Main***.
 
-Firstly, you will need to log on. If you want to have full functionality, use ***1*** as username and ***1*** as password.
-Alternatively, if you just want to have a little nosey, you can use username ***2*** and password ***2***. 
+Firstly, you will need to log on. If you want to have full functionality, use ***Admin*** as username and ***admin*** as password.
+Alternatively, if you just want to have a little nosey, you can use username ***Guest*** and password ***guest***. 
 The *guest* access will allow you to view the information stored but won't allow you to change anything. We don't want random curiosity mess up our CRM :P
 
 Please, pay attention dual screen users! The login window tends to pop up in the second screen...

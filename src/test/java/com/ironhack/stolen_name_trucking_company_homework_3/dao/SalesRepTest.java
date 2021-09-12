@@ -16,13 +16,13 @@ class SalesRepTest {
     private Lead lead1;
 
     @BeforeEach
-    void setUp() throws NameContainsNumbersException, EmptyStringException, EmailNotValidException, ExceedsMaxLength, PhoneNumberContainsLettersException {
+    void setUp() throws NameContainsNumbersException, EmptyStringException, EmailNotValidException, ExceedsMaxLength, PhoneNumberContainsLettersException, IdContainsLettersException {
         sr1 = new SalesRep(1L, "Sales Rep Name", new ArrayList<>(), new ArrayList<>());
-        lead1 = new Lead("TestOne", "123546", "test1@test.gmail.com", "TestCompany1");
+        lead1 = new Lead("TestOne", "123546", "test1@test.gmail.com", "TestCompany1", sr1);
     }
 
     @AfterEach
-    void tearDown() {
+    void tearDown() throws EmptyStringException, ExceedsMaxLength, IdContainsLettersException {
         sr1.removeLead(lead1);
     }
 
@@ -49,7 +49,7 @@ class SalesRepTest {
     }
 
    @Test
-    void addLead_shouldWork()  {
+    void addLead_shouldWork() throws EmptyStringException, ExceedsMaxLength, IdContainsLettersException {
         int arraySizeBefore = sr1.getLeadList().size();
         sr1.addLead(lead1);
         int arraySizeAfter=sr1.getLeadList().size();
@@ -57,7 +57,7 @@ class SalesRepTest {
     }
 
    @Test
-    void removeLead_shouldWork_ArrayNotEmpty()  {
+    void removeLead_shouldWork_ArrayNotEmpty() throws EmptyStringException, ExceedsMaxLength, IdContainsLettersException {
         sr1.addLead(lead1);
         int arraySizeBefore = sr1.getLeadList().size();
         sr1.removeLead(lead1);
@@ -66,7 +66,7 @@ class SalesRepTest {
     }
 
     @Test
-    void removeLead_shouldWork_ArrayEmpty()   {
+    void removeLead_shouldWork_ArrayEmpty() throws EmptyStringException, ExceedsMaxLength, IdContainsLettersException {
         assertEquals(0,sr1.getLeadList().size());
         sr1.removeLead(lead1);
         int arraySizeAfter=sr1.getLeadList().size();

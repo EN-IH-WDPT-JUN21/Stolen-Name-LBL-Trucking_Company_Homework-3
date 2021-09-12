@@ -8,6 +8,7 @@ import com.ironhack.stolen_name_trucking_company_homework_3.enums.Truck;
 import com.ironhack.stolen_name_trucking_company_homework_3.exceptions.*;
 import com.ironhack.stolen_name_trucking_company_homework_3.repository.*;
 import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
@@ -62,7 +63,7 @@ class MainMenuTest {
 
 
     @BeforeEach
-    void setUp() throws NameContainsNumbersException, EmptyStringException, EmailNotValidException, PhoneNumberContainsLettersException, ExceedsMaxLength, InvalidCountryException {
+    void setUp() throws NameContainsNumbersException, EmptyStringException, EmailNotValidException, PhoneNumberContainsLettersException, ExceedsMaxLength, InvalidCountryException, IdContainsLettersException {
 
         salesReps = salesRepRepository.saveAll(List.of(
                 new SalesRep("David Lynch"),
@@ -350,7 +351,7 @@ class MainMenuTest {
     @Test
     void closeLost() throws NameContainsNumbersException, EmptyStringException, EmailNotValidException, PhoneNumberContainsLettersException, ExceedsMaxLength {
 
-        String data = "y";
+        String data = "y \n";
         InputStream stdin = System.in;
 
         try {

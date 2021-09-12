@@ -145,6 +145,8 @@ public class Lead {
                               colorTable + getEmail().toUpperCase(),
                               colorMain + "║",
                               colorTable + getCompanyName().toUpperCase(),
+                              colorMain + "║",
+                              colorTable + getSalesRep().getId().toString(),
                               colorMain + "║"+ reset);
     }
 }

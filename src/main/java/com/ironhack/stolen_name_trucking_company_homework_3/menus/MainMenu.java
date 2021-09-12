@@ -34,7 +34,8 @@ public class MainMenu implements Variables {
     public MainMenu() {
     }
 
-    private static boolean wasRun = false;
+    private static boolean wasRunFocus = false;
+    private static boolean wasRunPopulate = false;
     private static boolean valid;
 
 
@@ -88,16 +89,6 @@ public class MainMenu implements Variables {
                 PopulateDatabase.populateDatabase(leadRepository, salesRepRepository, contactRepository, opportunityRepository, accountRepository);
             } else if (input[0].equals("clear")) {
                 PopulateDatabase.clearDatabase(leadRepository, salesRepRepository, contactRepository, opportunityRepository, accountRepository);
-            /*}else if(input[0].equals("rep")) {
-                var leadByRep = leadRepository.findCountLeadByRepName();
-                if(leadByRep.isEmpty()){
-                    System.out.println("\nThere are no entries matching reporting criteria");
-                } else {
-                    System.out.println(printCountReport("Lead"));
-                    for (int i = 0; i < leadByRep.size(); i++) {
-                        printTableRow(leadByRep, i);
-                    }
-                }*/
             } else if (input.length < 2) {
                 throw new IllegalArgumentException();
             } else if (input[0].equals("lookup") && input[1].equals("lead") && input.length > 2) {
@@ -243,7 +234,7 @@ public class MainMenu implements Variables {
 
                     //theLeads.put(newLead.getId(), newLead);
                     System.out.println(colorMain + "\n╔════════════╦═════ " + colorMainBold + "New Lead created" + colorMain + " ══════════════════════╦══════════════════════╦══════════════════════════════════════════╦═════════════════════════════════════════════╗" + reset);
-                    System.out.println(newLead.toString());
+                    System.out.println(newLead);
                     leadRepository.save(newLead);
                     return newLead;
                 }
@@ -711,9 +702,16 @@ public class MainMenu implements Variables {
 
     // Makes sure that method consoleFocus is run only once during the program runtime
     public void consoleFocusRunOnce() throws AWTException {
-        if (!wasRun) {
-            wasRun = true;
+        if (!wasRunFocus) {
+            wasRunFocus = true;
             consoleFocus();
+        }
+    }
+
+    public void populateDatabaseRunOnce() throws NameContainsNumbersException, EmptyStringException, InvalidCountryException, EmailNotValidException, ExceedsMaxLength, PhoneNumberContainsLettersException {
+        if (!wasRunPopulate) {
+            wasRunPopulate = true;
+            PopulateDatabase.populateDatabase(leadRepository, salesRepRepository, contactRepository, opportunityRepository, accountRepository);
         }
     }
 
@@ -742,6 +740,18 @@ public class MainMenu implements Variables {
                     valid = false;
                     salesRepRepository.save(newSalesRep);
                     System.out.println(colorMain + "\n╔════════════╦═══ " + colorMainBold + "New Sales Representative created" + colorMain + " ════════╗" + reset);
+                    System.out.printf("%-1s %-17s %-1s %-50s %-1s\n",
+                                      colorMain + "║",
+                                      colorHeadlineBold + "ID",
+                                      colorMain + "║",
+                                      colorHeadlineBold + "Name",
+                                      colorMain + "║");
+                    System.out.printf("%-1s%-12s%-1s%-45s%-1s\n",
+                                      colorMain + "╠",
+                                      "════════════",
+                                      "╬",
+                                      "═════════════════════════════════════════════",
+                                      "╣" + reset);
                     System.out.printf("%-1s %-17s %-1s %-50s %-1s\n",
                             colorMain + "║",
                             colorTable + newSalesRep.getId(),
@@ -788,7 +798,7 @@ public class MainMenu implements Variables {
         }
     }
 
-    public void OSGuest() throws RuntimeException, AWTException {
+    public void OSGuest() throws RuntimeException, AWTException, NameContainsNumbersException, EmptyStringException, InvalidCountryException, EmailNotValidException, ExceedsMaxLength, PhoneNumberContainsLettersException {
 
         System.out.println("\n" + colorHeadline + colorLogo
                 + "                                                                                                \n" +
@@ -803,7 +813,7 @@ public class MainMenu implements Variables {
                 colorHeadline + colorMain + "╔═══════════════════════════════════════════════════════════════════════════════════════════════════╗\n"
                 + "║                                " + colorTable + "WELCOME TO LBL CRM SYSTEM" + colorMain + "                                          ║\n"
                 + "╠═══════════════════════════════════════════════════════════════════════════════════════════════════╣\n"
-                + String.format("%-1s %-73s %-1s", colorTable + "WHAT WOULD YOU LIKE TO DO " + Login.getUsername().toUpperCase() + "?", colorMain + /*insertLine(68) +*/ "║\n")
+                + String.format("%-1s %-104s %-1s", "║", colorTable + "WHAT WOULD YOU LIKE TO DO " + Login.getUsername().toUpperCase() + "?", colorMain + /*insertLine(68) +*/ "║\n")
                 + "╠═══════════════════════════════════════════════════════════════════════════════════════════════════╣\n"
                 + "║ 1.  To check Leads list " + colorHeadline + "- type: 'show leads'" + colorMain + "                                                      ║\n"
                 + "║ 2.  To check individual Lead's details " + colorHeadline + "- type: 'lookup lead ' + Lead Id" + colorMain + "                           ║\n"
@@ -811,10 +821,12 @@ public class MainMenu implements Variables {
                 + "║ 4.  To check individual Opportunity's details " + colorHeadline + "- type: 'lookup opportunity ' + Opportunity Id" + colorMain + "      ║\n"
                 + "║ 5.  To check Contact list " + colorHeadline + "- type: 'show contacts'" + colorMain + "                                                 ║\n"
                 + "║ 6.  To check Account list " + colorHeadline + "- type: 'show accounts'" + colorMain + "                                                 ║\n"
-                + "║ 7.  To quit " + colorHeadline + "- type: 'quit'" + colorMain + "                                                                        ║\n"
+                + "║ 7.  To check Sales Representatives list " + colorHeadline + "- type: 'show salesreps'" + colorMain + "                                  ║\n"
+                + "║ 8.  To quit " + colorHeadline + "- type: 'quit'" + colorMain + "                                                                        ║\n"
                 + "╚═══════════════════════════════════════════════════════════════════════════════════════════════════╝\n" + reset);
 
         consoleFocusRunOnce();
+        populateDatabaseRunOnce();
 
         try {
 
@@ -826,10 +838,8 @@ public class MainMenu implements Variables {
                 System.out.println(colorError + "Exiting the program" + reset);
                 System.exit(0);
             } else if (input[0].equals("lookup") && input[1].equals("lead")) {
-                //System.out.println(lookUpLeadId(input[2]));
                 lookUpLeadId(Long.parseLong(input[2]));
             } else if (input[0].equals("lookup") && input[1].equals("opportunity")) {
-                //System.out.println(lookUpOppId(input[2]));
                 lookUpOppId(input[2]);
             } else {
 
@@ -839,6 +849,7 @@ public class MainMenu implements Variables {
                     case "show" + "opportunities" -> showOpportunities();
                     case "show" + "contacts" -> showContacts();
                     case "show" + "accounts" -> showAccounts();
+                    case "show" + "salesreps" -> showSalesReps();
                     default -> throw new IllegalArgumentException();
                 }
             }

@@ -32,7 +32,7 @@ class LeadRepositoryTest {
     private List<Lead> leads;
 
     @BeforeEach
-    void setUp() throws NameContainsNumbersException, EmptyStringException, EmailNotValidException, ExceedsMaxLength, PhoneNumberContainsLettersException {
+    void setUp() throws NameContainsNumbersException, EmptyStringException, EmailNotValidException, ExceedsMaxLength, PhoneNumberContainsLettersException, IdContainsLettersException {
 
         salesReps = salesRepRepository.saveAll(List.of(
                 new SalesRep("David Lynch"),

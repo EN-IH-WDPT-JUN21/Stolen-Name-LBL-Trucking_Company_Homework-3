@@ -26,7 +26,6 @@ public class Opportunity {
     @Enumerated(EnumType.STRING)
     private Status status = Status.OPEN;
 
-    // com.ironhack.stolen_name_trucking_company_homework_3.Opportunity Specific variable - EnumTruck com.ironhack.stolen_name_trucking_company_homework_3.enums.Truck, int quantity, ObjectContact DecisionMaker
     @Enumerated(EnumType.STRING)
     private Truck product;
     private Integer quantity;

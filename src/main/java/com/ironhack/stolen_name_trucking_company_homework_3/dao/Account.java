@@ -92,19 +92,6 @@ public class Account {
 
     public void setCountry(String country) throws InvalidCountryException, EmptyStringException, ExceedsMaxLength {
 
-        /*List<String> countries = new ArrayList<>();
-
-        // retrieve the list of countries and populate country names
-        String[] isoCountries = Locale.getISOCountries();
-        for (String code : isoCountries) {
-            Locale locale = new Locale("en", code);
-            String name = locale.getDisplayCountry().toUpperCase(Locale.ROOT);
-
-            if (!"".equals(name)) {
-                countries.add(name);
-            }
-        }*/ //found that this is OS language specific and we want it to be uniform, hence a different method created
-
         if (country.isEmpty()) {
             throw new EmptyStringException("No country input. Please try again.");
         }

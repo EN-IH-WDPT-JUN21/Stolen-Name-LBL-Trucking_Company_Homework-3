@@ -13,6 +13,7 @@ class AccountTest {
 
     Account acc;
 
+
     @BeforeEach
     void setUp() throws NameContainsNumbersException, EmptyStringException, EmailNotValidException,
             ExceedsMaxLength, PhoneNumberContainsLettersException {
