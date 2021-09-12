@@ -23,6 +23,8 @@ public class CityReportMenu implements Variables {
     @Autowired
     MainMenu mainMenu;
 
+
+
     public void cityReportMenu() throws NoSuchValueException, AWTException {
 
         System.out.println("\n" + colorHeadline + colorLogo

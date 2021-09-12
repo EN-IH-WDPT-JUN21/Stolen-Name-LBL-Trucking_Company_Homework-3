@@ -3,11 +3,9 @@ package com.ironhack.stolen_name_trucking_company_homework_3.menus;
 import com.ironhack.stolen_name_trucking_company_homework_3.StolenNameTruckingCompanyHomework3Application;
 import com.ironhack.stolen_name_trucking_company_homework_3.dao.*;
 import com.ironhack.stolen_name_trucking_company_homework_3.enums.Industry;
-import com.ironhack.stolen_name_trucking_company_homework_3.enums.Status;
 import com.ironhack.stolen_name_trucking_company_homework_3.enums.Truck;
 import com.ironhack.stolen_name_trucking_company_homework_3.exceptions.*;
 import com.ironhack.stolen_name_trucking_company_homework_3.repository.*;
-import org.junit.Assert;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -21,12 +19,11 @@ import java.io.ByteArrayOutputStream;
 import java.io.InputStream;
 import java.io.PrintStream;
 import java.util.List;
-import java.util.Scanner;
 
 import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest
-class CityReportMenuTest {
+class CountryReportMenuTest {
 
     @MockBean
     private StolenNameTruckingCompanyHomework3Application stolenNameTruckingCompanyHomework3Application;
@@ -43,7 +40,7 @@ class CityReportMenuTest {
     private AccountRepository accountRepository;
 
     @Autowired
-    private CityReportMenu test;
+    private CountryReportMenu test;
 
     String colorMain = "\033[0;33m";
     String colorMainBold = "\033[1;37m";
@@ -61,21 +58,20 @@ class CityReportMenuTest {
     String expectedOutput;
 
     @BeforeEach
-    public void setUp() throws NameContainsNumbersException, EmptyStringException, EmailNotValidException, ExceedsMaxLength, PhoneNumberContainsLettersException, InvalidCountryException {
+    void setUp() throws ExceedsMaxLength, NameContainsNumbersException, EmptyStringException, InvalidCountryException, EmailNotValidException, PhoneNumberContainsLettersException {
         salesReps = salesRepRepository.saveAll(List.of(
-                new SalesRep("David Brown"),
-                new SalesRep("Marta Stewart")
+                new SalesRep("David Brown")
         ));
 
         leads = leadRepository.saveAll(List.of(
                 new Lead("Roger Federer", "123456789", "feds@gmail.co", "Wings of Freedom", salesReps.get(0)),
                 new Lead("Axel Rose", "980651164", "ax@gmail.com", "Roses", salesReps.get(0)),
-                new Lead("Lionel Messi", "563782789", "messi@yahoo.com", "Still Not Retired", salesReps.get(1))
+                new Lead("Lionel Messi", "563782789", "messi@yahoo.com", "Still Not Retired", salesReps.get(0))
         ));
 
         contacts = contactRepository.saveAll(List.of(
                 new Contact("John Dowe", "123475357", "alfa@beta.uk", "Kałasznikow", salesReps.get(0)),
-                new Contact("Marta Steward", "123475357", "ms@wp.pl", "My own company", salesReps.get(1)),
+                new Contact("Marta Steward", "123475357", "ms@wp.pl", "My own company", salesReps.get(0)),
                 new Contact("George Trumane", "123475357", "thisisverylongemail@gmail.com", "Truman Show", salesReps.get(0))
 
         ));
@@ -83,7 +79,7 @@ class CityReportMenuTest {
         opportunities = opportunityRepository.saveAll(List.of(
                 new Opportunity(Truck.FLATBED, 10, contacts.get(0), salesReps.get(0)),
                 new Opportunity(Truck.BOX, 1150, contacts.get(1), salesReps.get(0)),
-                new Opportunity(Truck.HYBRID, 1, contacts.get(2), salesReps.get(1))
+                new Opportunity(Truck.HYBRID, 1, contacts.get(2), salesReps.get(0))
 
         ));
 
@@ -117,26 +113,12 @@ class CityReportMenuTest {
         accountRepository.deleteAll();
     }
 
-    @Test
-    public void CityReportMenu_ReportOppByCity() throws NoSuchValueException, AWTException {
-        String data = "report opportunity by city \n\n";
-        InputStream stdin = System.in;
-
-        try {
-            System.setIn(new ByteArrayInputStream(data.getBytes()));
-            ByteArrayOutputStream outContent = new ByteArrayOutputStream();
-            System.setOut(new PrintStream(outContent));
-            test.cityReportMenu();
-            assertTrue(outContent.toString().contains("London"));
-
-        } finally {
-            System.setIn(stdin);
-        }
-    }
 
     @Test
-    public void CityReportMenu_ReportOppByCityOpen() throws NoSuchValueException, AWTException {
-        String data = "report open by city \n\n";
+    void countryReportMenu() throws NoSuchValueException, AWTException {
+
+        String data = "report opportunity by country \n\n";
+
         InputStream stdin = System.in;
 
         try {
@@ -144,56 +126,11 @@ class CityReportMenuTest {
 
             ByteArrayOutputStream outContent = new ByteArrayOutputStream();
             System.setOut(new PrintStream(outContent));
-            test.cityReportMenu();
-            assertTrue(outContent.toString().contains("London"));
-            assertTrue(outContent.toString().contains("Madrid"));
-            assertTrue(outContent.toString().contains("Paris"));
-            assertTrue(outContent.toString().contains("Report"));
+            test.countryReportMenu();
+            assertTrue(outContent.toString().contains("Opportunity"));
 
         } finally {
             System.setIn(stdin);
         }
     }
-
-    @Test
-    public void CityReportMenu_ReportOppByCityWon() throws NoSuchValueException, AWTException {
-        opportunities.get(0).setStatus(Status.CLOSED_WON);
-        opportunityRepository.save(opportunities.get(0));
-        String data = "report closed-won by city \n\n";
-        InputStream stdin = System.in;
-
-        try {
-            System.setIn(new ByteArrayInputStream(data.getBytes()));
-            ByteArrayOutputStream outContent = new ByteArrayOutputStream();
-            System.setOut(new PrintStream(outContent));
-            test.cityReportMenu();
-            assertTrue(outContent.toString().contains("London"));
-            assertTrue(outContent.toString().contains("Report"));
-
-        } finally {
-            System.setIn(stdin);
-        }
     }
-
-        @Test
-        public void CityReportMenu_ReportOppByCityLost() throws NoSuchValueException, AWTException {
-            opportunities.get(1).setStatus(Status.CLOSED_LOST);
-            opportunityRepository.save(opportunities.get(1));
-            String data = "report closed-lost by city \n\n";
-            InputStream stdin = System.in;
-
-            try {
-                System.setIn(new ByteArrayInputStream(data.getBytes()));
-                ByteArrayOutputStream outContent = new ByteArrayOutputStream();
-                System.setOut(new PrintStream(outContent));
-                test.cityReportMenu();
-                assertTrue(outContent.toString().contains("Madrid"));
-                assertTrue(outContent.toString().contains("Report"));
-
-            } finally {
-                System.setIn(stdin);
-            }
-    }
-
-
-}

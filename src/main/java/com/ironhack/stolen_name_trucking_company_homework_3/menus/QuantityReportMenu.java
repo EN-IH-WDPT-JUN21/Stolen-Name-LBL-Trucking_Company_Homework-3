@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.awt.*;
+import java.util.Scanner;
 
 @Component
 public class QuantityReportMenu implements Variables {
@@ -45,6 +46,7 @@ public class QuantityReportMenu implements Variables {
                                    + "║ 7. To quit " + colorHeadline + "- type: 'quit'" + colorMain + "                                                                                        ║\n"
                                    + "╚══════════════════════════════════════════════════════════════════════════════════════════════════════════════════╝\n" + reset);
 
+        Scanner scanner = new Scanner(System.in);
         try {
 
             // Creates String from scanner input

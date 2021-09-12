@@ -26,6 +26,7 @@ class SalesRepRepositoryTest {
 
     @BeforeEach
     void setUp() {
+        salesRepRepository.deleteAll();
         salesReps = salesRepRepository.saveAll(List.of(
                 new SalesRep("David Lynch"),
                 new SalesRep("Martha Stewart")
@@ -35,6 +36,7 @@ class SalesRepRepositoryTest {
     @AfterEach
     void tearDown() { ;
         salesRepRepository.deleteAll();
+        salesReps.clear();
     }
 
     @Test

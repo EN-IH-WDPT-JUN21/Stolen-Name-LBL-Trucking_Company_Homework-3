@@ -16,10 +16,10 @@ import java.util.List;
 public class PopulateDatabase{
 
     public static void populateDatabase(LeadRepository leadRepository,
-                            SalesRepRepository salesRepRepository,
-                            ContactRepository contactRepository,
-                            OpportunityRepository opportunityRepository,
-                            AccountRepository accountRepository)
+                                        SalesRepRepository salesRepRepository,
+                                        ContactRepository contactRepository,
+                                        OpportunityRepository opportunityRepository,
+                                        AccountRepository accountRepository)
             throws NameContainsNumbersException, EmptyStringException, EmailNotValidException, ExceedsMaxLength, PhoneNumberContainsLettersException, InvalidCountryException {
 
         List<SalesRep> salesReps = salesRepRepository.saveAll(List.of(
@@ -69,10 +69,10 @@ public class PopulateDatabase{
     }
 
     public static void clearDatabase(LeadRepository leadRepository,
-                              SalesRepRepository salesRepRepository,
-                              ContactRepository contactRepository,
-                              OpportunityRepository opportunityRepository,
-                              AccountRepository accountRepository) {
+                                     SalesRepRepository salesRepRepository,
+                                     ContactRepository contactRepository,
+                                     OpportunityRepository opportunityRepository,
+                                     AccountRepository accountRepository) {
         leadRepository.deleteAll();
         opportunityRepository.deleteAll();
         contactRepository.deleteAll();
